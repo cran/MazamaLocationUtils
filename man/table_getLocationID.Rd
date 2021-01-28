@@ -4,8 +4,12 @@
 \alias{table_getLocationID}
 \title{Return IDs of known locations}
 \usage{
-table_getLocationID(locationTbl = NULL, longitude = NULL,
-  latitude = NULL, radius = NULL)
+table_getLocationID(
+  locationTbl = NULL,
+  longitude = NULL,
+  latitude = NULL,
+  radius = NULL
+)
 }
 \arguments{
 \item{locationTbl}{Tibble of known locations, Default: NULL}

@@ -9,6 +9,8 @@
 #' @param verbose Logical controlling the generation of progress messages.
 #' @return Updated tibble of known locations.
 #' @examples
+#' library(MazamaLocationUtils)
+#' 
 #' locationTbl <- get(data("wa_monitors_500"))
 #' wa <- get(data("wa_airfire_meta"))
 #' 

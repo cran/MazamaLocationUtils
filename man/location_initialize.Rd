@@ -4,8 +4,14 @@
 \alias{location_initialize}
 \title{Create known location record with core metadata}
 \usage{
-location_initialize(longitude = NULL, latitude = NULL,
-  stateDataset = "NaturalEarthAdm1", verbose = TRUE)
+location_initialize(
+  longitude = NULL,
+  latitude = NULL,
+  stateDataset = "NaturalEarthAdm1",
+  elevationService = NULL,
+  addressService = NULL,
+  verbose = TRUE
+)
 }
 \arguments{
 \item{longitude}{Single longitude in decimal degrees E, Default: NULL}
@@ -13,6 +19,12 @@ location_initialize(longitude = NULL, latitude = NULL,
 \item{latitude}{Single latitude in decimal degrees N, Default: NULL}
 
 \item{stateDataset}{Name of spatial dataset to use for determining state}
+
+\item{elevationService}{Name of the elevation service to use for determining
+the elevation. Default: NULL. Accepted values: "usgs".}
+
+\item{addressService}{Name of the address service to use for determining
+the street address. Default: NULL Accepted values: "photon".}
 
 \item{verbose}{Logical controlling the generation of progress messages.}
 }
@@ -40,6 +52,8 @@ of core metadata:
 }
 \examples{
 \donttest{
+library(MazamaLocationUtils)
+
 # Set up standard directories and spatial data
 spatialDataDir <- tempdir() # typically "~/Data/Spatial"
 mazama_initialize(spatialDataDir)

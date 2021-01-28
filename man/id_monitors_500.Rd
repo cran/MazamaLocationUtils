@@ -4,7 +4,9 @@
 \name{id_monitors_500}
 \alias{id_monitors_500}
 \title{Idaho monitor locations dataset}
-\format{A tibble with 34 rows and 13 columns of data.}
+\format{
+A tibble with 34 rows and 13 columns of data.
+}
 \usage{
 id_monitors_500
 }

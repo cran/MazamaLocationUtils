@@ -4,8 +4,11 @@
 \alias{table_updateSingleRecord}
 \title{Update a single known location record in a table}
 \usage{
-table_updateSingleRecord(locationTbl = NULL, locationList = NULL,
-  verbose = TRUE)
+table_updateSingleRecord(
+  locationTbl = NULL,
+  locationList = NULL,
+  verbose = TRUE
+)
 }
 \arguments{
 \item{locationTbl}{Tibble of known locations, Default: NULL}
@@ -26,6 +29,8 @@ records should be performed with \code{table_removeRecord()} followed by
 \code{table_addLocation()}.
 }
 \examples{
+library(MazamaLocationUtils)
+
 locationTbl <- get(data("wa_monitors_500"))
 
 # Wenatchee

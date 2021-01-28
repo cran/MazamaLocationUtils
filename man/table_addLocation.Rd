@@ -4,9 +4,16 @@
 \alias{table_addLocation}
 \title{Add new known location records to a table}
 \usage{
-table_addLocation(locationTbl = NULL, longitude = NULL,
-  latitude = NULL, radius = NULL, stateDataset = "NaturalEarthAdm1",
-  verbose = TRUE)
+table_addLocation(
+  locationTbl = NULL,
+  longitude = NULL,
+  latitude = NULL,
+  radius = NULL,
+  stateDataset = "NaturalEarthAdm1",
+  elevationService = NULL,
+  addressService = NULL,
+  verbose = TRUE
+)
 }
 \arguments{
 \item{locationTbl}{Tibble of known locations, Default: NULL}
@@ -19,6 +26,12 @@ table_addLocation(locationTbl = NULL, longitude = NULL,
 
 \item{stateDataset}{Name of spatial dataset to use for determining state
 codes, Default: 'NaturalEarthAdm1'}
+
+\item{elevationService}{Name of the elevation service to use for determining
+the elevation. Default: NULL. Accepted values: "usgs".}
+
+\item{addressService}{Name of the address service to use for determining
+the street address. Default: NULL. Accepted values: "photon".}
 
 \item{verbose}{Logical controlling the generation of progress messages.}
 }
@@ -36,6 +49,8 @@ This funciton is a vecorized version of \code{table_addSingleLocation()}.
 }
 \examples{
 \donttest{
+library(MazamaLocationUtils)
+
 # Set up standard directories and spatial data
 spatialDataDir <- tempdir() # typically "~/Data/Spatial"
 mazama_initialize(spatialDataDir)
@@ -49,6 +64,8 @@ lat <- 47.611942
 locationTbl <- 
   locationTbl \%>\%
   table_addLocation(lon, lat, radius = 500)
+  
+dplyr::glimpse(locationTbl)
 }
 }
 \seealso{

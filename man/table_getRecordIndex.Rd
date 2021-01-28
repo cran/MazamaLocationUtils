@@ -4,8 +4,7 @@
 \alias{table_getRecordIndex}
 \title{Return indexes of known location records}
 \usage{
-table_getRecordIndex(locationTbl = NULL, locationID = NULL,
-  verbose = TRUE)
+table_getRecordIndex(locationTbl = NULL, locationID = NULL, verbose = TRUE)
 }
 \arguments{
 \item{locationTbl}{Tibble of known locations, Default: NULL}
@@ -22,6 +21,8 @@ Returns a vector of \code{locationTbl} row indexes for the
 locations associated with each \code{locationID}.
 }
 \examples{
+library(MazamaLocationUtils)
+
 locationTbl <- get(data("wa_monitors_500"))
 
 # Wenatchee

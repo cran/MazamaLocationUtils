@@ -4,6 +4,8 @@
 #' @param collectionName Character identifier for this table, Default: NULL
 #' @return Tibble of known locations.
 #' @examples
+#' library(MazamaLocationUtils)
+#' 
 #' # Set the directory for saving location tables
 #' setLocationDataDir(tempdir())
 #' 

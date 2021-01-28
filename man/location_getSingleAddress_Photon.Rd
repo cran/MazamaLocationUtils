@@ -4,13 +4,19 @@
 \alias{location_getSingleAddress_Photon}
 \title{Get address data from the Photon API to OpenStreetMap}
 \usage{
-location_getSingleAddress_Photon(longitude = NULL, latitude = NULL,
-  verbose = TRUE)
+location_getSingleAddress_Photon(
+  longitude = NULL,
+  latitude = NULL,
+  baseUrl = "https://photon.komoot.io/reverse",
+  verbose = TRUE
+)
 }
 \arguments{
 \item{longitude}{Single longitude in decimal degrees E, Default: NULL}
 
 \item{latitude}{Single latitude in decimal degrees N, Default: NULL}
+
+\item{baseUrl}{Base URL for data queries.}
 
 \item{verbose}{Logical controlling the generation of progress messages.}
 }
@@ -21,6 +27,7 @@ List of address components.
 The Photon API is used get address data associated with
 the \code{longitude} and \code{latitude}. The following list of data
 is returned:
+
 \itemize{
 \item{\code{houseNumber}}
 \item{\code{street}}
@@ -31,6 +38,7 @@ is returned:
 \item{\code{countryCode}}
 \item{\code{countryName}}
 }
+
 The function makes an effort to convert both \code{state} and \code{country} 
 \code{Name} into \code{Code} with codes defaulting to \code{NA}. Both 
 \code{Name} and \code{Code} are returned so that improvements can be made in 
@@ -38,6 +46,8 @@ the conversion algorithm.
 }
 \examples{
 \donttest{
+library(MazamaLocationUtils)
+
 # Set up standard directories and spatial data
 spatialDataDir <- tempdir() # typically "~/Data/Spatial"
 mazama_initialize(spatialDataDir)
@@ -48,7 +58,8 @@ lat <- 47.423333
 addressList <- location_getSingleAddress_Photon(lon, lat)
 str(addressList)
 }
+
 }
 \references{
-\url{http://photon.komoot.de}
+\url{https://photon.komoot.io}
 }

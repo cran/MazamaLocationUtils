@@ -18,6 +18,8 @@ Representation of a known location table in the desired format.
 Export a known location tibble as CSV format.
 }
 \examples{
+library(MazamaLocationUtils)
+
 locationTbl <- get(data("wa_monitors_500"))
 csvString <- table_export(locationTbl)
 }

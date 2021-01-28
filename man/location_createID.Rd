@@ -7,9 +7,9 @@
 location_createID(longitude = NULL, latitude = NULL)
 }
 \arguments{
-\item{longitude}{Single longitude in decimal degrees E, Default: NULL}
+\item{longitude}{Vector of longitudes in decimal degrees E, Default: NULL}
 
-\item{latitude}{Single latitude in decimal degrees N, Default: NULL}
+\item{latitude}{Vector of latitudes in decimal degrees N, Default: NULL}
 }
 \value{
 Vector of character locationIDs.
@@ -22,9 +22,9 @@ each locationID. See the references for details.
 \preformatted{
 # Retain accuracy up to ~.1m
 locationString <- paste0(
-  sprintf("%.7f", longitude),
+  sprintf("\%.7f", longitude),
   "_",
-  sprintf("%.7f", latitude)
+  sprintf("\%.7f", latitude)
 )
   
 # Avoid collisions until billions of records
@@ -32,6 +32,8 @@ locationID <- digest::digest(locationString, algo = "xxhash64")
 }
 }
 \examples{
+library(MazamaLocationUtils)
+
 # Wenatchee
 lon <- -120.325278
 lat <- 47.423333

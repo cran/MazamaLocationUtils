@@ -4,8 +4,13 @@
 \alias{table_updateColumn}
 \title{Update a column of metadata in a table}
 \usage{
-table_updateColumn(locationTbl = NULL, columnName = NULL,
-  locationID = NULL, locationData = NULL, verbose = TRUE)
+table_updateColumn(
+  locationTbl = NULL,
+  columnName = NULL,
+  locationID = NULL,
+  locationData = NULL,
+  verbose = TRUE
+)
 }
 \arguments{
 \item{locationTbl}{Tibble of known locations, Default: NULL}
@@ -26,6 +31,8 @@ For matching \code{locationID} records the assaociated
 \code{locatioData} is used to replace any existing value in \code{columnName}.
 }
 \examples{
+library(MazamaLocationUtils)
+
 locationTbl <- get(data("wa_monitors_500"))
 wa <- get(data("wa_airfire_meta"))
 

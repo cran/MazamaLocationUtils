@@ -16,6 +16,8 @@ Tibble of known locations.
 Load a tibble of known locations from the preferred directory.
 }
 \examples{
+library(MazamaLocationUtils)
+
 # Set the directory for saving location tables
 setLocationDataDir(tempdir())
 

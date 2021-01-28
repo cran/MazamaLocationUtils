@@ -4,8 +4,11 @@
 \alias{location_getSingleElevation_USGS}
 \title{Get elevation data from a USGS web service}
 \usage{
-location_getSingleElevation_USGS(longitude = NULL, latitude = NULL,
-  verbose = TRUE)
+location_getSingleElevation_USGS(
+  longitude = NULL,
+  latitude = NULL,
+  verbose = TRUE
+)
 }
 \arguments{
 \item{longitude}{Single longitude in decimal degrees E, Default: NULL}
@@ -23,11 +26,14 @@ the \code{longitude} and \code{latitude}.
 }
 \examples{
 \donttest{
+library(MazamaLocationUtils)
+
 # Wenatchee
 lon <- -120.325278
 lat <- 47.423333
 location_getSingleElevation_USGS(lon, lat)
 }
+
 }
 \references{
 \url{https://nationalmap.gov/epqs/}

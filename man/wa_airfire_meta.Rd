@@ -4,7 +4,9 @@
 \name{wa_airfire_meta}
 \alias{wa_airfire_meta}
 \title{Washington monitor metadata dataset}
-\format{A tibble with 69 rows and 19 columns of data.}
+\format{
+A tibble with 69 rows and 19 columns of data.
+}
 \usage{
 wa_airfire_meta
 }

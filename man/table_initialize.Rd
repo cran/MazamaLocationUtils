@@ -12,6 +12,7 @@ Empty known location tibble with the specified metadata columns.
 \description{
 Creates an empty known location tibble with the following 
 columns of core metadata:
+
 \itemize{
 \item{locationID}
 \item{locationName}
@@ -29,6 +30,8 @@ columns of core metadata:
 }
 }
 \examples{
+library(MazamaLocationUtils)
+
 # Create an empty Tbl
 emptyTbl <- table_initialize()
 print(emptyTbl)

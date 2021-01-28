@@ -4,8 +4,7 @@
 \alias{table_removeRecord}
 \title{Remove location records from a table}
 \usage{
-table_removeRecord(locationTbl = NULL, locationID = NULL,
-  verbose = TRUE)
+table_removeRecord(locationTbl = NULL, locationID = NULL, verbose = TRUE)
 }
 \arguments{
 \item{locationTbl}{Tibble of known locations, Default: NULL}
@@ -22,6 +21,8 @@ Incoming \code{locationID} values are compared
 against the incoming \code{locationTbl} and any matches are removed.
 }
 \examples{
+library(MazamaLocationUtils)
+
 locationTbl <- get(data("wa_monitors_500"))
 dim(locationTbl)
 

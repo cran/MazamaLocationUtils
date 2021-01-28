@@ -1,5 +1,15 @@
-
+#' @rdname mazama_initialize
+#' 
+#' @export 
+#' @importFrom MazamaSpatialUtils setSpatialDataDir loadSpatialData
+#' 
 #' @title Initialize with MazamaScience standard directories
+#' 
+#' @param spatialDataDir Directory where spatial datasets are found, 
+#' Default: "~/Data/Spatial"
+#' 
+#' @return No return value.
+#' 
 #' @description Convenience function to initialize spatial data. Wraps the 
 #' following setup lines:
 #' 
@@ -11,27 +21,20 @@
 #' MazamaSpatialUtils::loadSpatialData("NaturalEarthAdm1")
 #' MazamaSpatialUtils::loadSpatialData("USCensusCounties")
 #' }
-#' @param spatialDataDir Directory where spatial datasets are found, 
-#' Default: "~/Data/Spatial"
-#' @return No return value.
-#' @rdname mazama_initialize
+#' 
 #' @examples
 #' \donttest{
+#' library(MazamaLocationUtils)
+#' 
 #' # Set up directory for spatial data
 #' spatialDataDir <- tempdir() # typically "~/Data/Spatial"
 #' MazamaSpatialUtils::setSpatialDataDir(spatialDataDir)
-#' 
-#' # Install core spatial datasets (168 MB download)
-#' MazamaSpatialUtils::installSpatialData()
 #' 
 #' exists("NaturalEarthAdm1")
 #' mazama_initialize(spatialDataDir)
 #' exists("NaturalEarthAdm1")
 #' class(NaturalEarthAdm1)
 #' }
-#' @export 
-#' @importFrom MazamaSpatialUtils setSpatialDataDir loadSpatialData
-#' 
 mazama_initialize <- function(
   spatialDataDir = "~/Data/Spatial"
 ) {
@@ -46,6 +49,12 @@ mazama_initialize <- function(
     # Not initialized, so try to initialize
     result <- try({
       MazamaSpatialUtils::setSpatialDataDir(spatialDataDir)
+      # Install if not found
+      MazamaSpatialUtils::installSpatialData("EEZCountries")
+      MazamaSpatialUtils::installSpatialData("OSMTimezones")
+      MazamaSpatialUtils::installSpatialData("NaturalEarthAdm1")
+      MazamaSpatialUtils::installSpatialData("USCensusCounties")
+      # Now load
       MazamaSpatialUtils::loadSpatialData("EEZCountries")
       MazamaSpatialUtils::loadSpatialData("OSMTimezones")
       MazamaSpatialUtils::loadSpatialData("NaturalEarthAdm1")

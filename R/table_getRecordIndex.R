@@ -7,6 +7,8 @@
 #' @param verbose Logical controlling the generation of progress messages.
 #' @return Vector of \code{locationTbl} row indexes.
 #' @examples
+#' library(MazamaLocationUtils)
+#' 
 #' locationTbl <- get(data("wa_monitors_500"))
 #' 
 #' # Wenatchee

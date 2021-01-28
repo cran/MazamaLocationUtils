@@ -1,14 +1,23 @@
-
+#' @rdname table_getNearestLocation
+#' @export
+#' @importFrom MazamaCoreUtils stopIfNull
+#' 
 #' @title Return known locations
-#' @description Returns a tibble of known locations from \code{locationTbl}, one 
-#' for each incoming location. If no known location is found for a particular
-#' incoming location, that record in the tibble will contain all \code{NA}.
+#' 
 #' @param locationTbl Tibble of known locations, Default: NULL
 #' @param longitude Vector of longitudes in decimal degrees E, Default: NULL
 #' @param latitude Vector of latitudes in decimal degrees N, Default: NULL
 #' @param radius Radius in meters, Default: NULL
+#' 
 #' @return Tibble of known locations.
+#' 
+#' @description Returns a tibble of known locations from \code{locationTbl}, one 
+#' for each incoming location. If no known location is found for a particular
+#' incoming location, that record in the tibble will contain all \code{NA}.
+#' 
 #' @examples
+#' library(MazamaLocationUtils)
+#' 
 #' locationTbl <- get(data("wa_monitors_500"))
 #' 
 #' # Wenatchee
@@ -20,11 +29,7 @@
 #' 
 #' # Expanding the radius will find one
 #' table_getNearestLocation(locationTbl, lon, lat, radius = 5000) %>% str()
-#' @rdname table_getNearestLocation
-#' @export
-#' @importFrom MazamaCoreUtils stopIfNull
-#' @importFrom geodist geodist
-#' @importFrom rlang .data
+
 table_getNearestLocation <- function(
   locationTbl = NULL,
   longitude = NULL,

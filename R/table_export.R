@@ -5,6 +5,8 @@
 #' @param outputType Output format, Default: 'csv'
 #' @return Representation of a known location table in the desired format.
 #' @examples
+#' library(MazamaLocationUtils)
+#' 
 #' locationTbl <- get(data("wa_monitors_500"))
 #' csvString <- table_export(locationTbl)
 #' @rdname table_export

@@ -4,7 +4,9 @@
 \name{or_monitors_500}
 \alias{or_monitors_500}
 \title{Oregon monitor locations dataset}
-\format{A tibble with 40 rows and 13 columns of data.}
+\format{
+A tibble with 40 rows and 13 columns of data.
+}
 \usage{
 or_monitors_500
 }

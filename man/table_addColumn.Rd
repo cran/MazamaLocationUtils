@@ -4,8 +4,13 @@
 \alias{table_addColumn}
 \title{Add a new column of metadata to a table}
 \usage{
-table_addColumn(locationTbl = NULL, columnName = NULL,
-  locationID = NULL, locationData = NULL, verbose = TRUE)
+table_addColumn(
+  locationTbl = NULL,
+  columnName = NULL,
+  locationID = NULL,
+  locationData = NULL,
+  verbose = TRUE
+)
 }
 \arguments{
 \item{locationTbl}{Tibble of known locations, Default: NULL}
@@ -27,6 +32,8 @@ matching \code{locationID} records the assaociated \code{locatioData} is
 inserted. Otherwise, the new column will be initialized with \code{NA}.
 }
 \examples{
+library(MazamaLocationUtils)
+
 # Starting table
 locationTbl <- get(data("wa_monitors_500")) 
 names(locationTbl)

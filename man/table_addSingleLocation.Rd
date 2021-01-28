@@ -4,9 +4,16 @@
 \alias{table_addSingleLocation}
 \title{Add a single new known location record to a table}
 \usage{
-table_addSingleLocation(locationTbl = NULL, longitude = NULL,
-  latitude = NULL, radius = NULL, stateDataset = "NaturalEarthAdm1",
-  verbose = TRUE)
+table_addSingleLocation(
+  locationTbl = NULL,
+  longitude = NULL,
+  latitude = NULL,
+  radius = NULL,
+  stateDataset = "NaturalEarthAdm1",
+  elevationService = NULL,
+  addressService = NULL,
+  verbose = TRUE
+)
 }
 \arguments{
 \item{locationTbl}{Tibble of known locations, Default: NULL}
@@ -19,6 +26,12 @@ table_addSingleLocation(locationTbl = NULL, longitude = NULL,
 
 \item{stateDataset}{Name of spatial dataset to use for determining state
 codes, Default: 'NaturalEarthAdm1'}
+
+\item{elevationService}{Name of the elevation service to use for determining
+the elevation. Default: NULL. Accepted values: "usgs".}
+
+\item{addressService}{Name of the address service to use for determining
+the street address. Default: NULL. Accepted values: "photon".}
 
 \item{verbose}{Logical controlling the generation of progress messages.}
 }
@@ -33,9 +46,11 @@ if the location is not already found in \code{locationTbl}.
 }
 \examples{
 \donttest{
+library(MazamaLocationUtils)
+
 # Set up standard directories and spatial data
 spatialDataDir <- tempdir() # typically "~/Data/Spatial"
-MazamaSpatialUtils::setSpatialDataDir(spatialDataDir)
+mazama_initialize(spatialDataDir)
 
 locationTbl <- get(data("wa_monitors_500"))
 
@@ -47,6 +62,7 @@ locationTbl <-
   locationTbl \%>\%
   table_addSingleLocation(lon, lat, radius = 500)
 }
+
 }
 \seealso{
 \link{table_addLocation}

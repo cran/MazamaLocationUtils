@@ -1,15 +1,15 @@
-## ---- echo=FALSE---------------------------------------------------------
+## ---- echo=FALSE--------------------------------------------------------------
 knitr::opts_chunk$set(fig.width=7, fig.height=5)
 
-## ----load_data-----------------------------------------------------------
+## ----load_data----------------------------------------------------------------
 wa <- get(data("wa_airfire_meta", package = "MazamaLocationUtils"))
 names(wa)
 
-## ----load_data_hidden, eval = TRUE, echo = FALSE-------------------------
+## ----load_data_hidden, eval = TRUE, echo = FALSE------------------------------
 library(MazamaLocationUtils)
 wa_monitors_500 <- get(data("wa_monitors_500", package = "MazamaLocationUtils"))
 
-## ----create_table, eval = FALSE, echo = TRUE-----------------------------
+## ----create_table, eval = FALSE, echo = TRUE----------------------------------
 #  library(MazamaLocationUtils)
 #  
 #  # Initialize with standard directories
@@ -20,10 +20,10 @@ wa_monitors_500 <- get(data("wa_monitors_500", package = "MazamaLocationUtils"))
 #    table_initialize() %>%
 #    table_addLocation(wa$longitude, wa$latitude, radius = 500)
 
-## ----basic_columns-------------------------------------------------------
+## ----basic_columns------------------------------------------------------------
 names(wa_monitors_500)
 
-## ----import_colmns-------------------------------------------------------
+## ----import_colmns------------------------------------------------------------
 # Use a subset of the wa metadata
 wa_indices <- seq(5,65,5)
 wa_sub <- wa[wa_indices,]
@@ -52,7 +52,7 @@ locationTbl <- table_updateColumn(
 locationTbl_indices <- table_getRecordIndex(locationTbl, locationID)
 locationTbl[locationTbl_indices, c("city", "siteName")]
 
-## ----new_locations-------------------------------------------------------
+## ----new_locations------------------------------------------------------------
 # Create new locations near our known locations
 lons <- jitter(wa_sub$longitude) 
 lats <- jitter(wa_sub$latitude)
@@ -82,17 +82,17 @@ table_getNearestLocation(
 ) %>% dplyr::pull(city)
 
 
-## ----MSU_setup, echo = TRUE, eval = FALSE--------------------------------
+## ----MSU_setup, echo = TRUE, eval = FALSE-------------------------------------
 #    library(MazamaSpatialUtils)
 #    setSpatialDataDir("~/Data/Spatial")
 #    installSpatialData()
 
-## ----easy_setup, echo = TRUE, eval = FALSE-------------------------------
+## ----easy_setup, echo = TRUE, eval = FALSE------------------------------------
 #    library(MazamaLocationUtils)
 #    mazama_initialize()
 #    setLocationDataDir("~/Data/KnownLocations")
 
-## ----standard_setup, echo = TRUE, eval = FALSE---------------------------
+## ----standard_setup, echo = TRUE, eval = FALSE--------------------------------
 #    MazamaSpatialUtils::setSpatialDataDir("~/Data/Spatial")
 #  
 #    MazamaSpatialUtils::loadSpatialData("EEZCountries")

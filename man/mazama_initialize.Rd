@@ -28,12 +28,11 @@ MazamaSpatialUtils::loadSpatialData("USCensusCounties")
 }
 \examples{
 \donttest{
+library(MazamaLocationUtils)
+
 # Set up directory for spatial data
 spatialDataDir <- tempdir() # typically "~/Data/Spatial"
 MazamaSpatialUtils::setSpatialDataDir(spatialDataDir)
-
-# Install core spatial datasets (168 MB download)
-MazamaSpatialUtils::installSpatialData()
 
 exists("NaturalEarthAdm1")
 mazama_initialize(spatialDataDir)

@@ -7,19 +7,21 @@
 #' \preformatted{
 #' # Retain accuracy up to ~.1m
 #' locationString <- paste0(
-#'   sprintf("%.7f", longitude),
+#'   sprintf("\%.7f", longitude),
 #'   "_",
-#'   sprintf("%.7f", latitude)
+#'   sprintf("\%.7f", latitude)
 #' )
 #'   
 #' # Avoid collisions until billions of records
 #' locationID <- digest::digest(locationString, algo = "xxhash64")  
 #' }
 #' 
-#' @param longitude Single longitude in decimal degrees E, Default: NULL
-#' @param latitude Single latitude in decimal degrees N, Default: NULL
+#' @param longitude Vector of longitudes in decimal degrees E, Default: NULL
+#' @param latitude Vector of latitudes in decimal degrees N, Default: NULL
 #' @return Vector of character locationIDs.
 #' @examples
+#' library(MazamaLocationUtils)
+#' 
 #' # Wenatchee
 #' lon <- -120.325278
 #' lat <- 47.423333

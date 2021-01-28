@@ -35,7 +35,7 @@ including at least:
 
 Unfortunately, we are rarely supplied with a truly unique and truly spatial 
 `locationID`. Instead we often use `sensorID` or an associated non-spatial
-identifier as a standin for `locationID`.
+identifier as a stand-in for `locationID`.
 
 Complications we have seen include:
 

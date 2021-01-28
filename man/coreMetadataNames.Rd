@@ -4,7 +4,9 @@
 \name{coreMetadataNames}
 \alias{coreMetadataNames}
 \title{Names of standard spatial metadata columns}
-\format{A vector with 3 elements}
+\format{
+A vector with 3 elements
+}
 \usage{
 coreMetadataNames
 }

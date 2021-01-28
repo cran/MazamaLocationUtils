@@ -4,7 +4,9 @@
 \name{LocationDataDir}
 \alias{LocationDataDir}
 \title{Directory for location data}
-\format{Absolute path string.}
+\format{
+Absolute path string.
+}
 \description{
 This package maintains an internal directory path which 
 users can set using \code{setLocationDataDir()}. All package functions use 

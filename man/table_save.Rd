@@ -4,8 +4,12 @@
 \alias{table_save}
 \title{Save a known location table}
 \usage{
-table_save(locationTbl = NULL, collectionName = NULL, backup = TRUE,
-  outputType = "rda")
+table_save(
+  locationTbl = NULL,
+  collectionName = NULL,
+  backup = TRUE,
+  outputType = "rda"
+)
 }
 \arguments{
 \item{locationTbl}{Tibble of known locations, Default: NULL}
@@ -27,6 +31,8 @@ Save a tibble of known locations to the preferred directory.
 Backup files are saved with "YYYY-mm-ddTHH:MM:SS"
 }
 \examples{
+library(MazamaLocationUtils)
+
 # Set the directory for saving location tables
 setLocationDataDir(tempdir())
 

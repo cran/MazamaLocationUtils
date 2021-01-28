@@ -8,6 +8,8 @@
 #' @param outputType Output format, Default: 'rda'
 #' @return File path of saved file.
 #' @examples
+#' library(MazamaLocationUtils)
+#' 
 #' # Set the directory for saving location tables
 #' setLocationDataDir(tempdir())
 #' 
