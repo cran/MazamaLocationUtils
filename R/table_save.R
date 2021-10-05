@@ -1,8 +1,8 @@
 
 #' @title Save a known location table
 #' @description Save a tibble of known locations to the preferred directory.
-#' @param locationTbl Tibble of known locations, Default: NULL
-#' @param collectionName Character identifier for this table, Default: NULL
+#' @param locationTbl Tibble of known locations.
+#' @param collectionName Character identifier for this table.
 #' @param backup Logical specifying whether to save a backup version of any
 #' existing tables sharing \code{collectionName}.
 #' @param outputType Output format, Default: 'rda'
@@ -41,7 +41,7 @@ table_save <- function(
   
   # ----- Validate parameters --------------------------------------------------
   
-  MazamaCoreUtils::stopIfNull(locationTbl)
+  MazamaLocationUtils::validateLocationTbl(locationTbl, locationOnly = FALSE)
   MazamaCoreUtils::stopIfNull(collectionName)
   
   dataDir <- getLocationDataDir()

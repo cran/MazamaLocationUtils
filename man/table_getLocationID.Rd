@@ -8,17 +8,21 @@ table_getLocationID(
   locationTbl = NULL,
   longitude = NULL,
   latitude = NULL,
-  radius = NULL
+  distanceThreshold = NULL,
+  measure = "geodesic"
 )
 }
 \arguments{
-\item{locationTbl}{Tibble of known locations, Default: NULL}
+\item{locationTbl}{Tibble of known locations.}
 
-\item{longitude}{Vector of longitudes in decimal degrees E, Default: NULL}
+\item{longitude}{Vector of longitudes in decimal degrees E.}
 
-\item{latitude}{Vector of latitudes in decimal degrees N, Default: NULL}
+\item{latitude}{Vector of latitudes in decimal degrees N.}
 
-\item{radius}{Radius in meters, Default: NULL}
+\item{distanceThreshold}{Distance in meters.}
+
+\item{measure}{One of "haversine" "vincenty", "geodesic", or "cheap" 
+specifying desired method of geodesic distance calculation. See \code{?geodist::geodist}.}
 }
 \value{
 Vector of known \code{locationID}s.
@@ -26,9 +30,15 @@ Vector of known \code{locationID}s.
 \description{
 Returns a vector of \code{locationID}s for the known locations
 that each incoming location will be assigned to within the given. If more
-than one known location exists within the given radius, the closest will be
+than one known location exists within the given \code{distanceThreshold}, the closest will be
 assigned.  \code{NA} will be returned for each incoming that cannot be 
-assigend to a known location in \code{locationTbl}.
+assigned to a known location in \code{locationTbl}.
+}
+\note{
+The measure \code{"cheap"} may be used to speed things up depending on
+the spatial scale being considered. Distances calculated with 
+\code{measure = "cheap"} will vary by a few meters compared with those 
+calculated using \code{measure = "geodesic"}.
 }
 \examples{
 locationTbl <- get(data("wa_monitors_500"))
@@ -37,9 +47,9 @@ locationTbl <- get(data("wa_monitors_500"))
 lon <- -120.325278
 lat <- 47.423333
 
-# Too small a radius will not find a match
-table_getLocationID(locationTbl, lon, lat, radius = 50)
+# Too small a distanceThreshold will not find a match
+table_getLocationID(locationTbl, lon, lat, distanceThreshold = 50)
 
-# Expanding the radius will find one
-table_getLocationID(locationTbl, lon, lat, radius = 5000)
+# Expanding the distanceThreshold will find one
+table_getLocationID(locationTbl, lon, lat, distanceThreshold = 5000)
 }

@@ -7,8 +7,8 @@
 #' 
 #' @title  Create known location record with core metadata
 #' 
-#' @param longitude Single longitude in decimal degrees E, Default: NULL
-#' @param latitude Single latitude in decimal degrees N, Default: NULL
+#' @param longitude Single longitude in decimal degrees E.
+#' @param latitude Single latitude in decimal degrees N.
 #' @param stateDataset Name of spatial dataset to use for determining state
 #' @param elevationService Name of the elevation service to use for determining
 #' the elevation. Default: NULL. Accepted values: "usgs".

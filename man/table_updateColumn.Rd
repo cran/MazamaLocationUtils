@@ -13,13 +13,13 @@ table_updateColumn(
 )
 }
 \arguments{
-\item{locationTbl}{Tibble of known locations, Default: NULL}
+\item{locationTbl}{Tibble of known locations.}
 
-\item{columnName}{Name to use for the new column, Default: NULL}
+\item{columnName}{Name to use for the new column.}
 
-\item{locationID}{Vector of \code{locationID} strings, Default: NULL}
+\item{locationID}{Vector of \code{locationID} strings.}
 
-\item{locationData}{Vector of data to used at matching records, Default: NULL}
+\item{locationData}{Vector of data to used at matching records.}
 
 \item{verbose}{Logical controlling the generation of progress messages.}
 }
@@ -42,10 +42,18 @@ wa <- get(data("wa_airfire_meta"))
 wa_indices <- seq(5,65,5)
 wa_sub <- wa[wa_indices,]
 
-locationID <- table_getLocationID(locationTbl, wa_sub$longitude, wa_sub$latitude, radius = 500)
+locationID <- 
+  table_getLocationID(
+    locationTbl, 
+    wa_sub$longitude, 
+    wa_sub$latitude, 
+    distanceThreshold = 500
+  )
+  
 locationData <- wa_sub$siteName
 
-locationTbl <- table_updateColumn(locationTbl, "siteName", locationID, locationData)
+locationTbl <- 
+  table_updateColumn(locationTbl, "siteName", locationID, locationData)
 
 # Look at the data we attempted to merge
 wa$siteName[wa_indices]

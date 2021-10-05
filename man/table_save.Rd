@@ -12,9 +12,9 @@ table_save(
 )
 }
 \arguments{
-\item{locationTbl}{Tibble of known locations, Default: NULL}
+\item{locationTbl}{Tibble of known locations.}
 
-\item{collectionName}{Character identifier for this table, Default: NULL}
+\item{collectionName}{Character identifier for this table.}
 
 \item{backup}{Logical specifying whether to save a backup version of any
 existing tables sharing \code{collectionName}.}

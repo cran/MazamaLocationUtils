@@ -5,9 +5,9 @@
 #' for small tweaks to an existing \code{locationTbl}. Wholesale replacement of
 #' records should be performed with \code{table_removeRecord()} followed by
 #' \code{table_addLocation()}. 
-#' @param locationTbl Tibble of known locations, Default: NULL
+#' @param locationTbl Tibble of known locations.
 #' @param locationList List containing `locationID` and one or more named
-#' columns whose values are to be replaced, Default: NULL
+#' columns whose values are to be replaced.
 #' @param verbose Logical controlling the generation of progress messages.
 #' @return Updated tibble of known locations.
 #' @examples
@@ -51,7 +51,7 @@ table_updateSingleRecord <- function(
   
   # ----- Validate parameters --------------------------------------------------
   
-  MazamaCoreUtils::stopIfNull(locationTbl)
+  MazamaLocationUtils::validateLocationTbl(locationTbl, locationOnly = FALSE)
   MazamaCoreUtils::stopIfNull(locationList)
 
   invalidNames <- setdiff(names(locationList), names(locationTbl))

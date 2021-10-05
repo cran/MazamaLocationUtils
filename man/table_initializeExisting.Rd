@@ -5,16 +5,17 @@
 \title{Converts an existing table into a known location table}
 \usage{
 table_initializeExisting(
-  tbl = NULL,
+  locationTbl = NULL,
   stateDataset = "NaturalEarthAdm1",
   countryCodes = NULL,
-  radius = NULL,
+  distanceThreshold = NULL,
+  measure = "geodesic",
   verbose = TRUE
 )
 }
 \arguments{
-\item{tbl}{Table of spatial locations that will be converted into a "known
-location" table.}
+\item{locationTbl}{Tibble of known locations. This input tibble need not be a 
+standardized "known location" with all required columns. They will be added.}
 
 \item{stateDataset}{Name of spatial dataset to use for determining state
 codes, Default: 'NaturalEarthAdm1'}
@@ -22,19 +23,22 @@ codes, Default: 'NaturalEarthAdm1'}
 \item{countryCodes}{Vector of country codes used to optimize spatial
 searching. (See ?MazamaSpatialUtils::getStateCode())}
 
-\item{radius}{Radius in meters, Default: NULL}
+\item{distanceThreshold}{Distance in meters.}
+
+\item{measure}{One of "haversine" "vincenty", "geodesic", or "cheap" 
+specifying desired method of geodesic distance calculation. See \code{?geodist::geodist}.}
 
 \item{verbose}{Logical controlling the generation of progress messages.}
 }
 \value{
 Known location tibble with the specified metadata columns. Any 
-locations whose circles (as defined by \code{radius}) overlap will generate
+locations whose circles (as defined by \code{distanceThreshold}) overlap will generate
 warning messages. 
 
 It is incumbent upon the user to address these issue by one of:
 
 \enumerate{
-\item{reduce the radius until no overlaps occur}
+\item{reduce the distanceThreshold until no overlaps occur}
 \item{assign one of the overlapping locations to the other location}
 }
 }
@@ -64,13 +68,19 @@ are optional.
 
 If any of these optional columns are found, they will be used and the often 
 slow and sometimes slightly inaccurate steps to generate that information
-will be skipped. Any additional columns of information not part of the 
-required list will be retained.
+will be skipped for locations with that data. Any additional columns of 
+information not part of the required core metadata will be retained.
 
 This method skips the assignment of columns like \code{elevation} and all
-address related foe;ds that require web service requests.
+address related fields that require web service requests.
 
 Compared to initializing a brand new table and populating one record at a
 time, this is a much faster way of creating a known location table from a
 pre-existing table of metadata.
+}
+\note{
+The measure \code{"cheap"} may be used to speed things up depending on
+the spatial scale being considered. Distances calculated with 
+\code{measure = "cheap"} will vary by a few meters compared with those 
+calculated using \code{measure = "geodesic"}.
 }

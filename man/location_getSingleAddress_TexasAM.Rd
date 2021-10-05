@@ -12,9 +12,9 @@ location_getSingleAddress_TexasAM(
 )
 }
 \arguments{
-\item{longitude}{Single longitude in decimal degrees E, Default: NULL}
+\item{longitude}{Single longitude in decimal degrees E.}
 
-\item{latitude}{Single latitude in decimal degrees N, Default: NULL}
+\item{latitude}{Single latitude in decimal degrees N.}
 
 \item{apiKey}{Texas A&M Geocoding requires an API key. The first 2500 requests
 are free. Default: NULL}

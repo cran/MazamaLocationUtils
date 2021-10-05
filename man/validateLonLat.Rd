@@ -7,9 +7,9 @@
 validateLonLat(longitude = NULL, latitude = NULL)
 }
 \arguments{
-\item{longitude}{Single longitude in decimal degrees E, Default: NULL}
+\item{longitude}{Single longitude in decimal degrees E.}
 
-\item{latitude}{Single latitude in decimal degrees N, Default: NULL}
+\item{latitude}{Single latitude in decimal degrees N.}
 }
 \value{
 Invisibly returns \code{TRUE} if no error message has been generated.

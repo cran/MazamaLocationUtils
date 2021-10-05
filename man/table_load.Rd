@@ -7,7 +7,7 @@
 table_load(collectionName = NULL)
 }
 \arguments{
-\item{collectionName}{Character identifier for this table, Default: NULL}
+\item{collectionName}{Character identifier for this table.}
 }
 \value{
 Tibble of known locations.

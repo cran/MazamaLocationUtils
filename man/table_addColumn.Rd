@@ -13,13 +13,13 @@ table_addColumn(
 )
 }
 \arguments{
-\item{locationTbl}{Tibble of known locations, Default: NULL}
+\item{locationTbl}{Tibble of known locations.}
 
-\item{columnName}{Name to use for the new column, Default: NULL}
+\item{columnName}{Name to use for the new column.}
 
-\item{locationID}{Vector of \code{locationID} strings, Default: NULL}
+\item{locationID}{Vector of \code{locationID} strings.}
 
-\item{locationData}{Vector of data to used at matching records, Default: NULL}
+\item{locationData}{Vector of data to used at matching records.}
 
 \item{verbose}{Logical controlling the generation of progress messages.}
 }

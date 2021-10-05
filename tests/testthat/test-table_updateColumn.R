@@ -14,7 +14,7 @@ test_that("table_updateColumn() works with data", {
   wa_indices <- seq(5,65,5)
   wa_sub <- wa[wa_indices,]
   
-  locationID <- table_getLocationID(locationTbl, wa_sub$longitude, wa_sub$latitude, radius = 500)
+  locationID <- table_getLocationID(locationTbl, wa_sub$longitude, wa_sub$latitude, distanceThreshold = 1000)
   locationData <- wa_sub$siteName
   
   testTbl <- table_updateColumn(locationTbl, "siteName", locationID, locationData)

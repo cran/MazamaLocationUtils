@@ -7,7 +7,7 @@
 table_export(locationTbl = NULL, outputType = "csv")
 }
 \arguments{
-\item{locationTbl}{Tibble of known locations, Default: NULL}
+\item{locationTbl}{Tibble of known locations.}
 
 \item{outputType}{Output format, Default: 'csv'}
 }

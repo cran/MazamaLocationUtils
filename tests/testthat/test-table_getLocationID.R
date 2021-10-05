@@ -7,7 +7,7 @@ test_that("correct locationID is returned", {
   longitude <- wa_monitors_500$longitude
   latitude <- wa_monitors_500$latitude
   
-  testID <- table_getLocationID(locationTbl, longitude, latitude, radius = 500)
+  testID <- table_getLocationID(locationTbl, longitude, latitude, distanceThreshold = 1000)
   expect_equal(locationID, testID)
 })
 
@@ -19,9 +19,9 @@ test_that("radius works", {
   latitude <- wa_monitors_500$latitude + 0.01 # ~ 780 m north
   allNA <- rep(as.character(NA), length(locationID))
   
-  testID <- table_getLocationID(locationTbl, longitude, latitude, radius = 500)
+  testID <- table_getLocationID(locationTbl, longitude, latitude, distanceThreshold = 1000)
   expect_equal(allNA, testID)
   
-  testID <- table_getLocationID(locationTbl, longitude, latitude, radius = 5000)
+  testID <- table_getLocationID(locationTbl, longitude, latitude, distanceThreshold = 10000)
   expect_equal(locationID, testID)
 })

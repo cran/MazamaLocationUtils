@@ -7,9 +7,9 @@
 table_removeRecord(locationTbl = NULL, locationID = NULL, verbose = TRUE)
 }
 \arguments{
-\item{locationTbl}{Tibble of known locations, Default: NULL}
+\item{locationTbl}{Tibble of known locations.}
 
-\item{locationID}{Vector of \code{locationID} strings, Default: NULL}
+\item{locationID}{Vector of \code{locationID} strings.}
 
 \item{verbose}{Logical controlling the generation of progress messages.}
 }
@@ -31,14 +31,14 @@ lon <- -120.325278
 lat <- 47.423333
 
 # Get the locationID first
-locationID <- table_getLocationID(locationTbl, lon, lat, radius = 500)
+locationID <- table_getLocationID(locationTbl, lon, lat, distanceThreshold = 500)
 
 # Remove it
 locationTbl <- table_removeRecord(locationTbl, locationID)
 dim(locationTbl)
 
 # Test
-table_getLocationID(locationTbl, lon, lat, radius = 500)
+table_getLocationID(locationTbl, lon, lat, distanceThreshold = 500)
 }
 \seealso{
 \link{table_addLocation}

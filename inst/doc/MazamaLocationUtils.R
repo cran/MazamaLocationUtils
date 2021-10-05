@@ -18,7 +18,7 @@ wa_monitors_500 <- get(data("wa_monitors_500", package = "MazamaLocationUtils"))
 #  
 #  wa_monitors_500 <-
 #    table_initialize() %>%
-#    table_addLocation(wa$longitude, wa$latitude, radius = 500)
+#    table_addLocation(wa$longitude, wa$latitude, distanceThreshold = 500)
 
 ## ----basic_columns------------------------------------------------------------
 names(wa_monitors_500)
@@ -36,7 +36,7 @@ locationID <- table_getLocationID(
   locationTbl, 
   longitude = wa_sub$longitude, 
   latitude = wa_sub$latitude, 
-  radius = 500
+  distanceThreshold = 500
 )
 
 # Now add the "siteName" column for our subset of locations
@@ -62,7 +62,7 @@ table_getNearestLocation(
   wa_monitors_500,
   longitude = lons,
   latitude = lats,
-  radius = 50
+  distanceThreshold = 50
 ) %>% dplyr::pull(city)
 
 # Any known locations within 500 meters
@@ -70,7 +70,7 @@ table_getNearestLocation(
   wa_monitors_500,
   longitude = lons,
   latitude = lats,
-  radius = 500
+  distanceThreshold = 500
 ) %>% dplyr::pull(city)
 
 # How about 5000 meters?
@@ -78,7 +78,7 @@ table_getNearestLocation(
   wa_monitors_500,
   longitude = lons,
   latitude = lats,
-  radius = 5000
+  distanceThreshold = 5000
 ) %>% dplyr::pull(city)
 
 

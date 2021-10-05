@@ -26,33 +26,40 @@
 #' 
 #' If any of these optional columns are found, they will be used and the often 
 #' slow and sometimes slightly inaccurate steps to generate that information
-#' will be skipped. Any additional columns of information not part of the 
-#' required list will be retained.
+#' will be skipped for locations with that data. Any additional columns of 
+#' information not part of the required core metadata will be retained.
 #' 
 #' This method skips the assignment of columns like \code{elevation} and all
-#' address related foe;ds that require web service requests.
+#' address related fields that require web service requests.
 #' 
 #' Compared to initializing a brand new table and populating one record at a
 #' time, this is a much faster way of creating a known location table from a
 #' pre-existing table of metadata.
 #' 
-#' @param tbl Table of spatial locations that will be converted into a "known
-#' location" table.
+#' @note The measure \code{"cheap"} may be used to speed things up depending on
+#' the spatial scale being considered. Distances calculated with 
+#' \code{measure = "cheap"} will vary by a few meters compared with those 
+#' calculated using \code{measure = "geodesic"}.
+#' 
+#' @param locationTbl Tibble of known locations. This input tibble need not be a 
+#' standardized "known location" with all required columns. They will be added.
 #' @param stateDataset Name of spatial dataset to use for determining state
 #' codes, Default: 'NaturalEarthAdm1'
 #' @param countryCodes Vector of country codes used to optimize spatial
 #' searching. (See ?MazamaSpatialUtils::getStateCode())
-#' @param radius Radius in meters, Default: NULL 
+#' @param distanceThreshold Distance in meters. 
+#' @param measure One of "haversine" "vincenty", "geodesic", or "cheap" 
+#' specifying desired method of geodesic distance calculation. See \code{?geodist::geodist}.
 #' @param verbose Logical controlling the generation of progress messages.
 #' 
 #' @return Known location tibble with the specified metadata columns. Any 
-#' locations whose circles (as defined by \code{radius}) overlap will generate
+#' locations whose circles (as defined by \code{distanceThreshold}) overlap will generate
 #' warning messages. 
 #' 
 #' It is incumbent upon the user to address these issue by one of:
 #' 
 #' \enumerate{
-#' \item{reduce the radius until no overlaps occur}
+#' \item{reduce the distanceThreshold until no overlaps occur}
 #' \item{assign one of the overlapping locations to the other location}
 #' }
 #' 
@@ -63,10 +70,11 @@
 #' @importFrom rlang .data
 #' 
 table_initializeExisting <- function(
-  tbl = NULL,
+  locationTbl = NULL,
   stateDataset = "NaturalEarthAdm1",
   countryCodes = NULL,
-  radius = NULL,
+  distanceThreshold = NULL,
+  measure = "geodesic",
   verbose = TRUE
 ) {
   
@@ -74,17 +82,8 @@ table_initializeExisting <- function(
   
   # ----- Validate parameters --------------------------------------------------
   
-  MazamaCoreUtils::stopIfNull(tbl)
-  MazamaCoreUtils::stopIfNull(radius)
-  
-  if ( !"data.frame" %in% class(tbl) )
-    stop("Parameter 'tbl' is not of class \"data.frame\".")
-  
-  if ( !"longitude" %in% names(tbl) )
-    stop("Parameter 'tbl' does not have a 'longitude' column.")
-  
-  if ( !"latitude" %in% names(tbl) )
-    stop("Parameter 'tbl' does not have a 'latitude' column.")
+  MazamaLocationUtils::validateLocationTbl(locationTbl, locationOnly = TRUE)
+  MazamaCoreUtils::stopIfNull(distanceThreshold)
   
   if ( !exists(stateDataset) ) {
     stop(paste0(
@@ -93,229 +92,217 @@ table_initializeExisting <- function(
     ))
   }
   
-  if ( "locationID" %in% names(tbl) )
-    stop("Parameter 'tbl' already has a column named \"locationID\"")
+  if ( "locationID" %in% names(locationTbl) )
+    stop("Parameter 'locationTbl' already has a column named \"locationID\"")
   
-  if ( !is.numeric(radius) )
-    stop("Parameter 'radius' must be a numeric value.")
-  
-  diameter <- 2 * radius
+  if ( !is.numeric(distanceThreshold) )
+    stop("Parameter 'distanceThreshold' must be a numeric value.")
   
   # ----- Create locationTbl ---------------------------------------------------
   
-  tblColumns <- names(tbl)
-  
-  locationTbl <- tbl
+  locationTbl <- table_addCoreMetadata(locationTbl)
   
   # * locationID -----
   
-  locationTbl$locationID <- location_createID(
-    longitude = locationTbl$longitude,
-    latitude = locationTbl$latitude
-  )
+  # locationID should have been added by table_add
+  if (anyNA(locationTbl$locationID)) {
+    locationTbl$locationID <- location_createID(
+      longitude = locationTbl$longitude,
+      latitude = locationTbl$latitude
+    )
+  }
   
   # * elevation -----
   
-  if ( !"elevation" %in% tblColumns ) {
-    # Slow web service so skip for now
-    locationTbl$elevation <- as.numeric(NA)
-  }
+  # Slow web service so skip for now
   
   # * countryCode -----
   
-  if ( !"countryCode" %in% tblColumns ) {
+  tbl_1 <- dplyr::filter(locationTbl, !is.na(.data$countryCode))
+  tbl_2 <- dplyr::filter(locationTbl, is.na(.data$countryCode))
+  
+  if ( nrow(tbl_2) > 0 ) {
     
     if ( verbose ) 
-      message("Searching for countryCodes...")
+      message(sprintf("Creating countryCodes for %d locations ...", nrow(tbl_2)))
     
-    locationTbl$countryCode <- MazamaSpatialUtils::getCountryCode(
-      lon = locationTbl$longitude,
-      lat = locationTbl$latitude,
+    tbl_2$countryCode <- MazamaSpatialUtils::getCountryCode(
+      lon = tbl_2$longitude,
+      lat = tbl_2$latitude,
       dataset = "EEZCountries",
       countryCodes = countryCodes,
       useBuffering = FALSE
     )
     
+    locationTbl <- dplyr::bind_rows(tbl_1, tbl_2)
+    
   }
   
   # * stateCode -----
   
-  if ( !"stateCode" %in% tblColumns ) {
+  tbl_1 <- dplyr::filter(locationTbl, !is.na(.data$stateCode))
+  tbl_2 <- dplyr::filter(locationTbl, is.na(.data$stateCode))
+  
+  if ( nrow(tbl_2) > 0 ) {
     
     if ( verbose ) 
-      message("Searching for stateCodes...")
+      message(sprintf("Creating stateCodes for %d locations ...", nrow(tbl_2)))
     
-    locationTbl$stateCode <- MazamaSpatialUtils::getStateCode(
-      lon = locationTbl$longitude,
-      lat = locationTbl$latitude,
+    tbl_2$stateCode <- MazamaSpatialUtils::getStateCode(
+      lon = tbl_2$longitude,
+      lat = tbl_2$latitude,
       dataset = stateDataset,
       countryCodes = countryCodes,
       useBuffering = TRUE
     )
     
+    locationTbl <- dplyr::bind_rows(tbl_1, tbl_2)
+  
   }
   
   # * locationName -----
   
-  if ( !"locationName" %in% tblColumns ) {
+  # NOTE:  The default locationName is intended to give folks a more memorable
+  # NOTE:  handel than the locationID but is not guaranteed to be unique. It is 
+  # NOTE:  expected that users will add their own, more relevant names 
+  # NOTE:  appropriate for the community of practice using a particular
+  # NOTE:  collectionName of known locations.
+  
+  tbl_1 <- dplyr::filter(locationTbl, !is.na(.data$locationName))
+  tbl_2 <- dplyr::filter(locationTbl, is.na(.data$locationName))
+  
+  if ( nrow(tbl_2) > 0 ) {
     
-    # NOTE:  The default locationName is intended to give folks a more memorable
-    # NOTE:  handel than the locationID but is not guaranteed to be unique. It is 
-    # NOTE:  expected that users will add their own, more relevant names 
-    # NOTE:  appropriate for the community of practice using a particular
-    # NOTE:  collectionName of known locations.
+    if ( verbose ) 
+      message(sprintf("Creating locationNames for %d locations ...", nrow(tbl_2)))
     
-    locationTbl$locationName <- paste0(
-      tolower(locationTbl$countryCode), ".",
-      tolower(locationTbl$stateCode), "_",
-      stringr::str_sub(locationTbl$locationID, 1, 6)
+    tbl_2$locationName <- paste0(
+      tolower(tbl_2$countryCode), ".",
+      tolower(tbl_2$stateCode), "_",
+      stringr::str_sub(tbl_2$locationID, 1, 6)
     )
+    
+    locationTbl <- dplyr::bind_rows(tbl_1, tbl_2)
     
   }
   
   # * county -----
   
-  if ( !"county" %in% tblColumns ) {
-    
-    if ( verbose ) 
-      message("Searching for counties...")
-    
-    locationTbl$county <- MazamaSpatialUtils::getUSCounty(
-      lon = locationTbl$longitude,
-      lat = locationTbl$latitude,
-      dataset = "USCensusCounties",
-      useBuffering = TRUE
-    )
-    
-  }
+  # Slow so skip for now
+  
+  # tbl_1 <- dplyr::filter(locationTbl, !is.na(.data$county))
+  # tbl_2 <- dplyr::filter(locationTbl, is.na(.data$county))
+  # 
+  # if ( nrow(tbl_2) > 0 ) {
+  #   
+  #   if ( verbose ) 
+  #     message(sprintf("Creating counties for %d locations ...", nrow(tbl_2)))
+  #   
+  #   tbl_2$county <- MazamaSpatialUtils::getUSCounty(
+  #     lon = tbl_2$longitude,
+  #     lat = tbl_2$latitude,
+  #     dataset = "USCensusCounties",
+  #     useBuffering = TRUE
+  #   )
+  #   
+  #   locationTbl <- dplyr::bind_rows(tbl_1, tbl_2)
+  #   
+  # }
   
   # * timezone -----
+
+  tbl_1 <- dplyr::filter(locationTbl, !is.na(.data$timezone))
+  tbl_2 <- dplyr::filter(locationTbl, is.na(.data$timezone))
   
-  if ( !"timezone" %in% tblColumns ) {
+  if ( nrow(tbl_2) > 0 ) {
     
     if ( verbose ) 
-      message("Searching for timezones...")
+      message(sprintf("Creating timezones for %d locations ...", nrow(tbl_2)))
     
-    timezone <- MazamaSpatialUtils::getTimezone(
-      lon = locationTbl$longitude,
-      lat = locationTbl$latitude,
+    tbl_2$county <- MazamaSpatialUtils::getTimezone(
+      lon = tbl_2$longitude,
+      lat = tbl_2$latitude,
       dataset = "OSMTimezones",
-      countryCodes = countryCodes,
       useBuffering = TRUE
     )
+    
+    locationTbl <- dplyr::bind_rows(tbl_1, tbl_2)
     
   }
   
   # * houseNumber -----
   
-  if ( !"houseNumber" %in% tblColumns ) {
-    # Slow web service so skip for now
-    locationTbl$houseNumber <- as.character(NA)
-  }
+  # Slow web service so skip for now
   
   # * street -----
   
-  if ( !"street" %in% tblColumns ) {
-    # Slow web service so skip for now
-    locationTbl$street <- as.character(NA)
-  }
+  # Slow web service so skip for now
   
   # * city -----
   
-  if ( !"city" %in% tblColumns ) {
-    # Slow web service so skip for now
-    locationTbl$city <- as.character(NA)
-  }
-  
+  # Slow web service so skip for now
+
   # * zip -----
   
-  if ( !"zip" %in% tblColumns ) {
-    # Slow web service so skip for now
-    locationTbl$zip <- as.character(NA)
-  }
+  # Slow web service so skip for now
+
+  # ----- Check for adjaceent locations ----------------------------------------
   
-  # ----- Reorganize locationTbl -----------------------------------------------
+  # # Calculate distances between each location
+  # distances <- geodist::geodist(locationTbl, measure = "geodesic")
+  # 
+  # # Get distances that are less than the given distanceThreshold
+  # # NOTE: the distance between a location and itself is always zero
+  # distancesLessThanR <- (distances != 0) & (distances < distanceThreshold )
+  # 
+  # # Select the locations that are "adjacent".
+  # overlappingTbl <- which(distancesLessThanR > 0, arr.ind = TRUE)
   
-  requiredColumns <- c(
-    "locationID", "locationName", 
-    "longitude", "latitude", "elevation", 
-    "countryCode", "stateCode", "county", "timezone", 
-    "houseNumber", "street", "city", "zip"
-  )
-  
-  extraColumns <- setdiff(tblColumns, requiredColumns)
-  
-  # This is the preferred order
-  allColumns <- c(requiredColumns, extraColumns)
-  
-  # TODO:  This doesn't seem to reorder like I thought it should.
-  locationTbl <- dplyr::select(locationTbl, all_of(allColumns))
-  
-  # ----- Check for locations that are too close -------------------------------
-  
-  # Calculate distances between each location
-  distances <- geodist::geodist(locationTbl, measure = "geodesic")
-  
-  # Get distances that are less than the given diameter
-  # NOTE: the distance between a location and itself is always zero
-  distancesLessThanR <- (distances != 0) & (distances < diameter )
-  
-  # Select the locations that are "too close".
-  tooClose <- which(distancesLessThanR > 0, arr.ind = TRUE)
-  
-  if ( nrow(tooClose) > 0 ) {
+  overlappingTbl <- table_findAdjacentDistances(locationTbl, distanceThreshold, measure)
+
+  if ( nrow(overlappingTbl) > 0 ) {
     
-    # NOTE:  If location a and b are too close, two entries will be returned:
-    # NOTE:        row  col
-    # NOTE:   [#,]  a    b
-    # NOTE:    ...
-    # NOTE:   [#,]  b    a
-    #
-    # NOTE:  While often the case, there is no guarantee that complementary
-    # NOTE:  rows will be adjacent to eachother. The next couple of lines
-    # NOTE:  find the rows that have the same indices and reduce the table to
-    # NOTE:  only unique pairs.
-    
-    sortedMatrix <- t(apply(tooClose, 1, sort))
-    tooClose <- sortedMatrix[!duplicated(sortedMatrix),]
-    
-    tooCloseCount <- nrow(tooClose)
+    overlappingCount <- nrow(overlappingTbl)
     
     # Format the first line of the warning message
     firstLine <- sprintf(
       "%d locations have neighbors that are < %d m apart\n",
-      round(tooCloseCount),
-      diameter
+      round(overlappingCount),
+      distanceThreshold
     )
     
-    # Create a vector of lines, on for each tooClose location pair
-    tooCloseLines <- vector("character", length = tooCloseCount)
-    for ( i in seq_len(nrow(tooClose)) ) {
+    # Create a vector of lines, on for each overlappingTbl location pair
+    overlappingLines <- vector("character", length = overlappingCount)
+    for ( i in seq_len(nrow(overlappingTbl)) ) {
       
-      dist <- distances[tooClose[i, 1], tooClose[i, 2]]
-      tooCloseLines[i] <- sprintf(
+      overlappingLines[i] <- sprintf(
         "Distance: %6.1f -- rows %s %s",
-        round(dist, 1),
-        tooClose[i, 1],
-        tooClose[i, 2]
+        round(overlappingTbl[i, 3], 1),
+        overlappingTbl[i, 1],
+        overlappingTbl[i, 2]
       )
       
     }
     
-    instructions <- "
-The presence of locations closer than twice the specified radius invalidate the 
-uniqueness of a 'known locations' table and should be rectified. There are two 
+    instructions <- sprintf("
+The presence of locations closer than twice the specified distanceThreshold invalidate the 
+uniqueness of a 'known locations' table and should be rectified. There are several 
 basic options:
 
-  1) Reduce the radius to less than the minimum distance.
-  2) Manually merge nearby locations to share the same longitude, latitude and
+  1) Reduce the distanceThreshold to less than the half the minimum distance.
+  2) Manually remove one location from each pair.
+  3) Manually merge nearby locations to share the same longitude, latitude and
      locationID
      
-Please review the returned locationTbl for the identified rows.
+Please review the returned locationTbl for the identified rows with:
 
-  "
+locationTbl %%>%%
+  table_findAdjacentLocations(distanceThreshold = %d, measure = \"%s\") %%>%%
+  table_leaflet()
+
+  ", round(distanceThreshold), measure)
     
-    lines <- c(firstLine, tooCloseLines, instructions)
+    lines <- c(firstLine, overlappingLines, instructions)
     
     # Paste the lines together
     warning(paste(lines, collapse = "\n"))

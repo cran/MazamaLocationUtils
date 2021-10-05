@@ -7,9 +7,9 @@
 location_createID(longitude = NULL, latitude = NULL)
 }
 \arguments{
-\item{longitude}{Vector of longitudes in decimal degrees E, Default: NULL}
+\item{longitude}{Vector of longitudes in decimal degrees E.}
 
-\item{latitude}{Vector of latitudes in decimal degrees N, Default: NULL}
+\item{latitude}{Vector of latitudes in decimal degrees N.}
 }
 \value{
 Vector of character locationIDs.

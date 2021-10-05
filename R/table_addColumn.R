@@ -3,10 +3,10 @@
 #' @description A new metadata column is added to the \code{locationTbl}. For
 #' matching \code{locationID} records the assaociated \code{locatioData} is
 #' inserted. Otherwise, the new column will be initialized with \code{NA}.
-#' @param locationTbl Tibble of known locations, Default: NULL
-#' @param columnName Name to use for the new column, Default: NULL
-#' @param locationID Vector of \code{locationID} strings, Default: NULL
-#' @param locationData Vector of data to used at matching records, Default: NULL
+#' @param locationTbl Tibble of known locations.
+#' @param columnName Name to use for the new column.
+#' @param locationID Vector of \code{locationID} strings.
+#' @param locationData Vector of data to used at matching records.
 #' @param verbose Logical controlling the generation of progress messages.
 #' @return Updated tibble of known locations.
 #' @examples
@@ -38,7 +38,7 @@ table_addColumn <- function(
   
   # ----- Validate parameters --------------------------------------------------
   
-  MazamaCoreUtils::stopIfNull(locationTbl)
+  MazamaLocationUtils::validateLocationTbl(locationTbl, locationOnly = FALSE)
   MazamaCoreUtils::stopIfNull(columnName)
   
   if ( !is.null(locationID) )

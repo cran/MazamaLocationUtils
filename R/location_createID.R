@@ -16,8 +16,8 @@
 #' locationID <- digest::digest(locationString, algo = "xxhash64")  
 #' }
 #' 
-#' @param longitude Vector of longitudes in decimal degrees E, Default: NULL
-#' @param latitude Vector of latitudes in decimal degrees N, Default: NULL
+#' @param longitude Vector of longitudes in decimal degrees E.
+#' @param latitude Vector of latitudes in decimal degrees N.
 #' @return Vector of character locationIDs.
 #' @examples
 #' library(MazamaLocationUtils)

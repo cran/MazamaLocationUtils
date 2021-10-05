@@ -1,7 +1,7 @@
 ---
 title: "Introduction to MazamaLocationUtils"
 author: "Mazama Science"
-date: "2019-10-22"
+date: "2021-09-29"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{Introduction to MazamaLocationUtils}
@@ -25,16 +25,16 @@ you have to do is create unique identifiers for each individual time series. In
 an ideal world, each environmental time series would have both a 
 `locationID` and a `sensorID` that uniquely identify the spatial location and 
 specific instrument making measurements. A unique `timeseriesID` could
-be produced as `locationID_sensorID`. Location metadata associated with each
-time series would contain basic information needed for downstream analysis
+be produced as `locationID_sensorID`. Metadata associated with each
+`timeseriesID` would contain basic information needed for downstream analysis
 including at least:
 
 `timeseriesID, locationID, sensorID, longitude, latitude, ...`
 
-* Multiple sensors placed at a location could be be grouped by `locationID`.
+* Multiple sensors placed at a single location could be be grouped by `locationID`.
 * An extended time series for a mobile sensor would group by `sensorID`.
 * Maps would be created using `longitude, latitude`.
-* Time series would be accessed from a secondary `data` table with `timeseriesID`.
+* Time series would be accessed from a secondary `data` table with `timeseriesID` column names.
 
 Unfortunately, we are rarely supplied with a truly unique and truly spatial 
 `locationID`. Instead we often use `sensorID` or an associated non-spatial
@@ -48,7 +48,7 @@ decimal place making it challenging to use them to create a unique `locationID`.
 location".
 * Data for a single sensor goes through different processing pipelines using
 different identifiers and is later brought together as two separate timeseries.
-* The radius of what constitutes a "single location" depends on the 
+* The spatial scale of what constitutes a "single location" depends on the 
 instrumentation and scientific question being asked.
 * Deriving location-based metadata from spatial datasets is computationally 
 intensive unless saved and identified with a unique `locationID`.
@@ -62,7 +62,7 @@ A solution to all these problems is possible if we store spatial metadata in
 simple tables in a standard directory. These tables will be referred to as 
 _collections_. Location lookups can be performed with
 geodesic distance calculations where a location is assigned to a pre-existing
-_known location_ if it is within `radius` meters. These will be extremely fast.
+_known location_ if it is within `distanceThreshold` meters. These will be extremely fast.
 
 If no previously _known location_ is found, the relatively slow (seconds)
 creation of a new _known location_ metadata record can be performed and then 
@@ -106,7 +106,7 @@ setLocationDataDir("./data")
 
 wa_monitors_500 <-
   table_initialize() %>%
-  table_addLocation(wa$longitude, wa$latitude, radius = 500) 
+  table_addLocation(wa$longitude, wa$latitude, distanceThreshold = 500) 
 ```
 
 Right now, our _known locations_ table contains only automatically generated
@@ -139,7 +139,7 @@ locationID <- table_getLocationID(
   locationTbl, 
   longitude = wa_sub$longitude, 
   latitude = wa_sub$latitude, 
-  radius = 500
+  distanceThreshold = 500
 )
 
 # Now add the "siteName" column for our subset of locations
@@ -174,7 +174,7 @@ table_getNearestLocation(
   wa_monitors_500,
   longitude = lons,
   latitude = lats,
-  radius = 50
+  distanceThreshold = 50
 ) %>% dplyr::pull(city)
 
 # Any known locations within 500 meters
@@ -182,7 +182,7 @@ table_getNearestLocation(
   wa_monitors_500,
   longitude = lons,
   latitude = lats,
-  radius = 500
+  distanceThreshold = 500
 ) %>% dplyr::pull(city)
 
 # How about 5000 meters?
@@ -190,7 +190,7 @@ table_getNearestLocation(
   wa_monitors_500,
   longitude = lons,
   latitude = lats,
-  radius = 5000
+  distanceThreshold = 5000
 ) %>% dplyr::pull(city)
 
 ```

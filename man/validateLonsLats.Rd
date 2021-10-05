@@ -4,12 +4,15 @@
 \alias{validateLonsLats}
 \title{Validate longitude and latitude vectors}
 \usage{
-validateLonsLats(longitude = NULL, latitude = NULL)
+validateLonsLats(longitude = NULL, latitude = NULL, na.rm = FALSE)
 }
 \arguments{
-\item{longitude}{Vector of longitudes in decimal degrees E, Default: NULL}
+\item{longitude}{Vector of longitudes in decimal degrees E.}
 
-\item{latitude}{Vector of latitudes in decimal degrees N, Default: NULL}
+\item{latitude}{Vector of latitudes in decimal degrees N.}
+
+\item{na.rm}{Logical specifying whether to remove \code{NA} values before
+validation.}
 }
 \value{
 Invisibly returns \code{TRUE} if no error message has been generated.

@@ -2,8 +2,8 @@
 #' @title Remove a column of metadata in a table
 #' @description Remove the column matching \code{columnName}. This function 
 #' can be used in pipelines.
-#' @param locationTbl Tibble of known locations, Default: NULL
-#' @param columnName Name of the colun to be removed, Default: NULL
+#' @param locationTbl Tibble of known locations.
+#' @param columnName Name of the colun to be removed.
 #' @param verbose Logical controlling the generation of progress messages.
 #' @return Updated tibble of known locations.
 #' @examples
@@ -46,7 +46,7 @@ table_removeColumn <- function(
   
   # ----- Validate parameters --------------------------------------------------
   
-  MazamaCoreUtils::stopIfNull(locationTbl)
+  MazamaLocationUtils::validateLocationTbl(locationTbl, locationOnly = FALSE)
   MazamaCoreUtils::stopIfNull(columnName)
   
   if ( !columnName %in% names(locationTbl) ) 

@@ -4,10 +4,10 @@
 #' 
 #' @title Return known locations
 #' 
-#' @param locationTbl Tibble of known locations, Default: NULL
-#' @param longitude Vector of longitudes in decimal degrees E, Default: NULL
-#' @param latitude Vector of latitudes in decimal degrees N, Default: NULL
-#' @param radius Radius in meters, Default: NULL
+#' @param locationTbl Tibble of known locations.
+#' @param longitude Vector of longitudes in decimal degrees E.
+#' @param latitude Vector of latitudes in decimal degrees N.
+#' @param distanceThreshold Distance in meters.
 #' 
 #' @return Tibble of known locations.
 #' 
@@ -24,32 +24,31 @@
 #' lon <- -120.325278
 #' lat <- 47.423333
 #' 
-#' # Too small a radius will not find a match
-#' table_getNearestLocation(locationTbl, lon, lat, radius = 50) %>% str()
+#' # Too small a distanceThreshold will not find a match
+#' table_getNearestLocation(locationTbl, lon, lat, distanceThreshold = 50) %>% str()
 #' 
-#' # Expanding the radius will find one
-#' table_getNearestLocation(locationTbl, lon, lat, radius = 5000) %>% str()
+#' # Expanding the distanceThreshold will find one
+#' table_getNearestLocation(locationTbl, lon, lat, distanceThreshold = 5000) %>% str()
 
 table_getNearestLocation <- function(
   locationTbl = NULL,
   longitude = NULL,
   latitude = NULL,
-  radius = NULL
+  distanceThreshold = NULL
 ) {
 
   # ----- Validate parameters --------------------------------------------------
 
-  MazamaCoreUtils::stopIfNull(locationTbl)
-  MazamaCoreUtils::stopIfNull(longitude)
-  MazamaCoreUtils::stopIfNull(latitude)
-  MazamaCoreUtils::stopIfNull(radius)
+  MazamaLocationUtils::validateLocationTbl(locationTbl, locationOnly = TRUE)
+  MazamaLocationUtils::validateLonsLats(longitude, latitude)
+  MazamaCoreUtils::stopIfNull(distanceThreshold)
 
-  radius <- round(radius)
+  distanceThreshold <- round(distanceThreshold)
 
   # ----- Subset ---------------------------------------------------------------
 
   incomingIDTbl <- dplyr::tibble(
-    locationID = table_getLocationID(locationTbl, longitude, latitude, radius)
+    locationID = table_getLocationID(locationTbl, longitude, latitude, distanceThreshold)
   )
   
   subsetTbl <- dplyr::left_join(incomingIDTbl, locationTbl, by = "locationID")

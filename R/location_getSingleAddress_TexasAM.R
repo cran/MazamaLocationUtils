@@ -3,8 +3,8 @@
 #' 
 #' @title Get an address from a Texas A&M web service
 #' 
-#' @param longitude Single longitude in decimal degrees E, Default: NULL
-#' @param latitude Single latitude in decimal degrees N, Default: NULL
+#' @param longitude Single longitude in decimal degrees E.
+#' @param latitude Single latitude in decimal degrees N.
 #' @param verbose Logical controlling the generation of progress messages.
 #' @param apiKey Texas A&M Geocoding requires an API key. The first 2500 requests
 #' are free. Default: NULL

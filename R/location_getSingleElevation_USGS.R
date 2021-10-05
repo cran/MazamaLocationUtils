@@ -3,8 +3,8 @@
 #' 
 #' @title Get elevation data from a USGS web service
 #' 
-#' @param longitude Single longitude in decimal degrees E, Default: NULL
-#' @param latitude Single latitude in decimal degrees N, Default: NULL
+#' @param longitude Single longitude in decimal degrees E.
+#' @param latitude Single latitude in decimal degrees N.
 #' @param verbose Logical controlling the generation of progress messages.
 #' 
 #' @return Numeric elevation value.

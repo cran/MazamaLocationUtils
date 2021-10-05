@@ -22,16 +22,16 @@ you have to do is create unique identifiers for each individual time series. In
 an ideal world, each environmental time series would have both a 
 `locationID` and a `sensorID` that uniquely identify the spatial location and 
 specific instrument making measurements. A unique `timeseriesID` could
-be produced as `locationID_sensorID`. Location metadata associated with each
-time series would contain basic information needed for downstream analysis
+be produced as `locationID_sensorID`. Metadata associated with each
+timeseries would contain basic information needed for downstream analysis
 including at least:
 
 `timeseriesID, locationID, sensorID, longitude, latitude, ...`
 
-* Multiple sensors placed at a location could be be grouped by `locationID`.
-* An extended time series for a mobile sensor would group by `sensorID`.
-* Maps would be created using `longitude, latitude`.
-* Time series would be accessed from a secondary `data` table with `timeseriesID`.
+* Multiple sensors placed at a single location could be associated based on their shared `locationID`.
+* An extended time series for a single, potentially redeployed sensor would be associated with a single `sensorID`.
+* Maps could be created using `longitude, latitude` fields.
+* Time series data for a sensor would be accessed from a secondary `data` table with `timeseriesID` column names.
 
 Unfortunately, we are rarely supplied with a truly unique and truly spatial 
 `locationID`. Instead we often use `sensorID` or an associated non-spatial
@@ -45,13 +45,13 @@ decimal place making it challenging to use them to create a unique `locationID`.
 location".
 * Data for a single sensor goes through different processing pipelines using
 different identifiers and is later brought together as two separate timeseries.
-* The radius of what constitutes a "single location" depends on the 
+* The spatial scale of what constitutes a "single location" depends on the 
 instrumentation and scientific question being asked.
 * Deriving location-based metadata from spatial datasets is computationally 
 intensive unless saved and identified with a unique `locationID`.
 * Automated searches for spatial metadata occasionally produce incorrect results
-because of the non-infinite resolution of spatial datasets and must be corrected
-by hand.
+because of the non-infinite resolution of spatial datasets and must be manually
+corrected.
 
 ## A Solution
 
@@ -59,18 +59,18 @@ A solution to all these problems is possible if we store spatial metadata in
 simple tables in a standard directory. These tables will be referred to as 
 _collections_. Location lookups can be performed with
 geodesic distance calculations where a location is assigned to a pre-existing
-_known location_ if it is within `radius` meters. These will be extremely fast.
+_known location_ if it is within `distanceThreshold` meters. These will be extremely fast.
 
 If no previously _known location_ is found, the relatively slow (seconds)
 creation of a new _known location_ metadata record can be performed and then 
 added to the growing collection.
 
 For collections of stationary environmental monitors that only number in the 
-thousands, this entire _collection_ (_i.e._ "database") can be stored as either a 
+thousands, an entire _collection_ can be stored as either an 
 `.rda` or `.csv` file and will be under a megabyte in size making it fast to 
 load. This small size also makes it possible to store multiple _known location_ 
-files, each created with different locations and different radii to address 
-the needs of different scientific studies.
+files, each created with different locations and different distance thresholds to address 
+the needs of different instruments or scientific studies.
 
 ## Immediate Advantages
 
@@ -83,9 +83,9 @@ locations in river bends that even high resolution spatial datasets mis-assign)
 commonly used location names within a community of practice)
 * Different field campaigns can maintain separate _collections_.
 * `.csv` or `.rda` versions of well populated tables can be downloaded from a
-URL and used locally, giving scientists working with known locations instant
-access to spatial data that otherwise requires special skills, large datasets 
-and many compute cycles to generate.
+URL and used locally, giving scientists and analysts working with known locations 
+instant access to location-specifc spatial metadata data that otherwise requires 
+special skills, large datasets and many compute cycles to generate.
 
 ----
 

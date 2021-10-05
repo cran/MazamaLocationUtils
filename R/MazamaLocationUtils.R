@@ -43,7 +43,7 @@
 #' location".}
 #' \item{Data for a single sensor goes through different processing pipelines using
 #' different identifiers and is later brought together as two separate timeseries.}
-#' \item{The radius of what constitutes a "single location" depends on the 
+#' \item{The spatial scale of what constitutes a "single location" depends on the 
 #' instrumentation and scientific question being asked.}
 #' \item{Deriving location-based metadata from spatial datasets is computationally 
 #' intensive unless saved and identified with a unique \code{locationID}.}

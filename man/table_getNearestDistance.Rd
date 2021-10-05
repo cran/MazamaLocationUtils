@@ -8,26 +8,36 @@ table_getNearestDistance(
   locationTbl = NULL,
   longitude = NULL,
   latitude = NULL,
-  radius = NULL
+  distanceThreshold = NULL,
+  measure = "geodesic"
 )
 }
 \arguments{
-\item{locationTbl}{Tibble of known locations, Default: NULL}
+\item{locationTbl}{Tibble of known locations.}
 
-\item{longitude}{Vector of longitudes in decimal degrees E, Default: NULL}
+\item{longitude}{Vector of longitudes in decimal degrees E.}
 
-\item{latitude}{Vector of latitudes in decimal degrees N, Default: NULL}
+\item{latitude}{Vector of latitudes in decimal degrees N.}
 
-\item{radius}{Radius in meters, Default: NULL}
+\item{distanceThreshold}{Distance in meters.}
+
+\item{measure}{One of "haversine" "vincenty", "geodesic", or "cheap" 
+specifying desired method of geodesic distance calculation. See \code{?geodist::geodist}.}
 }
 \value{
 Vector of distances from known locations.
 }
 \description{
-Returns a distances from known locations in \code{locationTbl},
+Returns distances from known locations in \code{locationTbl},
 one for each incoming location. If no known location is found within
-\code{radius} meters for a particular
+\code{distanceThreshold} meters for a particular
 incoming location, that distance in the vector will be \code{NA}.
+}
+\note{
+The measure \code{"cheap"} may be used to speed things up depending on
+the spatial scale being considered. Distances calculated with 
+\code{measure = "cheap"} will vary by a few meters compared with those 
+calculated using \code{measure = "geodesic"}.
 }
 \examples{
 library(MazamaLocationUtils)
@@ -38,9 +48,9 @@ locationTbl <- get(data("wa_monitors_500"))
 lon <- -120.325278
 lat <- 47.423333
 
-# Too small a radius will not find a match
-table_getNearestDistance(locationTbl, lon, lat, radius = 50)
+# Too small a distanceThreshold will not find a match
+table_getNearestDistance(locationTbl, lon, lat, distanceThreshold = 50)
 
-# Expanding the radius will find one
-table_getNearestDistance(locationTbl, lon, lat, radius = 5000)
+# Expanding the distanceThreshold will find one
+table_getNearestDistance(locationTbl, lon, lat, distanceThreshold = 5000)
 }

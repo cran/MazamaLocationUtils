@@ -1,3 +1,25 @@
+# MazamaLocationUtils 0.2.0
+
+Version 0.2.x focuses on usability improvements after initial work with the package.
+
+* **Renamed `radius` to `distanceThreshold` throughout for clarity.**
+* Updated `table_initializeExisting()` to only perform spatial searches where
+data are missing in the incoming table. This greatly speeds up performance.
+* New `table_leafletAdd()` function to make it easier to compare "known locations"
+tables."
+* New `table_addCoreMetadata()` function adds columns of `NA` values for
+any missing core metadata but does not perform any spatial calculations.
+* New `table_findAdjacentLocations()` function returns a tibble of all locations
+that are too close (_i.e._ separated by < `distanceThreshold`).
+* `table_findOverlappingLocations()` renamed to `table_findAdjacentDistances()`.
+* Added `measure` argument to `table_findAdjacentLocations()`, 
+`table_findAdjacentDistances()`, `table_getLocationID()` and `table_getNearestDistance()`.
+* Added `na.rm` argument to `validateLonsLats()`.
+* Improved validation of arguments in all `table_~()` functions.
+* Update function arguments to consistently use `locationTbl` whenever an
+incoming table includes `longitude` and `latitude` variables.
+* New `table_leaflet()` function to display locations and metadata.
+
 # MazamaLocationUtils 0.1.13
 
 * Updated to require **geodist** 0.0.7.
@@ -9,7 +31,7 @@
 and latitude columns in the passed in tibble.
 * `geodist::geodist()` is now always called with `measure = "geodesic"` to avoid
 warning messages from `geodist()` about inaccuracies with `measure = "cheap"`
-(the default).
+(the `geodist()` default).
 * `mazama_initialize()` now installs required datasets if they are missing.
 * Updated to require **MazamaSpatialUtils** 0.7.
 
@@ -22,7 +44,7 @@ warning messages from `geodist()` about inaccuracies with `measure = "cheap"`
 * Added `table_initializeExisting()` for fast conversion of an existing 
 table of spatial metadata into a standardized "known location" table.
 * Added `table_findOverlappingLocations()` to help choose an appropriate radius
-when initializing frorm an existing metadata table.
+when initializing from an existing metadata table.
 * Added `addressService` argument to `table_addLocation()`, 
 `table_addSingleLocation() and `location_initialize()` to skip the address
 step that requires web services.
@@ -58,7 +80,7 @@ step that requires web services.
 
 # MazamaLocationUtils 0.1.2
 
-* Massive refatoring of function names.
+* Massive refactoring of function names.
 * Example datasets and unit tests.
 
 # MazamaLocationUtils 0.1.1

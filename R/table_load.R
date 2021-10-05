@@ -1,7 +1,7 @@
 
 #' @title Load a known location table
 #' @description Load a tibble of known locations from the preferred directory.
-#' @param collectionName Character identifier for this table, Default: NULL
+#' @param collectionName Character identifier for this table.
 #' @return Tibble of known locations.
 #' @examples
 #' library(MazamaLocationUtils)

@@ -10,8 +10,8 @@
 #' }
 #' The data from this function should be considered to be the gold standard for state and county.
 #' i.e. this information could and should be used to override information we get elsewhere.
-#' @param longitude Single longitude in decimal degrees E, Default: NULL
-#' @param latitude Single latitude in decimal degrees N, Default: NULL
+#' @param longitude Single longitude in decimal degrees E.
+#' @param latitude Single latitude in decimal degrees N.
 #' @param verbose Logical controlling the generation of progress messages.
 #' @return List of census block/county/state data.
 #' @examples 
@@ -49,10 +49,10 @@ location_getCensusBlock <- function(
   url <- httr::parse_url("https://geo.fcc.gov/api/census/block/find")
   
   url$query <- list(
-    latitude=latitude, 
-    longitude=longitude, 
-    showall=FALSE,
-    format="json"
+    latitude = latitude, 
+    longitude = longitude, 
+    showall = FALSE,
+    format = "json"
   )
   
   # Get and parse the return

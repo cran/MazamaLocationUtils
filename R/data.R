@@ -16,7 +16,7 @@
 #' lats <- monitor$meta$latitude
 #' 
 #' table_initialize() %>%
-#'   table_addLocation(lons, lats, radius = 500) %>%
+#'   table_addLocation(lons, lats, distanceThreshold = 500) %>%
 #'   table_save("id_monitors_500")
 #' }
 #' 
@@ -43,7 +43,7 @@
 #' lats <- monitor$meta$latitude
 #' 
 #' table_initialize() %>%
-#'   table_addLocation(lons, lats, radius = 500) %>%
+#'   table_addLocation(lons, lats, distanceThreshold = 500) %>%
 #'   table_save("or_monitors_500")
 #' }
 #' 
@@ -70,7 +70,7 @@
 #' lats <- monitor$meta$latitude
 #' 
 #' table_initialize() %>%
-#'   table_addLocation(lons, lats, radius = 500) %>%
+#'   table_addLocation(lons, lats, distanceThreshold = 500) %>%
 #'   table_save("wa_monitors_500")
 #' }
 #' 

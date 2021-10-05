@@ -2,16 +2,16 @@
 #' @title Add new known location records to a table
 #' 
 #' @description Incoming \code{longitude} and \code{latitude} values are compared 
-#' against the incoming \code{locationTbl} to see if the are already within
-#' \code{radius} meters of an existing entry. A new record is created for
+#' against the incoming \code{locationTbl} to see if they are already within
+#' \code{distanceThreshold} meters of an existing entry. A new record is created for
 #' each location that is not already found in \code{locationTbl}.
 #' 
-#' @note This funciton is a vecorized version of \code{table_addSingleLocation()}.
+#' @note This function is a vectorized version of \code{table_addSingleLocation()}.
 #' 
-#' @param locationTbl Tibble of known locations, Default: NULL
-#' @param longitude Vector of longitudes in decimal degrees E, Default: NULL
-#' @param latitude Vector of latitudes in decimal degrees N, Default: NULL
-#' @param radius Radius in meters, Default: NULL
+#' @param locationTbl Tibble of known locations.
+#' @param longitude Vector of longitudes in decimal degrees E.
+#' @param latitude Vector of latitudes in decimal degrees N.
+#' @param distanceThreshold Distance in meters.
 #' @param stateDataset Name of spatial dataset to use for determining state
 #' codes, Default: 'NaturalEarthAdm1'
 #' @param elevationService Name of the elevation service to use for determining
@@ -38,7 +38,7 @@
 #' 
 #' locationTbl <- 
 #'   locationTbl %>%
-#'   table_addLocation(lon, lat, radius = 500)
+#'   table_addLocation(lon, lat, distanceThreshold = 500)
 #'   
 #' dplyr::glimpse(locationTbl)
 #' }
@@ -54,7 +54,7 @@ table_addLocation <- function(
   locationTbl = NULL,
   longitude = NULL,
   latitude = NULL,
-  radius = NULL,
+  distanceThreshold = NULL,
   stateDataset = "NaturalEarthAdm1",
   elevationService = NULL,
   addressService = NULL,
@@ -65,17 +65,17 @@ table_addLocation <- function(
   
   # ----- Validate parameters --------------------------------------------------
   
-  MazamaCoreUtils::stopIfNull(locationTbl)
+  MazamaLocationUtils::validateLocationTbl(locationTbl, locationOnly = FALSE)
   MazamaCoreUtils::stopIfNull(longitude)
   MazamaCoreUtils::stopIfNull(latitude)
-  MazamaCoreUtils::stopIfNull(radius)
+  MazamaCoreUtils::stopIfNull(distanceThreshold)
   MazamaCoreUtils::stopIfNull(stateDataset)
   
   if ( length(longitude) != length(latitude) )
     stop("longitude and latitude must have the same length")
   
-  if ( length(radius) != 1 )
-    stop("radius must be of length 1")
+  if ( length(distanceThreshold) != 1 )
+    stop("distanceThreshold must be of length 1")
   
   incomingCount <- length(longitude)
   
@@ -90,6 +90,9 @@ table_addLocation <- function(
       length(which(naMask)), incomingCount
     ))
   }
+  
+  # Validate remaining locations
+  MazamaLocationUtils::validateLonsLats(longitude, latitude)
   
   if ( !exists(stateDataset) ) {
     stop(paste0(
@@ -118,7 +121,7 @@ table_addLocation <- function(
   
   # ----- Reduce to only new locations -----------------------------------------
 
-  foundLocationID <- table_getLocationID(locationTbl, longitude, latitude, radius)
+  foundLocationID <- table_getLocationID(locationTbl, longitude, latitude, distanceThreshold)
   existingCount <- sum(!is.na(foundLocationID))
   
   if ( verbose && existingCount > 0 ) {
@@ -136,7 +139,7 @@ table_addLocation <- function(
   # NOTE:  Yes, this is a loop!
   # NOTE:  But the task of generating spatial data takes many seconds for each
   # NOTE:  iteration so there is nothing to be gained by making the code less
-  # NOTE:  readable with functional progamming style.
+  # NOTE:  readable with functional programming style.
   
   for ( i in seq_along(longitude) ) {
     
@@ -152,7 +155,7 @@ table_addLocation <- function(
         locationTbl = locationTbl,
         longitude = longitude[i],
         latitude = latitude[i],
-        radius = radius,
+        distanceThreshold = distanceThreshold,
         stateDataset = stateDataset,
         elevationService = elevationService,
         addressService = addressService,

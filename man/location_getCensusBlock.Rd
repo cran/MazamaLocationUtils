@@ -7,9 +7,9 @@
 location_getCensusBlock(longitude = NULL, latitude = NULL, verbose = TRUE)
 }
 \arguments{
-\item{longitude}{Single longitude in decimal degrees E, Default: NULL}
+\item{longitude}{Single longitude in decimal degrees E.}
 
-\item{latitude}{Single latitude in decimal degrees N, Default: NULL}
+\item{latitude}{Single latitude in decimal degrees N.}
 
 \item{verbose}{Logical controlling the generation of progress messages.}
 }

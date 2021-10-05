@@ -2,8 +2,8 @@
 #' @title Remove location records from a table
 #' @description Incoming \code{locationID} values are compared 
 #' against the incoming \code{locationTbl} and any matches are removed.
-#' @param locationTbl Tibble of known locations, Default: NULL
-#' @param locationID Vector of \code{locationID} strings, Default: NULL
+#' @param locationTbl Tibble of known locations.
+#' @param locationID Vector of \code{locationID} strings.
 #' @param verbose Logical controlling the generation of progress messages.
 #' @return Updated tibble of known locations.
 #' @examples
@@ -17,14 +17,14 @@
 #' lat <- 47.423333
 #' 
 #' # Get the locationID first
-#' locationID <- table_getLocationID(locationTbl, lon, lat, radius = 500)
+#' locationID <- table_getLocationID(locationTbl, lon, lat, distanceThreshold = 500)
 #' 
 #' # Remove it
 #' locationTbl <- table_removeRecord(locationTbl, locationID)
 #' dim(locationTbl)
 #' 
 #' # Test
-#' table_getLocationID(locationTbl, lon, lat, radius = 500)
+#' table_getLocationID(locationTbl, lon, lat, distanceThreshold = 500)
 #' @seealso \link{table_addLocation}
 #' @seealso \link{table_addSingleLocation}
 #' @seealso \link{table_updateSingleRecord}
@@ -39,7 +39,7 @@ table_removeRecord <- function(
   
   # ----- Validate parameters --------------------------------------------------
   
-  MazamaCoreUtils::stopIfNull(locationTbl)
+  MazamaLocationUtils::validateLocationTbl(locationTbl, locationOnly = FALSE)
   MazamaCoreUtils::stopIfNull(locationID)
 
   # ----- Subset locationTbl ---------------------------------------------------

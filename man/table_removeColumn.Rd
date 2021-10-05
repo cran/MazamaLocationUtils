@@ -7,9 +7,9 @@
 table_removeColumn(locationTbl = NULL, columnName = NULL, verbose = TRUE)
 }
 \arguments{
-\item{locationTbl}{Tibble of known locations, Default: NULL}
+\item{locationTbl}{Tibble of known locations.}
 
-\item{columnName}{Name of the colun to be removed, Default: NULL}
+\item{columnName}{Name of the colun to be removed.}
 
 \item{verbose}{Logical controlling the generation of progress messages.}
 }

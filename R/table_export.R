@@ -1,7 +1,7 @@
 
 #' @title Export a known location table
 #' @description Export a known location tibble as CSV format.
-#' @param locationTbl Tibble of known locations, Default: NULL
+#' @param locationTbl Tibble of known locations.
 #' @param outputType Output format, Default: 'csv'
 #' @return Representation of a known location table in the desired format.
 #' @examples
@@ -20,7 +20,7 @@ table_export <- function(
   
   # ----- Validate parameters --------------------------------------------------
   
-  MazamaCoreUtils::stopIfNull(locationTbl)
+  MazamaLocationUtils::validateLocationTbl(locationTbl, locationOnly = FALSE)
   MazamaCoreUtils::setIfNull(outputType, "csv")
   
   validOutputTypes <- c("csv")

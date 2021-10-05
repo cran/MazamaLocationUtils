@@ -7,9 +7,9 @@
 table_getRecordIndex(locationTbl = NULL, locationID = NULL, verbose = TRUE)
 }
 \arguments{
-\item{locationTbl}{Tibble of known locations, Default: NULL}
+\item{locationTbl}{Tibble of known locations.}
 
-\item{locationID}{Vector of \code{locationID} strings, Default: NULL}
+\item{locationID}{Vector of \code{locationID} strings.}
 
 \item{verbose}{Logical controlling the generation of progress messages.}
 }
@@ -30,7 +30,7 @@ lon <- -120.325278
 lat <- 47.423333
 
 # Get the locationID first
-locationID <- table_getLocationID(locationTbl, lon, lat, radius = 5000)
+locationID <- table_getLocationID(locationTbl, lon, lat, distanceThreshold = 5000)
 
 # Now find the row associated with this ID
 recordIndex <- table_getRecordIndex(locationTbl, locationID)

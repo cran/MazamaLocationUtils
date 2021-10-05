@@ -2,10 +2,10 @@
 #' @title Update a column of metadata in a table
 #' @description For matching \code{locationID} records the assaociated 
 #' \code{locatioData} is used to replace any existing value in \code{columnName}.
-#' @param locationTbl Tibble of known locations, Default: NULL
-#' @param columnName Name to use for the new column, Default: NULL
-#' @param locationID Vector of \code{locationID} strings, Default: NULL
-#' @param locationData Vector of data to used at matching records, Default: NULL
+#' @param locationTbl Tibble of known locations.
+#' @param columnName Name to use for the new column.
+#' @param locationID Vector of \code{locationID} strings.
+#' @param locationData Vector of data to used at matching records.
 #' @param verbose Logical controlling the generation of progress messages.
 #' @return Updated tibble of known locations.
 #' @examples
@@ -20,10 +20,18 @@
 #' wa_indices <- seq(5,65,5)
 #' wa_sub <- wa[wa_indices,]
 #' 
-#' locationID <- table_getLocationID(locationTbl, wa_sub$longitude, wa_sub$latitude, radius = 500)
+#' locationID <- 
+#'   table_getLocationID(
+#'     locationTbl, 
+#'     wa_sub$longitude, 
+#'     wa_sub$latitude, 
+#'     distanceThreshold = 500
+#'   )
+#'   
 #' locationData <- wa_sub$siteName
 #' 
-#' locationTbl <- table_updateColumn(locationTbl, "siteName", locationID, locationData)
+#' locationTbl <- 
+#'   table_updateColumn(locationTbl, "siteName", locationID, locationData)
 #' 
 #' # Look at the data we attempted to merge
 #' wa$siteName[wa_indices]
@@ -48,7 +56,7 @@ table_updateColumn <- function(
   
   # ----- Validate parameters --------------------------------------------------
   
-  MazamaCoreUtils::stopIfNull(locationTbl)
+  MazamaLocationUtils::validateLocationTbl(locationTbl, locationOnly = FALSE)
   MazamaCoreUtils::stopIfNull(columnName)
   
   if ( !is.null(locationID) )

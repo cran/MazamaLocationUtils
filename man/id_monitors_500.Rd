@@ -27,7 +27,7 @@ lons <- monitor$meta$longitude
 lats <- monitor$meta$latitude
 
 table_initialize() %>%
-  table_addLocation(lons, lats, radius = 500) %>%
+  table_addLocation(lons, lats, distanceThreshold = 500) %>%
   table_save("id_monitors_500")
 }
 }
