@@ -21,7 +21,7 @@ wa_monitors_500 <- get(data("wa_monitors_500", package = "MazamaLocationUtils"))
 #    table_addLocation(wa$longitude, wa$latitude, distanceThreshold = 500)
 
 ## ----basic_columns------------------------------------------------------------
-names(wa_monitors_500)
+dplyr::glimpse(wa_monitors_500)
 
 ## ----import_colmns------------------------------------------------------------
 # Use a subset of the wa metadata
@@ -85,7 +85,15 @@ table_getNearestLocation(
 ## ----MSU_setup, echo = TRUE, eval = FALSE-------------------------------------
 #    library(MazamaSpatialUtils)
 #    setSpatialDataDir("~/Data/Spatial")
-#    installSpatialData()
+#  
+#    installSpatialData("EEZCountries")
+#    installSpatialData("OSMTimezones")
+#    installSpatialData("NaturalEarthAdm1")
+#    installSpatialData("USCensusCounties")
+#  
+#  Once the required datasets have been installed, the easiest way to set things
+#  up each session is with:
+#  
 
 ## ----easy_setup, echo = TRUE, eval = FALSE------------------------------------
 #    library(MazamaLocationUtils)

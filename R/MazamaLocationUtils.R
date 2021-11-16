@@ -12,8 +12,8 @@
 #'
 #' @details
 #' When working with environmental monitoring time series, one of the first things
-#' you have to do is create unique identifiers for each individual time series. In 
-#' an ideal world, each environmental time series would have both a 
+#' you have to do is create unique identifiers for each individual time series. 
+#' In an ideal world, each environmental time series would have both a 
 #' \code{locationID} and a \code{sensorID} that uniquely identify the spatial location and 
 #' specific instrument making measurements. A unique \code{timeseriesID} could
 #' be produced as \code{locationID_sensorID}. Metadata associated with each
@@ -94,7 +94,7 @@ coreMetadataNames <- c(
   "elevation",                # from https://nationalmap.gov/epqs/
   "countryCode",              # from MazamaSpatialUtils::getCountryCode()
   "stateCode",                # from MazamaSpatialUtils::getStateCode()
-  "county",                   # from MazamaSpatialUtils::getUSCounty()
+  "countyName",               # from MazamaSpatialUtils::getUSCounty()
   "timezone",                 # from MazamaSpatialUtils::getTimezone()
   "houseNumber",              # from https://photon.komoot.io/
   "street",                   # from https://photon.komoot.io/
@@ -106,87 +106,6 @@ coreMetadataNames <- c(
 
 MazamaLocationUtilsEnv <- new.env(parent = emptyenv())
 MazamaLocationUtilsEnv$dataDir <- NULL
-MazamaLocationUtilsEnv$apiKeys <- list(
-  "google" = NULL,
-  "bing" = NULL,
-  "esri" = NULL,
-  "texasam" = NULL,
-  "custom1" = NULL,
-  "custom2" = NULL
-)
-
-# ----- API Keys ---------------------------------------------------------------
-
-#' @docType data
-#' @keywords environment
-#' @name apiKeys
-#' @title API keys for reverse geocoding services.
-#' @format List of character strings.
-#' @description This package maintains an internal set of API keys which 
-#' users can set using \code{setAPIKey()}. These keys will be remembered for
-#' the duration of an R session. The following service providers are supported:
-#' 
-#' \itemize{
-#' \item{\code{"google"}}
-#' \item{\code{"bing"}}
-#' \item{\code{"esri"}}
-#' \item{\code{"texasam"}}
-#' \item{\code{"custom1"}}
-#' \item{\code{"custom2"}}
-#' }
-#' 
-#' @seealso \link{getAPIKey}
-#' @seealso \link{setAPIKey}
-NULL
-
-#' @keywords environment
-#' @export
-#' @title Get API key
-#' @param provider Web service provider.
-#' @description Returns the API key associated with a web service.
-#' If \code{provider == NULL} a list is returned containing all recognized
-#' API keys.
-#' @return API key string or a list of provider:key pairs.
-#' @seealso \link{apiKeys}
-#' @seealso \link{setAPIKey}
-
-getAPIKey <- function(provider = NULL) {
-  if ( is.null(provider) ) {
-    return(MazamaLocationUtilsEnv$apiKeys)
-  } else {
-    if ( !(provider %in% names(MazamaLocationUtilsEnv$apiKeys)) ) {
-      stop(sprintf(
-        "Provider \"%s\" is not recognized.", provider
-      ),
-      call.=FALSE)
-    } else {
-      return(MazamaLocationUtilsEnv$apiKeys[[provider]])
-    }
-  }
-}
-
-#' @keywords environment
-#' @export
-#' @title Set APIKey
-#' @param provider Web service provider.
-#' @param key API key.
-#' @description Sets the API key associated with a web service.
-#' @return Silently returns previous value of the API key.
-#' @seealso \link{LocationDataDir}
-#' @seealso \link{getLocationDataDir}
-
-setAPIKey <- function(provider = NULL, key = NULL) {
-  if ( !(provider %in% names(MazamaLocationUtilsEnv$apiKeys)) ) {
-    stop(sprintf(
-      "Provider \"%s\" is not recognized.", provider
-    ),
-    call.=FALSE)
-  } else {
-    old <- MazamaLocationUtilsEnv$apiKeys[[provider]]
-    MazamaLocationUtilsEnv$apiKeys[[provider]] <- key
-    return(invisible(old))
-  }
-}
 
 # ----- Data Directory Configuration -------------------------------------------
 

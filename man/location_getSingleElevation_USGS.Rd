@@ -28,10 +28,16 @@ the \code{longitude} and \code{latitude}.
 \donttest{
 library(MazamaLocationUtils)
 
-# Wenatchee
-lon <- -120.325278
-lat <- 47.423333
-location_getSingleElevation_USGS(lon, lat)
+# Fail gracefully if any resources are not available
+try({
+
+  # Wenatchee
+  lon <- -120.325278
+  lat <- 47.423333
+
+  location_getSingleElevation_USGS(lon, lat)
+  
+}, silent = FALSE)
 }
 
 }

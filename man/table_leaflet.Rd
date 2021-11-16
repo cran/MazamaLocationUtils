@@ -8,7 +8,7 @@ table_leaflet(
   locationTbl = NULL,
   maptype = "terrain",
   extraVars = NULL,
-  locationOnly = FALSE,
+  jitter = 5e-04,
   ...
 )
 }
@@ -20,8 +20,9 @@ table_leaflet(
 \item{extraVars}{Character vector of addition \code{locationTbl} column names
 to be shown in leaflet popups.}
 
-\item{locationOnly}{Logical specifying whether to check for all standard
-columns.}
+\item{jitter}{Amount to use to slightly adjust locations so that multiple
+monitors at the same location can be seen. Use zero or \code{NA} to see
+precise locations.}
 
 \item{...}{Additional arguments passed to \code{leaflet::addCircleMarker()}.}
 }
@@ -31,7 +32,9 @@ Rstudio's 'Viewer' tab.
 }
 \description{
 This function creates interactive maps that will be displayed in
-  RStudio's 'Viewer' tab.
+RStudio's 'Viewer' tab. The default setting of `jitter` will move locations
+randomly within an ~50 meter radius so that overlapping locations can be 
+identified. Set `jitter = 0` to see precise locations.
 }
 \details{
 The \code{maptype} argument is mapped onto leaflet "ProviderTile"
@@ -47,4 +50,29 @@ If a character string not listed above is provided, it will be used as the
 underlying map tile if available. See
 \url{https://leaflet-extras.github.io/leaflet-providers/} for a list of
 "provider tiles" to use as the background map.
+}
+\examples{
+\dontrun{
+library(MazamaLocationUtils)
+
+# A table with all core metadata
+table_leaflet(wa_monitors_500)
+  
+# A table missing some core metadata
+table_leaflet(
+  wa_airfire_meta,
+  extraVars = c("stateCode", "countyName", "msaName")
+)
+
+# Customizing the map
+table_leaflet(
+  wa_airfire_meta,
+  extraVars = c("stateCode", "countyName", "msaName"),
+  radius = 6,
+  color = "black",
+  weight = 2,
+  fillColor = "red",
+  fillOpacity = 0.3
+)
+}
 }

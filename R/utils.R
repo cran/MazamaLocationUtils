@@ -35,87 +35,30 @@ validateMazamaSpatialUtils <- function() {
 
 
 #' @title Validate longitude and latitude vectors
-#' @description Longitude and latitude vectors validated to be parseable as numeric
-#' and within the bounds -180:180 and -90:90. If validation fails, an error is
-#' generated.
-#' @param longitude Vector of longitudes in decimal degrees E.
-#' @param latitude Vector of latitudes in decimal degrees N.
-#' @param na.rm Logical specifying whether to remove \code{NA} values before
-#' validation.
-#' @return Invisibly returns \code{TRUE} if no error message has been generated.
+#'
+#' See \code{MazamaCoreUtils::\link[MazamaCoreUtils:validateLonsLats]{\%>\%}} for details.
+#'
+#' @name validateLonsLats
 #' @rdname validateLonsLats
-#' @export 
-#' 
-validateLonsLats <- function(
-  longitude = NULL,
-  latitude = NULL,
-  na.rm = FALSE
-) {
-  
-  MazamaCoreUtils::stopIfNull(longitude)
-  MazamaCoreUtils::stopIfNull(latitude)
-  
-  if ( length(longitude) != length(latitude) ) {
-    stop(paste0(
-      "longitude and latitude must have the same length"
-    ))
-  }
-  
-  # Remove locations with NAs
-  if ( na.rm ) {
-    good_mask <- !is.na(longitude) & !is.na(latitude)
-    longitude <- longitude[good_mask]
-    latitude <- latitude[good_mask]
-  }
-  
-  longitude <- as.numeric(longitude)
-  if ( anyNA(longitude) || any(longitude < -180) || any(longitude > 180 ))
-    stop("all longitudes must be valid values between -180 and 180")
-  
-  latitude <- as.numeric(latitude)
-  if ( anyNA(latitude) || any(latitude < -180) || any(latitude > 180) )
-    stop("all latitudes must be a valid values between -180 and 180")
-  
-  return(invisible(TRUE))
-  
-}
+#' @keywords internal
+#' @export
+#' @importFrom MazamaCoreUtils validateLonsLats
+#' @usage validateLonsLats(longitude = NULL, latitude = NULL, na.rm = FALSE)
+NULL
 
 
 #' @title Validate longitude and latitude values
-#' @description Longitude and latitude are validated to be parseable as numeric
-#' and within the bounds -180:180 and -90:90. If validation fails, an error is
-#' generated.
-#' @param longitude Single longitude in decimal degrees E.
-#' @param latitude Single latitude in decimal degrees N.
-#' @return Invisibly returns \code{TRUE} if no error message has been generated.
+#'
+#' See \code{MazamaCoreUtils::\link[MazamaCoreUtils:validateLonLat]{\%>\%}} for details.
+#'
+#' @name validateLonLat
 #' @rdname validateLonLat
-#' @export 
-#' 
-validateLonLat <- function(
-  longitude = NULL,
-  latitude = NULL
-) {
-  
-  MazamaCoreUtils::stopIfNull(longitude)
-  MazamaCoreUtils::stopIfNull(latitude)
-  
-  if ( length(longitude) > 1 || length(latitude) > 1 ) {
-    stop(paste0(
-      "longitude and latitude must be single values"
-    ))
-  }
-  
-  longitude <- as.numeric(longitude)
-  if ( is.na(longitude) || longitude < -180 || longitude > 180 )
-    stop("longitude must be a valid value between -180 and 180")
-  
-  latitude <- as.numeric(latitude)
-  if ( is.na(latitude) || latitude < -180 || latitude > 180 )
-    stop("latitude must be a valid value between -180 and 180")
-  
-  return(invisible(TRUE))
-  
-}
+#' @keywords internal
+#' @export
+#' @importFrom MazamaCoreUtils validateLonLat
+#' @usage validateLonLat(longitude = NULL, latitude = NULL)
+NULL
+
 
 #' @title Validate a location table
 #' @description Ensures that the incoming table has numeric \code{longitude} and

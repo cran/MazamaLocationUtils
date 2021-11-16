@@ -12,7 +12,7 @@
 #' \item{elevation}
 #' \item{countryCode}
 #' \item{stateCode}
-#' \item{county}
+#' \item{countyName}
 #' \item{timezone}
 #' \item{houseNumber}
 #' \item{street}
@@ -95,10 +95,10 @@ table_addCoreMetadata <- function(
     locationTbl$locationName <- as.character(NA)
   }
   
-  # * county -----
+  # * countyName -----
   
-  if ( !"county" %in% incomingTblColumns ) {
-    locationTbl$county <- as.character(NA)
+  if ( !"countyName" %in% incomingTblColumns ) {
+    locationTbl$countyName <- as.character(NA)
   }
   
   # * timezone -----
@@ -136,7 +136,7 @@ table_addCoreMetadata <- function(
   requiredColumns <- c(
     "locationID", "locationName", 
     "longitude", "latitude", "elevation", 
-    "countryCode", "stateCode", "county", "timezone", 
+    "countryCode", "stateCode", "countyName", "timezone", 
     "houseNumber", "street", "city", "zip"
   )
   

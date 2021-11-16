@@ -2,6 +2,7 @@
 #' @title Update a column of metadata in a table
 #' @description For matching \code{locationID} records the assaociated 
 #' \code{locatioData} is used to replace any existing value in \code{columnName}.
+#' \code{NA} values in \code{locationID} will be ignored.
 #' @param locationTbl Tibble of known locations.
 #' @param columnName Name to use for the new column.
 #' @param locationID Vector of \code{locationID} strings.
@@ -38,7 +39,7 @@
 #' 
 #' # And two columns from the updated locationTbl
 #' locationTbl_indices <- table_getRecordIndex(locationTbl, locationID)
-#' locationTbl[locationTbl_indices, c("city","siteName")]
+#' locationTbl[locationTbl_indices, c("city", "siteName")]
 #' 
 #' @seealso \link{table_addColumn}
 #' @seealso \link{table_removeColumn}
@@ -72,6 +73,11 @@ table_updateColumn <- function(
       ))
     }
   }
+  
+  # Remove elements associated with missing locationIDs
+  mask <- !is.na(locationID)
+  locationID <- locationID[mask]
+  locationData <- locationData[mask]
   
   # ----- Update column --------------------------------------------------------
   

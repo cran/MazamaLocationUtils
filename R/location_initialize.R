@@ -28,7 +28,7 @@
 #' \item{elevation}
 #' \item{countryCode}
 #' \item{stateCode}
-#' \item{county}
+#' \item{countyName}
 #' \item{timezone}
 #' \item{houseNumber}
 #' \item{street}
@@ -40,14 +40,21 @@
 #' \donttest{
 #' library(MazamaLocationUtils)
 #' 
-#' # Set up standard directories and spatial data
-#' spatialDataDir <- tempdir() # typically "~/Data/Spatial"
-#' mazama_initialize(spatialDataDir)
+#' # Fail gracefully if any resources are not available
+#' try({
 #' 
-#' # Wenatchee
-#' lon <- -120.325278
-#' lat <- 47.423333
-#' locationRecord <- location_initialize(lon, lat)
+#'   # Set up standard directories and spatial data
+#'   spatialDataDir <- tempdir() # typically "~/Data/Spatial"
+#'   mazama_initialize(spatialDataDir)
+#' 
+#'   # Wenatchee
+#'   lon <- -120.325278
+#'   lat <- 47.423333
+#'   
+#'   locationRecord <- location_initialize(lon, lat)
+#'   str(locationRecord)
+#'   
+#' }, silent = FALSE)
 #' }
 
 location_initialize <- function(
@@ -137,7 +144,7 @@ location_initialize <- function(
     useBuffering = TRUE
   )
   
-  county <- MazamaSpatialUtils::getUSCounty(
+  countyName <- MazamaSpatialUtils::getUSCounty(
     lon = longitude,
     lat = latitude,
     dataset = "USCensusCounties",
@@ -220,9 +227,9 @@ location_initialize <- function(
         # Trust address data over MazamaSpatialUtils result
         MazamaStateCode <- stateCode
         
-        # Change stateCode and reset possibly incorrect county
+        # Change stateCode and reset possibly incorrect countyName
         stateCode <- addressList$stateCode
-        county <- as.character(NA)
+        countyName <- as.character(NA)
         
         # Update locationName
         locationName <- paste0(
@@ -254,7 +261,7 @@ location_initialize <- function(
     "elevation" = elevation,
     "countryCode" = countryCode,
     "stateCode" = stateCode,
-    "county" = county,
+    "countyName" = countyName,
     "timezone" = timezone,
     "houseNumber" = addressList$houseNumber,
     "street" = addressList$street,

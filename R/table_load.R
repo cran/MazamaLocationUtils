@@ -48,7 +48,7 @@ table_load <- function(
   }, silent = TRUE)
   
   if ( "try-error" %in% class(result) ) {
-    # TODO:  handle errors
+    stop(sprintf("Could not load %s", filePath))
   }
   
   # ----- Return ---------------------------------------------------------------

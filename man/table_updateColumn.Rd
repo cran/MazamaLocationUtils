@@ -29,6 +29,7 @@ Updated tibble of known locations.
 \description{
 For matching \code{locationID} records the assaociated 
 \code{locatioData} is used to replace any existing value in \code{columnName}.
+\code{NA} values in \code{locationID} will be ignored.
 }
 \examples{
 library(MazamaLocationUtils)
@@ -60,7 +61,7 @@ wa$siteName[wa_indices]
 
 # And two columns from the updated locationTbl
 locationTbl_indices <- table_getRecordIndex(locationTbl, locationID)
-locationTbl[locationTbl_indices, c("city","siteName")]
+locationTbl[locationTbl_indices, c("city", "siteName")]
 
 }
 \seealso{

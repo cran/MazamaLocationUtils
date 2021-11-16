@@ -53,4 +53,5 @@ table_getNearestDistance(locationTbl, lon, lat, distanceThreshold = 50)
 
 # Expanding the distanceThreshold will find one
 table_getNearestDistance(locationTbl, lon, lat, distanceThreshold = 5000)
+
 }

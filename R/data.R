@@ -1,8 +1,8 @@
 #' @title Idaho monitor locations dataset
-#' @format A tibble with 34 rows and 13 columns of data.
+#' @format A tibble with 30 rows and 13 columns of data.
 #' @description The \code{id_monitor_500} dataset provides a set of known
 #' locations associated with Idaho state air quality monitors.
-#' This dataset was generatedon 2019-10-21 by running:
+#' This dataset was generated on 2021-10-19 by running:
 #' 
 #' \preformatted{
 #' library(PWFSLSmoke)
@@ -16,7 +16,12 @@
 #' lats <- monitor$meta$latitude
 #' 
 #' table_initialize() %>%
-#'   table_addLocation(lons, lats, distanceThreshold = 500) %>%
+#'   table_addLocation(
+#'     lons, lats, 
+#'       distanceThreshold = 500,
+#'       elevationService = "usgs",
+#'       addressService = "photon"
+#'     ) %>%
 #'   table_save("id_monitors_500")
 #' }
 #' 
@@ -26,10 +31,10 @@
 
 
 #' @title Oregon monitor locations dataset
-#' @format A tibble with 40 rows and 13 columns of data.
+#' @format A tibble with 69 rows and 13 columns of data.
 #' @description The \code{or_monitor_500} dataset provides a set of known
 #' locations associated with Oregon state air quality monitors.
-#' This dataset was generatedon 2019-10-21 by running:
+#' This dataset was generated on 2021-10-19 by running:
 #' 
 #' \preformatted{
 #' library(PWFSLSmoke)
@@ -43,7 +48,12 @@
 #' lats <- monitor$meta$latitude
 #' 
 #' table_initialize() %>%
-#'   table_addLocation(lons, lats, distanceThreshold = 500) %>%
+#'   table_addLocation(
+#'     lons, lats, 
+#'       distanceThreshold = 500,
+#'       elevationService = "usgs",
+#'       addressService = "photon"
+#'     ) %>%
 #'   table_save("or_monitors_500")
 #' }
 #' 
@@ -53,10 +63,10 @@
 
 
 #' @title Wshington monitor locations dataset
-#' @format A tibble with 69 rows and 13 columns of data.
+#' @format A tibble with 72 rows and 13 columns of data.
 #' @description The \code{wa_monitor_500} dataset provides a set of known
 #' locations associated with Washington state air quality monitors.
-#' This dataset was generatedon 2019-10-21 by running:
+#' This dataset was generated on 2021-10-19 by running:
 #' 
 #' \preformatted{
 #' library(PWFSLSmoke)
@@ -70,7 +80,12 @@
 #' lats <- monitor$meta$latitude
 #' 
 #' table_initialize() %>%
-#'   table_addLocation(lons, lats, distanceThreshold = 500) %>%
+#'   table_addLocation(
+#'     lons, lats, 
+#'     distanceThreshold = 500,
+#'     elevationService = "usgs",
+#'     addressService = "photon"
+#'   ) %>%
 #'   table_save("wa_monitors_500")
 #' }
 #' 
@@ -80,10 +95,10 @@
 
 
 #' @title Washington monitor metadata dataset
-#' @format A tibble with 69 rows and 19 columns of data.
+#' @format A tibble with 73 rows and 19 columns of data.
 #' @description The \code{wa_pwfsl_meta} dataset provides a set of Washington
 #' state air quality monitor metadata used by the USFS AirFire group.
-#' This dataset was generatedon 2019-10-21 by running:
+#' This dataset was generated on 2021-10-19 by running:
 #' 
 #' \preformatted{
 #' library(PWFSLSmoke)

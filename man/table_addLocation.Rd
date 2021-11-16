@@ -51,21 +51,26 @@ This function is a vectorized version of \code{table_addSingleLocation()}.
 \donttest{
 library(MazamaLocationUtils)
 
-# Set up standard directories and spatial data
-spatialDataDir <- tempdir() # typically "~/Data/Spatial"
-mazama_initialize(spatialDataDir)
+# Fail gracefully if any resources are not available
+try({
 
-locationTbl <- get(data("wa_monitors_500"))
+  # Set up standard directories and spatial data
+  spatialDataDir <- tempdir() # typically "~/Data/Spatial"
+  mazama_initialize(spatialDataDir)
 
-# Coulee City, WA
-lon <- -119.290904
-lat <- 47.611942
+  locationTbl <- get(data("wa_monitors_500"))
 
-locationTbl <- 
-  locationTbl \%>\%
-  table_addLocation(lon, lat, distanceThreshold = 500)
+  # Coulee City, WA
+  lon <- -119.290904
+  lat <- 47.611942
+
+  locationTbl <- 
+    locationTbl \%>\%
+    table_addLocation(lon, lat, distanceThreshold = 500)
   
-dplyr::glimpse(locationTbl)
+  dplyr::glimpse(locationTbl)
+  
+}, silent = FALSE)
 }
 }
 \seealso{

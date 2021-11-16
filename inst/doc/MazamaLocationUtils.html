@@ -12,7 +12,7 @@
 
 <meta name="author" content="Mazama Science" />
 
-<meta name="date" content="2021-09-29" />
+<meta name="date" content="2021-10-26" />
 
 <title>Introduction to MazamaLocationUtils</title>
 
@@ -332,27 +332,27 @@ code > span.er { color: #a61717; background-color: #e3d2d2; }
 
 <h1 class="title toc-ignore">Introduction to MazamaLocationUtils</h1>
 <h4 class="author">Mazama Science</h4>
-<h4 class="date">2021-09-29</h4>
+<h4 class="date">2021-10-26</h4>
 
 
 
 <div id="background" class="section level2">
 <h2>Background</h2>
-<p>This package is intended to be used in support of data management activities associated with fixed locations in space. The motivating fields include both air and water quality monitoring where fixed sensors report at regular time intervals.</p>
-<p>When working with environmental monitoring time series, one of the first things you have to do is create unique identifiers for each individual time series. In an ideal world, each environmental time series would have both a <code>locationID</code> and a <code>sensorID</code> that uniquely identify the spatial location and specific instrument making measurements. A unique <code>timeseriesID</code> could be produced as <code>locationID_sensorID</code>. Metadata associated with each <code>timeseriesID</code> would contain basic information needed for downstream analysis including at least:</p>
-<p><code>timeseriesID, locationID, sensorID, longitude, latitude, ...</code></p>
+<p>This package is intended for use in data management activities associated with fixed locations in space. The motivating fields include air and water quality monitoring where fixed sensors report at regular time intervals.</p>
+<p>When working with environmental monitoring time series, one of the first things you have to do is create unique identifiers for each individual time series. In an ideal world, each environmental time series would have both a <code>deviceID</code> and a <code>locationID</code> that uniquely identify the specific instrument making measurements and the physical location where measurements are made. A unique <code>timeseriesID</code> could be produced as <code>deviceID_locationID</code>. Metadata associated with each <code>timeseriesID</code> would contain basic information needed for downstream analysis including at least:</p>
+<p><code>timeseriesID, deviceID, locationID, longitude, latitude, ...</code></p>
 <ul>
+<li>An extended time series for a mobile sensor would group by <code>deviceID</code>.</li>
 <li>Multiple sensors placed at a single location could be be grouped by <code>locationID</code>.</li>
-<li>An extended time series for a mobile sensor would group by <code>sensorID</code>.</li>
 <li>Maps would be created using <code>longitude, latitude</code>.</li>
-<li>Time series would be accessed from a secondary <code>data</code> table with <code>timeseriesID</code> column names.</li>
+<li>Time series measurements would be accessed from a secondary <code>data</code> table with <code>timeseriesID</code> column names.</li>
 </ul>
-<p>Unfortunately, we are rarely supplied with a truly unique and truly spatial <code>locationID</code>. Instead we often use <code>sensorID</code> or an associated non-spatial identifier as a stand-in for <code>locationID</code>.</p>
+<p>Unfortunately, we are rarely supplied with a truly unique and truly spatial <code>locationID</code>. Instead we often use <code>deviceID</code> or an associated non-spatial identifier as a stand-in for <code>locationID</code>.</p>
 <p>Complications we have seen include:</p>
 <ul>
 <li>GPS-reported longitude and latitude can have <em>jitter</em> in the fourth or fifth decimal place making it challenging to use them to create a unique <code>locationID</code>.</li>
 <li>Sensors are sometimes <em>repositioned</em> in what the scientist considers the “same location”.</li>
-<li>Data for a single sensor goes through different processing pipelines using different identifiers and is later brought together as two separate timeseries.</li>
+<li>Data from a single sensor goes through different processing pipelines using different identifiers and is later brought together as two separate timeseries.</li>
 <li>The spatial scale of what constitutes a “single location” depends on the instrumentation and scientific question being asked.</li>
 <li>Deriving location-based metadata from spatial datasets is computationally intensive unless saved and identified with a unique <code>locationID</code>.</li>
 <li>Automated searches for spatial metadata occasionally produce incorrect results because of the non-infinite resolution of spatial datasets and must be corrected by hand.</li>
@@ -360,14 +360,14 @@ code > span.er { color: #a61717; background-color: #e3d2d2; }
 </div>
 <div id="functionality" class="section level2">
 <h2>Functionality</h2>
-<p>A solution to all these problems is possible if we store spatial metadata in simple tables in a standard directory. These tables will be referred to as <em>collections</em>. Location lookups can be performed with geodesic distance calculations where a location is assigned to a pre-existing <em>known location</em> if it is within <code>distanceThreshold</code> meters. These will be extremely fast.</p>
+<p>A solution to all these problems is possible if we store spatial metadata in simple tables in a standard directory. These tables will be referred to as <em>collections</em>. Location lookups can be performed with geodesic distance calculations where a longitude-latitude pair is assigned to a pre-existing <em>known location</em> if it is within <code>distanceThreshold</code> meters of that location. These lookups will be extremely fast.</p>
 <p>If no previously <em>known location</em> is found, the relatively slow (seconds) creation of a new <em>known location</em> metadata record can be performed and then added to the growing collection.</p>
-<p>For collections of stationary environmental monitors that only number in the thousands, this entire <em>collection</em> (<em>i.e.</em> “database”) can be stored as either a <code>.rda</code> or <code>.csv</code> file and will be under a megabyte in size making it fast to load. This small size also makes it possible to store multiple <em>known location</em> files, each created with different locations and different radii to address the needs of different scientific studies.</p>
+<p>For collections of stationary environmental monitors that only number in the thousands, this entire <em>collection</em> can be stored as either a <code>.rda</code> or <code>.csv</code> file and will be under a megabyte in size making it fast to load. This small size also makes it possible to store multiple <em>known locations</em> files, each created with different locations and different distance thresholds to address the needs of different scientific studies.</p>
 </div>
 <div id="example-usage" class="section level2">
 <h2>Example Usage</h2>
-<p>The package comes with some example <em>known location</em> tables to demonstrate.</p>
-<p>Lets take some metadata we have for air quality monitors in Washington state and create a <em>known location</em> table for them.</p>
+<p>The package comes with some example <em>known locations</em> tables.</p>
+<p>Lets take some metadata we have for air quality monitors in Washington state and create a <em>known locations</em> table for them.</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true"></a>wa &lt;-<span class="st"> </span><span class="kw">get</span>(<span class="kw">data</span>(<span class="st">&quot;wa_airfire_meta&quot;</span>, <span class="dt">package =</span> <span class="st">&quot;MazamaLocationUtils&quot;</span>))</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true"></a><span class="kw">names</span>(wa)</span></code></pre></div>
 <pre><code>##  [1] &quot;monitorID&quot;             &quot;longitude&quot;             &quot;latitude&quot;             
@@ -377,9 +377,9 @@ code > span.er { color: #a61717; background-color: #e3d2d2; }
 ## [13] &quot;siteID&quot;                &quot;instrumentID&quot;          &quot;aqsID&quot;                
 ## [16] &quot;pwfslID&quot;               &quot;pwfslDataIngestSource&quot; &quot;telemetryAggregator&quot;  
 ## [19] &quot;telemetryUnitID&quot;</code></pre>
-<div id="creating-a-known-location-table" class="section level3">
-<h3>Creating a Known Location table</h3>
-<p>We can create a <em>known location</em> table for them with a minimum 500 meter separation between distinct locations:</p>
+<div id="creating-a-known-locations-table" class="section level3">
+<h3>Creating a Known Locations table</h3>
+<p>We can create a <em>known locations</em> table for them with a minimum 500 meter separation between distinct locations:</p>
 <div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true"></a><span class="kw">library</span>(MazamaLocationUtils)</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true"></a></span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true"></a><span class="co"># Initialize with standard directories</span></span>
@@ -390,15 +390,27 @@ code > span.er { color: #a61717; background-color: #e3d2d2; }
 <span id="cb3-8"><a href="#cb3-8" aria-hidden="true"></a><span class="st">  </span><span class="kw">table_initialize</span>() <span class="op">%&gt;%</span></span>
 <span id="cb3-9"><a href="#cb3-9" aria-hidden="true"></a><span class="st">  </span><span class="kw">table_addLocation</span>(wa<span class="op">$</span>longitude, wa<span class="op">$</span>latitude, <span class="dt">distanceThreshold =</span> <span class="dv">500</span>) </span></code></pre></div>
 <p>Right now, our <em>known locations</em> table contains only automatically generated spatial metadata:</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true"></a><span class="kw">names</span>(wa_monitors_<span class="dv">500</span>)</span></code></pre></div>
-<pre><code>##  [1] &quot;locationID&quot;   &quot;locationName&quot; &quot;longitude&quot;    &quot;latitude&quot;     &quot;elevation&quot;   
-##  [6] &quot;countryCode&quot;  &quot;stateCode&quot;    &quot;county&quot;       &quot;timezone&quot;     &quot;houseNumber&quot; 
-## [11] &quot;street&quot;       &quot;city&quot;         &quot;zip&quot;</code></pre>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true"></a>dplyr<span class="op">::</span><span class="kw">glimpse</span>(wa_monitors_<span class="dv">500</span>)</span></code></pre></div>
+<pre><code>## Rows: 68
+## Columns: 13
+## $ locationID   &lt;chr&gt; &quot;ddbb565d51fe74ba&quot;, &quot;f4ac27b3de8b9c19&quot;, &quot;efce6225e8b2b1b8…
+## $ locationName &lt;chr&gt; &quot;us.wa_ddbb56&quot;, &quot;us.wa_f4ac27&quot;, &quot;us.wa_efce62&quot;, &quot;us.wa_3b…
+## $ longitude    &lt;dbl&gt; -122.3383, -120.6647, -120.0231, -120.1051, -117.5890, -1…
+## $ latitude     &lt;dbl&gt; 47.55998, 47.59880, 47.83861, 48.35412, 47.64535, 47.8852…
+## $ elevation    &lt;dbl&gt; 3.19, 361.69, 338.56, 473.18, 729.72, 730.84, 13.03, 175.…
+## $ countryCode  &lt;chr&gt; &quot;US&quot;, &quot;US&quot;, &quot;US&quot;, &quot;US&quot;, &quot;US&quot;, &quot;US&quot;, &quot;US&quot;, &quot;US&quot;, &quot;US&quot;, &quot;US…
+## $ stateCode    &lt;chr&gt; &quot;WA&quot;, &quot;WA&quot;, &quot;WA&quot;, &quot;WA&quot;, &quot;WA&quot;, &quot;WA&quot;, &quot;WA&quot;, &quot;WA&quot;, &quot;WA&quot;, &quot;WA…
+## $ countyName   &lt;chr&gt; &quot;King&quot;, &quot;Chelan&quot;, &quot;Chelan&quot;, &quot;Okanogan&quot;, &quot;Spokane&quot;, &quot;Steve…
+## $ timezone     &lt;chr&gt; &quot;America/Los_Angeles&quot;, &quot;America/Los_Angeles&quot;, &quot;America/Lo…
+## $ houseNumber  &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, N…
+## $ street       &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, N…
+## $ city         &lt;chr&gt; &quot;Seattle&quot;, &quot;Leavenworth&quot;, &quot;Chelan&quot;, &quot;Okanogan County&quot;, &quot;A…
+## $ zip          &lt;chr&gt; &quot;98106&quot;, &quot;98826&quot;, &quot;98816&quot;, &quot;98856&quot;, &quot;99001&quot;, &quot;99040&quot;, &quot;98…</code></pre>
 </div>
 <div id="merging-external-metadata" class="section level3">
 <h3>Merging external metadata</h3>
 <p>Perhaps we would like to import some of the original metadata into our new table. This is a very common use case where non-spatial metadata like site name or agency responsible for a monitor can be added.</p>
-<p>Just to make it interesting, let’s assume that our <em>known location</em> table is already large and we are only providing additional metadata for a subset of the records.</p>
+<p>Just to make it interesting, let’s assume that our <em>known locations</em> table is already large and we are only providing additional metadata for a subset of the records.</p>
 <div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true"></a><span class="co"># Use a subset of the wa metadata</span></span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true"></a>wa_indices &lt;-<span class="st"> </span><span class="kw">seq</span>(<span class="dv">5</span>,<span class="dv">65</span>,<span class="dv">5</span>)</span>
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true"></a>wa_sub &lt;-<span class="st"> </span>wa[wa_indices,]</span>
@@ -427,26 +439,26 @@ code > span.er { color: #a61717; background-color: #e3d2d2; }
 <span id="cb6-26"><a href="#cb6-26" aria-hidden="true"></a>locationTbl_indices &lt;-<span class="st"> </span><span class="kw">table_getRecordIndex</span>(locationTbl, locationID)</span>
 <span id="cb6-27"><a href="#cb6-27" aria-hidden="true"></a>locationTbl[locationTbl_indices, <span class="kw">c</span>(<span class="st">&quot;city&quot;</span>, <span class="st">&quot;siteName&quot;</span>)]</span></code></pre></div>
 <pre><code>## # A tibble: 13 × 2
-##    city               siteName                      
-##    &lt;chr&gt;              &lt;chr&gt;                         
-##  1 Chelan             &quot;Chelan-Woodin Ave&quot;           
-##  2 La Crosse          &quot;Lacrosse-Hill St&quot;            
-##  3 Tri-Cities         &quot;Kennewick-Metaline&quot;          
-##  4 Sunnyside          &quot;Sunnyside-S 16th&quot;            
-##  5 Inchelium          &quot;Inchelium&quot;                   
-##  6 Wellpinit          &quot;Wellpinit-Spokane Tribe&quot;     
-##  7 Lake Forest Park   &quot;Lake Forest Park-Town Center&quot;
-##  8 Okanogan County    &quot;Twisp-Glover St&quot;             
-##  9 Limestone Junction &quot;Maple Falls-Azure Way&quot;       
-## 10 Okanogan County    &quot;Omak-Colville Tribe&quot;         
-## 11 Ritzville          &quot;Ritzville-Alder St &quot;         
-## 12 Darrington         &quot;Darrington-Fir St&quot;           
-## 13 Tukwila            &quot;Tukwila_Allentown&quot;</code></pre>
-<p>Very nice.</p>
+##    city            siteName                  
+##    &lt;chr&gt;           &lt;chr&gt;                     
+##  1 Okanogan County Twisp-Ewell St            
+##  2 &lt;NA&gt;            &lt;NA&gt;                      
+##  3 Tacoma          Tacoma-Alexander Ave      
+##  4 Auburn          Auburn 29th St            
+##  5 Anacortes       Anacortes-202 Ave (SO-AQS)
+##  6 Quincy          Quincy 3rd                
+##  7 Tulalip Bay     Tulalip-Totem Beach Rd    
+##  8 Shelton         Shelton-W Franklin        
+##  9 Ellensburg      Ellensburg-Ruby St        
+## 10 Wenatchee       Wenatchee-Fifth St        
+## 11 Walla Walla     Walla Walla-12th St       
+## 12 Chehalis        Chehalis-Market Blvd      
+## 13 Tacoma          Tacoma-S 36th St</code></pre>
+<p>Very nice. We have added <code>siteName</code> to our known locations table for a more detailed description of each monitors’ location.</p>
 </div>
 <div id="finding-known-locations" class="section level3">
 <h3>Finding known locations</h3>
-<p>The whole point of a know location table is to speed up access to spatial and other metadata. Here’s how we can use it with a set of longitudes and latitudes that are not currently in our table.</p>
+<p>The whole point of a known locations table is to speed up access to spatial and other metadata. Here’s how we can use it with a set of longitudes and latitudes that are not currently in our table.</p>
 <div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true"></a><span class="co"># Create new locations near our known locations</span></span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true"></a>lons &lt;-<span class="st"> </span><span class="kw">jitter</span>(wa_sub<span class="op">$</span>longitude) </span>
 <span id="cb8-3"><a href="#cb8-3" aria-hidden="true"></a>lats &lt;-<span class="st"> </span><span class="kw">jitter</span>(wa_sub<span class="op">$</span>latitude)</span>
@@ -458,9 +470,7 @@ code > span.er { color: #a61717; background-color: #e3d2d2; }
 <span id="cb8-9"><a href="#cb8-9" aria-hidden="true"></a>  <span class="dt">latitude =</span> lats,</span>
 <span id="cb8-10"><a href="#cb8-10" aria-hidden="true"></a>  <span class="dt">distanceThreshold =</span> <span class="dv">50</span></span>
 <span id="cb8-11"><a href="#cb8-11" aria-hidden="true"></a>) <span class="op">%&gt;%</span><span class="st"> </span>dplyr<span class="op">::</span><span class="kw">pull</span>(city)</span></code></pre></div>
-<pre><code>##  [1] NA          NA          NA          NA          NA          &quot;Wellpinit&quot;
-##  [7] NA          NA          NA          NA          NA          NA         
-## [13] NA</code></pre>
+<pre><code>##  [1] NA NA NA NA NA NA NA NA NA NA NA NA NA</code></pre>
 <div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true"></a><span class="co"># Any known locations within 500 meters</span></span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true"></a><span class="kw">table_getNearestLocation</span>(</span>
 <span id="cb10-3"><a href="#cb10-3" aria-hidden="true"></a>  wa_monitors_<span class="dv">500</span>,</span>
@@ -468,11 +478,9 @@ code > span.er { color: #a61717; background-color: #e3d2d2; }
 <span id="cb10-5"><a href="#cb10-5" aria-hidden="true"></a>  <span class="dt">latitude =</span> lats,</span>
 <span id="cb10-6"><a href="#cb10-6" aria-hidden="true"></a>  <span class="dt">distanceThreshold =</span> <span class="dv">500</span></span>
 <span id="cb10-7"><a href="#cb10-7" aria-hidden="true"></a>) <span class="op">%&gt;%</span><span class="st"> </span>dplyr<span class="op">::</span><span class="kw">pull</span>(city)</span></code></pre></div>
-<pre><code>##  [1] NA                   &quot;La Crosse&quot;          NA                  
-##  [4] &quot;Sunnyside&quot;          &quot;Inchelium&quot;          &quot;Wellpinit&quot;         
-##  [7] &quot;Lake Forest Park&quot;   &quot;Okanogan County&quot;    &quot;Limestone Junction&quot;
-## [10] &quot;Okanogan County&quot;    &quot;Ritzville&quot;          NA                  
-## [13] &quot;Tukwila&quot;</code></pre>
+<pre><code>##  [1] NA            NA            NA            &quot;Auburn&quot;      NA           
+##  [6] &quot;Quincy&quot;      NA            &quot;Shelton&quot;     NA            &quot;Wenatchee&quot;  
+## [11] &quot;Walla Walla&quot; NA            &quot;Tacoma&quot;</code></pre>
 <div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true"></a><span class="co"># How about 5000 meters?</span></span>
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true"></a><span class="kw">table_getNearestLocation</span>(</span>
 <span id="cb12-3"><a href="#cb12-3" aria-hidden="true"></a>  wa_monitors_<span class="dv">500</span>,</span>
@@ -480,11 +488,10 @@ code > span.er { color: #a61717; background-color: #e3d2d2; }
 <span id="cb12-5"><a href="#cb12-5" aria-hidden="true"></a>  <span class="dt">latitude =</span> lats,</span>
 <span id="cb12-6"><a href="#cb12-6" aria-hidden="true"></a>  <span class="dt">distanceThreshold =</span> <span class="dv">5000</span></span>
 <span id="cb12-7"><a href="#cb12-7" aria-hidden="true"></a>) <span class="op">%&gt;%</span><span class="st"> </span>dplyr<span class="op">::</span><span class="kw">pull</span>(city)</span></code></pre></div>
-<pre><code>##  [1] &quot;Chelan&quot;             &quot;La Crosse&quot;          &quot;Tri-Cities&quot;        
-##  [4] &quot;Sunnyside&quot;          &quot;Inchelium&quot;          &quot;Wellpinit&quot;         
-##  [7] &quot;Lake Forest Park&quot;   &quot;Okanogan County&quot;    &quot;Limestone Junction&quot;
-## [10] &quot;Okanogan County&quot;    &quot;Ritzville&quot;          &quot;Darrington&quot;        
-## [13] &quot;Tukwila&quot;</code></pre>
+<pre><code>##  [1] &quot;Okanogan County&quot; NA                &quot;Tacoma&quot;          &quot;Auburn&quot;         
+##  [5] &quot;Anacortes&quot;       &quot;Quincy&quot;          &quot;Tulalip Bay&quot;     &quot;Shelton&quot;        
+##  [9] &quot;Ellensburg&quot;      &quot;Wenatchee&quot;       &quot;Walla Walla&quot;     &quot;Chehalis&quot;       
+## [13] &quot;Tacoma&quot;</code></pre>
 </div>
 </div>
 <div id="standard-setup" class="section level2">
@@ -492,8 +499,14 @@ code > span.er { color: #a61717; background-color: #e3d2d2; }
 <p>Before using <strong>MazamaLocationUtils</strong> you must first install <strong>MazamaSpatialUtils</strong> and then install core spatial data with:</p>
 <div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true"></a>  <span class="kw">library</span>(MazamaSpatialUtils)</span>
 <span id="cb14-2"><a href="#cb14-2" aria-hidden="true"></a>  <span class="kw">setSpatialDataDir</span>(<span class="st">&quot;~/Data/Spatial&quot;</span>)</span>
-<span id="cb14-3"><a href="#cb14-3" aria-hidden="true"></a>  <span class="kw">installSpatialData</span>()</span></code></pre></div>
-<p>Once the required datasets have been installed, the easiest way to set things up each session is with:</p>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true"></a>  </span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true"></a>  <span class="kw">installSpatialData</span>(<span class="st">&quot;EEZCountries&quot;</span>)</span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true"></a>  <span class="kw">installSpatialData</span>(<span class="st">&quot;OSMTimezones&quot;</span>)</span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true"></a>  <span class="kw">installSpatialData</span>(<span class="st">&quot;NaturalEarthAdm1&quot;</span>)</span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true"></a>  <span class="kw">installSpatialData</span>(<span class="st">&quot;USCensusCounties&quot;</span>)</span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true"></a></span>
+<span id="cb14-9"><a href="#cb14-9" aria-hidden="true"></a>Once the required datasets have been installed, the easiest way to set things </span>
+<span id="cb14-10"><a href="#cb14-10" aria-hidden="true"></a>up each session is with<span class="op">:</span></span></code></pre></div>
 <div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true"></a>  <span class="kw">library</span>(MazamaLocationUtils)</span>
 <span id="cb15-2"><a href="#cb15-2" aria-hidden="true"></a>  <span class="kw">mazama_initialize</span>()</span>
 <span id="cb15-3"><a href="#cb15-3" aria-hidden="true"></a>  <span class="kw">setLocationDataDir</span>(<span class="st">&quot;~/Data/KnownLocations&quot;</span>)</span></code></pre></div>

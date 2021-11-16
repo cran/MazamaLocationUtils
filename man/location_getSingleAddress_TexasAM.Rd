@@ -32,16 +32,21 @@ the \code{longitude} and \code{latitude}.
 \dontrun{
 library(MazamaLocationUtils)
 
-# Set up standard directories and spatial data
-spatialDataDir <- tempdir() # typically "~/Data/Spatial"
-mazama_initialize(spatialDataDir)
+# Fail gracefully if any resources are not available
+try({
 
-# Wenatchee
-longitude <- -122.47
-latitude <- 47.47
-apiKey <- YOUR_PERSONAL_API_KEY
+  # Set up standard directories and spatial data
+  spatialDataDir <- tempdir() # typically "~/Data/Spatial"
+  mazama_initialize(spatialDataDir)
 
-location_getSingleAddress_TexasAM(longitude, latitude, apiKey)
+  # Wenatchee
+  longitude <- -122.47
+  latitude <- 47.47
+  apiKey <- YOUR_PERSONAL_API_KEY
+
+  location_getSingleAddress_TexasAM(longitude, latitude, apiKey)
+  
+}, silent = FALSE)
 }
 
 }

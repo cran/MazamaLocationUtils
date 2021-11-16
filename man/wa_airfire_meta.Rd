@@ -5,7 +5,7 @@
 \alias{wa_airfire_meta}
 \title{Washington monitor metadata dataset}
 \format{
-A tibble with 69 rows and 19 columns of data.
+A tibble with 73 rows and 19 columns of data.
 }
 \usage{
 wa_airfire_meta
@@ -13,7 +13,7 @@ wa_airfire_meta
 \description{
 The \code{wa_pwfsl_meta} dataset provides a set of Washington
 state air quality monitor metadata used by the USFS AirFire group.
-This dataset was generatedon 2019-10-21 by running:
+This dataset was generated on 2021-10-19 by running:
 
 \preformatted{
 library(PWFSLSmoke)

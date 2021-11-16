@@ -23,10 +23,11 @@
 #' # Add a column and save again
 #' locationTbl %>% 
 #'   table_addColumn("my_column") %>% 
-#'   table_save(locationTbl, "table_save_example")
+#'   table_save("table_save_example")
 #'   
 #' # Check the locationDataDir
 #' list.files(getLocationDataDir(), pattern = "table_save_example")
+#' 
 #' @details Backup files are saved with "YYYY-mm-ddTHH:MM:SS"
 #' @rdname table_save
 #' @export 
@@ -55,8 +56,6 @@ table_save <- function(
     ))
   }
   
-  # TODO: validate locationTbl
-  
   # ----- Save data ------------------------------------------------------------
   
   result <- try({
@@ -79,7 +78,7 @@ table_save <- function(
       
       # Assign a name and save
       assign(collectionName, locationTbl)
-      save(list=c(collectionName), file = filePath)
+      save(list = c(collectionName), file = filePath)
       
     } else if ( outputType == "csv" ) {
       
@@ -90,7 +89,7 @@ table_save <- function(
   }, silent = TRUE)
   
   if ( "try-error" %in% class(result) ) {
-    # TODO:  handle errors
+    stop(sprintf("Could not write %s", filePath))
   }
   
   # ----- Return ---------------------------------------------------------------

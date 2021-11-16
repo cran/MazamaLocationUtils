@@ -15,7 +15,8 @@ table_initializeExisting(
 }
 \arguments{
 \item{locationTbl}{Tibble of known locations. This input tibble need not be a 
-standardized "known location" with all required columns. They will be added.}
+standardized "known location" table with all required columns. Missing 
+columns will be added.}
 
 \item{stateDataset}{Name of spatial dataset to use for determining state
 codes, Default: 'NaturalEarthAdm1'}
@@ -26,14 +27,15 @@ searching. (See ?MazamaSpatialUtils::getStateCode())}
 \item{distanceThreshold}{Distance in meters.}
 
 \item{measure}{One of "haversine" "vincenty", "geodesic", or "cheap" 
-specifying desired method of geodesic distance calculation. See \code{?geodist::geodist}.}
+specifying desired method of geodesic distance calculation. See 
+\code{?geodist::geodist}.}
 
 \item{verbose}{Logical controlling the generation of progress messages.}
 }
 \value{
 Known location tibble with the specified metadata columns. Any 
-locations whose circles (as defined by \code{distanceThreshold}) overlap will generate
-warning messages. 
+locations whose circles (as defined by \code{distanceThreshold}) overlap will
+generate warning messages. 
 
 It is incumbent upon the user to address these issue by one of:
 
@@ -55,7 +57,7 @@ searches for required columns:
 \item{elevation}
 \item{countryCode}
 \item{stateCode}
-\item{county}
+\item{countyName}
 \item{timezone}
 \item{houseNumber}
 \item{street}

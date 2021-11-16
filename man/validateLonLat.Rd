@@ -2,20 +2,15 @@
 % Please edit documentation in R/utils.R
 \name{validateLonLat}
 \alias{validateLonLat}
-\title{Validate longitude and latitude values}
+\title{Validate longitude and latitude values
+
+See \code{MazamaCoreUtils::\link[MazamaCoreUtils:validateLonLat]{\%>\%}} for details.}
 \usage{
 validateLonLat(longitude = NULL, latitude = NULL)
 }
-\arguments{
-\item{longitude}{Single longitude in decimal degrees E.}
-
-\item{latitude}{Single latitude in decimal degrees N.}
-}
-\value{
-Invisibly returns \code{TRUE} if no error message has been generated.
-}
 \description{
-Longitude and latitude are validated to be parseable as numeric
-and within the bounds -180:180 and -90:90. If validation fails, an error is
-generated.
+Validate longitude and latitude values
+
+See \code{MazamaCoreUtils::\link[MazamaCoreUtils:validateLonLat]{\%>\%}} for details.
 }
+\keyword{internal}

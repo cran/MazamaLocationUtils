@@ -15,8 +15,8 @@ intervals.
 }
 \details{
 When working with environmental monitoring time series, one of the first things
-you have to do is create unique identifiers for each individual time series. In 
-an ideal world, each environmental time series would have both a 
+you have to do is create unique identifiers for each individual time series. 
+In an ideal world, each environmental time series would have both a 
 \code{locationID} and a \code{sensorID} that uniquely identify the spatial location and 
 specific instrument making measurements. A unique \code{timeseriesID} could
 be produced as \code{locationID_sensorID}. Metadata associated with each

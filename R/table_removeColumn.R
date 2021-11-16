@@ -27,12 +27,13 @@
 #' 
 #' names(locationTbl)
 #' 
-#' \dontrun{
-#' # Cannot remove "core" metadata
-#' locationTbl <-
-#'   locationTbl %>%
-#'   table_removeColumn("zip")
-#'}
+#' try({
+#'   # Cannot remove "core" metadata
+#'   locationTbl <-
+#'     locationTbl %>%
+#'     table_removeColumn("zip")
+#' }, silent = FALSE)
+#'
 #' @seealso \link{table_addColumn}
 #' @seealso \link{table_removeColumn}
 #' @rdname table_removeColumn
@@ -56,7 +57,7 @@ table_removeColumn <- function(
   
   if ( columnName %in% MazamaLocationUtils::coreMetadataNames )
     stop(sprintf(
-      "columnName %s is part of the core metdata and cannot be removed", columnName
+      "columnName '%s' is part of the core metdata and cannot be removed", columnName
     ))
   
   

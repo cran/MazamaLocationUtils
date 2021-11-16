@@ -114,7 +114,15 @@ table_findAdjacentDistances <- function(
     # NOTE:  only unique pairs.
     
     sortedAdjacentIndices <- t(apply(adjacentIndices, 1, sort))
-    adjacentMatrix <- sortedAdjacentIndices[!duplicated(sortedAdjacentIndices),]
+    
+    # NOTE:  We have to be careful when there is only one pair so that we don't
+    # NOTE:  unintentionally get simplified to a vector instead of a matrix.
+    
+    if ( nrow(sortedAdjacentIndices) == 2 ) {
+      adjacentMatrix <- matrix(sortedAdjacentIndices[1,], nrow = 1, byrow = TRUE)
+    } else {
+      adjacentMatrix <- sortedAdjacentIndices[!duplicated(sortedAdjacentIndices),]
+    }
     
     adjacentDistanceTable <- dplyr::tibble(
       row1 = adjacentMatrix[,1],

@@ -25,6 +25,7 @@
 #' 
 #' # Test
 #' table_getLocationID(locationTbl, lon, lat, distanceThreshold = 500)
+#' 
 #' @seealso \link{table_addLocation}
 #' @seealso \link{table_addSingleLocation}
 #' @seealso \link{table_updateSingleRecord}

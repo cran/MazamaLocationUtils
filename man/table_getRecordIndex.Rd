@@ -36,4 +36,5 @@ locationID <- table_getLocationID(locationTbl, lon, lat, distanceThreshold = 500
 recordIndex <- table_getRecordIndex(locationTbl, locationID)
 
 str(locationTbl[recordIndex,])
+
 }

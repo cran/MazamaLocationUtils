@@ -44,6 +44,7 @@ locationTbl <-
   table_addColumn("siteName")
   
 names(locationTbl)
+
 }
 \seealso{
 \link{table_removeColumn}

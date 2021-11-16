@@ -30,6 +30,7 @@
 #' 
 #' # Expanding the distanceThreshold will find one
 #' table_getLocationID(locationTbl, lon, lat, distanceThreshold = 5000)
+#' 
 #' @rdname table_getLocationID
 #' @export 
 #' @importFrom MazamaCoreUtils stopIfNull
@@ -53,14 +54,25 @@ table_getLocationID <- function(
     stop("Parameter 'distanceThreshold' must be a numeric value.")
   
   distanceThreshold <- round(distanceThreshold)
+
+  # ----- Find unique locations ------------------------------------------------
+  
+  # NOTE:  For the case where the incoming longitude and latitude have many 
+  # NOTE:  duplicated locations (a "tidy" dataframe perhaps), we need to speed
+  # NOTE:  things up by only calculating distance for unique locations and then
+  # NOTE:  merging with all incoming locations.
+  
+  myTbl <- dplyr::tibble(longitude = longitude, latitude = latitude)
+  
+  myUniqueTbl <- myTbl %>% dplyr::distinct()
   
   # ----- Calculate distances --------------------------------------------------
 
   distance <-
     geodist::geodist(
       y = cbind(
-        "x" = longitude,
-        "y" = latitude
+        "x" = myUniqueTbl$longitude,
+        "y" = myUniqueTbl$latitude
       ),
       x = cbind(
         "x" = locationTbl$longitude,
@@ -72,23 +84,81 @@ table_getLocationID <- function(
       measure = measure
     )
 
-  # NOTE:  distance matrix is nrow(locationTbl) X length(longitude)
+  # NOTE:  distance matrix is nrow(locationTbl) X nrow(myUniqueTbl)
 
-  # ----- Find locationIDs -----------------------------------------------------
+  # ----- Find unique locationIDs ----------------------------------------------
 
-  locationID <- rep(as.character(NA), length(longitude))
-
-  for ( index in seq_along(longitude) ) {
+  myUniqueTbl$locationID <- as.character(NA)
+  
+  for ( index in seq_len(nrow(myUniqueTbl)) ) {
 
     if ( any(distance[,index] <= distanceThreshold) ) {
-      row <- which(distance[,index] == min(distance[,index]))
-      locationID[index] <- locationTbl$locationID[row]
+      row <- which(distance[,index] == min(distance[,index], na.rm = TRUE))
+      myUniqueTbl$locationID[index] <- locationTbl$locationID[row]
     }
 
   }
+  
+  # ----- Merge with all locations ---------------------------------------------
+  
+  locationID <- 
+    dplyr::full_join(
+      myTbl,
+      myUniqueTbl,
+      by = c("longitude", "latitude")
+    ) %>%
+    dplyr::pull(.data$locationID)
   
   # ----- Return ---------------------------------------------------------------
   
   return(locationID)
   
 }
+
+# ===== DEBUG ==================================================================
+
+if ( FALSE ) {
+  
+  library(MazamaLocationUtils)
+  
+  locationTbl <- MazamaCoreUtils::loadDataFile(
+    filename = "airnow_PM2.5_sites.rda",
+    dataUrl = NULL,
+    dataDir = "~/Data/known_locations"
+  )
+  
+  airnow_data <- MazamaCoreUtils::loadDataFile(
+    filename = "airnow_PM2.5_202111.rda",
+    dataUrl = "https://data-monitoring1.airfire.org/monitoring-v2/airnow-latency/2021",
+    dataDir = NULL
+  )
+  
+  longitude <- airnow_data$longitude
+  latitude <- airnow_data$latitude
+  
+  distanceThreshold <- 100
+  measure <- "geodesic"
+  
+  
+  locationID <- 
+    table_getLocationID(
+      locationTbl = locationTbl,
+      longitude = longitude,
+      latitude = latitude,
+      distanceThreshold = distanceThreshold,
+      measure = measure
+    )
+  
+  distance <- 
+    table_getNearestDistance(
+      locationTbl = locationTbl,
+      longitude = longitude,
+      latitude = latitude,
+      distanceThreshold = distanceThreshold,
+      measure = measure
+    )
+
+  
+}
+
+

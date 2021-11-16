@@ -12,7 +12,7 @@
 #' \item{elevation}
 #' \item{countryCode}
 #' \item{stateCode}
-#' \item{county}
+#' \item{countyName}
 #' \item{timezone}
 #' \item{houseNumber}
 #' \item{street}
@@ -27,7 +27,8 @@
 #' 
 #' # Create an empty Tbl
 #' emptyTbl <- table_initialize()
-#' print(emptyTbl)
+#' dplyr::glimpse(emptyTbl)
+#' 
 #' @rdname table_initialize
 #' @export 
 #' @importFrom MazamaCoreUtils stopIfNull
@@ -49,7 +50,7 @@ table_initialize <- function() {
     "elevation" = as.numeric(NA),
     "countryCode" = as.character(NA),
     "stateCode" = as.character(NA),
-    "county" = as.character(NA),
+    "countyName" = as.character(NA),
     "timezone" = as.character(NA),
     "houseNumber" = as.character(NA),
     "street" = as.character(NA),

@@ -22,7 +22,7 @@ the \code{longitude} and \code{latitude}. The following list of data
 is returned:
 \itemize{
 \item{\code{stateCode}}
-\item{\code{county}}
+\item{\code{countyName}}
 \item{\code{censusBlock}}
 }
 The data from this function should be considered to be the gold standard for state and county.
@@ -32,11 +32,17 @@ i.e. this information could and should be used to override information we get el
 \donttest{
 library(MazamaLocationUtils)
 
-lon <- -77.51
-lat <- 38.26
+# Fail gracefully if any resources are not available
+try({
 
-censusList <- location_getCensusBlock(lon, lat)
-str(censusList)
+  # Wenatchee
+  lon <- -120.325278
+  lat <- 47.423333
+
+  censusList <- location_getCensusBlock(lon, lat)
+  str(censusList)
+  
+}, silent = FALSE)
 }
 }
 \references{

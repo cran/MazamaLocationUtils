@@ -22,6 +22,7 @@
 #' recordIndex <- table_getRecordIndex(locationTbl, locationID)
 #' 
 #' str(locationTbl[recordIndex,])
+#' 
 #' @rdname table_getRecordIndex
 #' @export 
 #' @importFrom MazamaCoreUtils stopIfNull
@@ -37,26 +38,19 @@ table_getRecordIndex <- function(
   MazamaLocationUtils::validateLocationTbl(locationTbl, locationOnly = FALSE)
   MazamaCoreUtils::stopIfNull(locationID)
   
-  invalidIDs <- setdiff(names(locationID), locationTbl$locationID)
-  if ( length(invalidIDs) > 0 ) {
-    invalidString <- paste0(invalidIDs, collapse = ", ")
-    stop(sprintf(
-      "Invalid locationIDs found in locationIDt: %s", invalidString
-    ))
-  }
-       
   # ----- Find recordIndexes ---------------------------------------------------
   
   recordIndex <- rep(as.numeric(NA), length(locationID))
-  
+    
   for ( index in seq_along(locationID) ) {
     
-    if ( any(locationTbl$locationID == locationID[index]) ) {
-      recordIndex[index] <- which(locationTbl$locationID == locationID[index])
+    if ( !is.na(locationID[index]) ) {
+      if ( any(locationTbl$locationID == locationID[index]) ) {
+        recordIndex[index] <- which(locationTbl$locationID == locationID[index])
+      }
     }
     
   }
-  
   
   # ----- Return ---------------------------------------------------------------
   

@@ -39,6 +39,7 @@ dim(locationTbl)
 
 # Test
 table_getLocationID(locationTbl, lon, lat, distanceThreshold = 500)
+
 }
 \seealso{
 \link{table_addLocation}

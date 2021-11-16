@@ -1,7 +1,7 @@
 ---
 title: "Introduction to MazamaLocationUtils"
 author: "Mazama Science"
-date: "2021-09-29"
+date: "2021-10-26"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{Introduction to MazamaLocationUtils}
@@ -15,29 +15,31 @@ knitr::opts_chunk$set(fig.width=7, fig.height=5)
 
 ## Background
 
-This package is intended to be used in support of data management activities
-associated with fixed locations in space. The motivating fields include both
+This package is intended for use in data management activities
+associated with fixed locations in space. The motivating fields include 
 air and water quality monitoring where fixed sensors report at regular time 
 intervals.
 
 When working with environmental monitoring time series, one of the first things
 you have to do is create unique identifiers for each individual time series. In 
 an ideal world, each environmental time series would have both a 
-`locationID` and a `sensorID` that uniquely identify the spatial location and 
-specific instrument making measurements. A unique `timeseriesID` could
-be produced as `locationID_sensorID`. Metadata associated with each
+`deviceID` and a `locationID` that uniquely identify the specific instrument 
+making measurements and the physical location where measurements are made. A 
+unique `timeseriesID` could
+be produced as `deviceID_locationID`. Metadata associated with each
 `timeseriesID` would contain basic information needed for downstream analysis
 including at least:
 
-`timeseriesID, locationID, sensorID, longitude, latitude, ...`
+`timeseriesID, deviceID, locationID, longitude, latitude, ...`
 
+* An extended time series for a mobile sensor would group by `deviceID`.
 * Multiple sensors placed at a single location could be be grouped by `locationID`.
-* An extended time series for a mobile sensor would group by `sensorID`.
 * Maps would be created using `longitude, latitude`.
-* Time series would be accessed from a secondary `data` table with `timeseriesID` column names.
+* Time series measurements would be accessed from a secondary `data` table with 
+`timeseriesID` column names.
 
 Unfortunately, we are rarely supplied with a truly unique and truly spatial 
-`locationID`. Instead we often use `sensorID` or an associated non-spatial
+`locationID`. Instead we often use `deviceID` or an associated non-spatial
 identifier as a stand-in for `locationID`.
 
 Complications we have seen include:
@@ -46,7 +48,7 @@ Complications we have seen include:
 decimal place making it challenging to use them to create a unique `locationID`.
 * Sensors are sometimes _repositioned_ in what the scientist considers the "same 
 location".
-* Data for a single sensor goes through different processing pipelines using
+* Data from a single sensor goes through different processing pipelines using
 different identifiers and is later brought together as two separate timeseries.
 * The spatial scale of what constitutes a "single location" depends on the 
 instrumentation and scientific question being asked.
@@ -61,26 +63,27 @@ by hand.
 A solution to all these problems is possible if we store spatial metadata in
 simple tables in a standard directory. These tables will be referred to as 
 _collections_. Location lookups can be performed with
-geodesic distance calculations where a location is assigned to a pre-existing
-_known location_ if it is within `distanceThreshold` meters. These will be extremely fast.
+geodesic distance calculations where a longitude-latitude pair is assigned to a pre-existing
+_known location_ if it is within `distanceThreshold` meters of that location. 
+These lookups will be extremely fast.
 
 If no previously _known location_ is found, the relatively slow (seconds)
 creation of a new _known location_ metadata record can be performed and then 
 added to the growing collection.
 
 For collections of stationary environmental monitors that only number in the 
-thousands, this entire _collection_ (_i.e._ "database") can be stored as either a 
+thousands, this entire _collection_ can be stored as either a 
 `.rda` or `.csv` file and will be under a megabyte in size making it fast to 
-load. This small size also makes it possible to store multiple _known location_ 
-files, each created with different locations and different radii to address 
-the needs of different scientific studies.
+load. This small size also makes it possible to store multiple _known locations_ 
+files, each created with different locations and different distance thresholds
+to address the needs of different scientific studies.
 
 ## Example Usage
 
-The package comes with some example _known location_ tables to demonstrate.
+The package comes with some example _known locations_ tables.
 
 Lets take some metadata we have for air quality monitors in Washington state and
-create a _known location_ table for them.
+create a _known locations_ table for them.
 
 ```{r load_data}
 wa <- get(data("wa_airfire_meta", package = "MazamaLocationUtils"))
@@ -92,9 +95,9 @@ library(MazamaLocationUtils)
 wa_monitors_500 <- get(data("wa_monitors_500", package = "MazamaLocationUtils"))
 ```
 
-### Creating a Known Location table
+### Creating a Known Locations table
 
-We can create a _known location_ table for them with a minimum 500 meter
+We can create a _known locations_ table for them with a minimum 500 meter
 separation between distinct locations:
 
 ```{r create_table, eval = FALSE, echo = TRUE}
@@ -113,7 +116,7 @@ Right now, our _known locations_ table contains only automatically generated
 spatial metadata:
 
 ```{r basic_columns}
-names(wa_monitors_500)
+dplyr::glimpse(wa_monitors_500)
 ```
 
 ### Merging external metadata
@@ -122,7 +125,7 @@ Perhaps we would like to import some of the original metadata into our new
 table. This is a very common use case where non-spatial metadata like site name
 or agency responsible for a monitor can be added.
 
-Just to make it interesting, let's assume that our _known location_ table is
+Just to make it interesting, let's assume that our _known locations_ table is
 already large and we are only providing additional metadata for a subset of the
 records.
 
@@ -156,11 +159,12 @@ locationTbl_indices <- table_getRecordIndex(locationTbl, locationID)
 locationTbl[locationTbl_indices, c("city", "siteName")]
 ```
 
-Very nice.
+Very nice. We have added `siteName` to our known locations table for a more 
+detailed description of each monitors' location.
 
 ### Finding known locations
 
-The whole point of a know location table is to speed up access to spatial
+The whole point of a known locations table is to speed up access to spatial
 and other metadata. Here's how we can use it with a set of longitudes and
 latitudes that are not currently in our table.
 
@@ -203,8 +207,11 @@ Before using **MazamaLocationUtils** you must first install
 ```{r MSU_setup, echo = TRUE, eval = FALSE}
   library(MazamaSpatialUtils)
   setSpatialDataDir("~/Data/Spatial")
-  installSpatialData()
-```
+  
+  installSpatialData("EEZCountries")
+  installSpatialData("OSMTimezones")
+  installSpatialData("NaturalEarthAdm1")
+  installSpatialData("USCensusCounties")
 
 Once the required datasets have been installed, the easiest way to set things 
 up each session is with:

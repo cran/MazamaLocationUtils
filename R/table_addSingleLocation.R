@@ -24,19 +24,24 @@
 #' \donttest{
 #' library(MazamaLocationUtils)
 #' 
-#' # Set up standard directories and spatial data
-#' spatialDataDir <- tempdir() # typically "~/Data/Spatial"
-#' mazama_initialize(spatialDataDir)
+#' # Fail gracefully if any resources are not available
+#' try({
 #' 
-#' locationTbl <- get(data("wa_monitors_500"))
+#'   # Set up standard directories and spatial data
+#'   spatialDataDir <- tempdir() # typically "~/Data/Spatial"
+#'   mazama_initialize(spatialDataDir)
 #' 
-#' # Coulee City, WA
-#' lon <- -119.290904
-#' lat <- 47.611942
+#'   locationTbl <- get(data("wa_monitors_500"))
 #' 
-#' locationTbl <- 
-#'   locationTbl %>%
-#'   table_addSingleLocation(lon, lat, distanceThreshold = 500)
+#'   # Coulee City, WA
+#'   lon <- -119.290904
+#'   lat <- 47.611942
+#' 
+#'   locationTbl <- 
+#'     locationTbl %>%
+#'     table_addSingleLocation(lon, lat, distanceThreshold = 500)
+#'   
+#' }, silent = FALSE)
 #' }
 #' 
 #' @seealso \link{table_addLocation}
@@ -106,12 +111,11 @@ table_addSingleLocation <- function(
     
   additionalNames <- setdiff( names(locationTbl), names(singleRecordTbl))
   
-  # TODO:  Create additional spatial metadata by calling a function that
-  # TODO:  handles everything.
-  
   for ( name in additionalNames ) {
     
-    print(sprintf("Adding NA in place of actual metadata for %s", name))
+    if ( verbose ) 
+      message(sprintf("Using NA in place of actual metadata for %s", name))
+    
     singleRecordTbl[[name]] <- NA
     
   }

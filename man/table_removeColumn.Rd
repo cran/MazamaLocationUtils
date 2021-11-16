@@ -41,12 +41,13 @@ locationTbl <-
 
 names(locationTbl)
 
-\dontrun{
-# Cannot remove "core" metadata
-locationTbl <-
-  locationTbl \%>\%
-  table_removeColumn("zip")
-}
+try({
+  # Cannot remove "core" metadata
+  locationTbl <-
+    locationTbl \%>\%
+    table_removeColumn("zip")
+}, silent = FALSE)
+
 }
 \seealso{
 \link{table_addColumn}

@@ -13,7 +13,7 @@
 #' \item{elevation}
 #' \item{countryCode}
 #' \item{stateCode}
-#' \item{county}
+#' \item{countyName}
 #' \item{timezone}
 #' \item{houseNumber}
 #' \item{street}
@@ -42,19 +42,21 @@
 #' calculated using \code{measure = "geodesic"}.
 #' 
 #' @param locationTbl Tibble of known locations. This input tibble need not be a 
-#' standardized "known location" with all required columns. They will be added.
+#' standardized "known location" table with all required columns. Missing 
+#' columns will be added.
 #' @param stateDataset Name of spatial dataset to use for determining state
 #' codes, Default: 'NaturalEarthAdm1'
 #' @param countryCodes Vector of country codes used to optimize spatial
 #' searching. (See ?MazamaSpatialUtils::getStateCode())
 #' @param distanceThreshold Distance in meters. 
 #' @param measure One of "haversine" "vincenty", "geodesic", or "cheap" 
-#' specifying desired method of geodesic distance calculation. See \code{?geodist::geodist}.
+#' specifying desired method of geodesic distance calculation. See 
+#' \code{?geodist::geodist}.
 #' @param verbose Logical controlling the generation of progress messages.
 #' 
 #' @return Known location tibble with the specified metadata columns. Any 
-#' locations whose circles (as defined by \code{distanceThreshold}) overlap will generate
-#' warning messages. 
+#' locations whose circles (as defined by \code{distanceThreshold}) overlap will
+#' generate warning messages. 
 #' 
 #' It is incumbent upon the user to address these issue by one of:
 #' 
@@ -92,9 +94,6 @@ table_initializeExisting <- function(
     ))
   }
   
-  if ( "locationID" %in% names(locationTbl) )
-    stop("Parameter 'locationTbl' already has a column named \"locationID\"")
-  
   if ( !is.numeric(distanceThreshold) )
     stop("Parameter 'distanceThreshold' must be a numeric value.")
   
@@ -105,7 +104,7 @@ table_initializeExisting <- function(
   # * locationID -----
   
   # locationID should have been added by table_add
-  if (anyNA(locationTbl$locationID)) {
+  if ( anyNA(locationTbl$locationID) ) {
     locationTbl$locationID <- location_createID(
       longitude = locationTbl$longitude,
       latitude = locationTbl$latitude
@@ -186,19 +185,19 @@ table_initializeExisting <- function(
     
   }
   
-  # * county -----
+  # * countyName -----
   
   # Slow so skip for now
   
-  # tbl_1 <- dplyr::filter(locationTbl, !is.na(.data$county))
-  # tbl_2 <- dplyr::filter(locationTbl, is.na(.data$county))
+  # tbl_1 <- dplyr::filter(locationTbl, !is.na(.data$countyName))
+  # tbl_2 <- dplyr::filter(locationTbl, is.na(.data$countyName))
   # 
   # if ( nrow(tbl_2) > 0 ) {
   #   
   #   if ( verbose ) 
   #     message(sprintf("Creating counties for %d locations ...", nrow(tbl_2)))
   #   
-  #   tbl_2$county <- MazamaSpatialUtils::getUSCounty(
+  #   tbl_2$countyName <- MazamaSpatialUtils::getUSCounty(
   #     lon = tbl_2$longitude,
   #     lat = tbl_2$latitude,
   #     dataset = "USCensusCounties",
@@ -219,7 +218,7 @@ table_initializeExisting <- function(
     if ( verbose ) 
       message(sprintf("Creating timezones for %d locations ...", nrow(tbl_2)))
     
-    tbl_2$county <- MazamaSpatialUtils::getTimezone(
+    tbl_2$timezone <- MazamaSpatialUtils::getTimezone(
       lon = tbl_2$longitude,
       lat = tbl_2$latitude,
       dataset = "OSMTimezones",
@@ -246,17 +245,7 @@ table_initializeExisting <- function(
   
   # Slow web service so skip for now
 
-  # ----- Check for adjaceent locations ----------------------------------------
-  
-  # # Calculate distances between each location
-  # distances <- geodist::geodist(locationTbl, measure = "geodesic")
-  # 
-  # # Get distances that are less than the given distanceThreshold
-  # # NOTE: the distance between a location and itself is always zero
-  # distancesLessThanR <- (distances != 0) & (distances < distanceThreshold )
-  # 
-  # # Select the locations that are "adjacent".
-  # overlappingTbl <- which(distancesLessThanR > 0, arr.ind = TRUE)
+  # ----- Check for adjacent locations -----------------------------------------
   
   overlappingTbl <- table_findAdjacentDistances(locationTbl, distanceThreshold, measure)
 
@@ -307,7 +296,7 @@ locationTbl %%>%%
     # Paste the lines together
     warning(paste(lines, collapse = "\n"))
     
-  }
+  } # END overlapping
   
   # ----- Return ---------------------------------------------------------------
   

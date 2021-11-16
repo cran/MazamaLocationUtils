@@ -37,15 +37,21 @@
 #' \donttest{
 #' library(MazamaLocationUtils)
 #' 
-#' # Set up standard directories and spatial data
-#' spatialDataDir <- tempdir() # typically "~/Data/Spatial"
-#' mazama_initialize(spatialDataDir)
+#' # Fail gracefully if any resources are not available
+#' try({
 #' 
-#' # Wenatchee
-#' lon <- -120.325278
-#' lat <- 47.423333
-#' addressList <- location_getSingleAddress_Photon(lon, lat)
-#' str(addressList)
+#'   # Set up standard directories and spatial data
+#'   spatialDataDir <- tempdir() # typically "~/Data/Spatial"
+#'   mazama_initialize(spatialDataDir)
+#' 
+#'   # Wenatchee
+#'   lon <- -120.325278
+#'   lat <- 47.423333
+#' 
+#'   addressList <- location_getSingleAddress_Photon(lon, lat)
+#'   str(addressList)
+#'   
+#' }, silent = FALSE)
 #' }
 #' 
 #' @references \url{https://photon.komoot.io}
@@ -123,11 +129,11 @@ location_getSingleAddress_Photon <- function(
   
   # NOTE: Sometimes state contains the state code and sometimes contains the state name
   if ( nchar(photonList$state) > 2 ) {
-    photonList$stateName = photonList$state
-    photonList$stateCode = as.character(NA)
+    photonList$stateName <- photonList$state
+    photonList$stateCode <- as.character(NA)
   } else {
-    photonList$stateName = as.character(NA)
-    photonList$stateCode = photonList$state
+    photonList$stateName <- as.character(NA)
+    photonList$stateCode <- photonList$state
   }
   
   # ----- Create addressList ---------------------------------------------------

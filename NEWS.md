@@ -1,3 +1,50 @@
+# MazamaLocationUtils 0.2.7
+
+* All examples now meet the CRAN directive to avoid stopping if a web 
+resource is unavailable.
+* Improved error messages in `table_load()` and `table_save()`.
+* Removed `table_export()`. Use `table_save()` instead.
+
+# MazamaLocationUtils 0.2.6
+
+* Removed `~APIKey()` functionality. Now importing this from 
+`MazamaCoreUtils` 0.4.10.
+* Optimized `table_getLocationID()` and `table_getNearestDistance()` by only 
+calculating distance for unique locations. This helps tremendously when 
+`longitude` and `latitude` come from "tidy" dataframes.
+
+# MazamaLocationUtils 0.2.5
+
+* Fix timezone assignment bug in `table_initializeExisting()`.
+
+# MazamaLocationUtils 0.2.4
+
+* Improved documentation.
+
+# MazamaLocationUtils 0.2.3
+
+* Refactored `table_leaflet()` and `table_leafletAdd()` with improved defaults
+and more flexibility.
+
+# MazamaLocationUtils 0.2.2
+
+* Rename `county` to `countyName`. (This change more closely matches spatial
+metadata found in other systems and fits with the pattern of `~Code`/`~Name` 
+pairs in **MazamaSpatialUtils** as is the case with `countryCode/CountryName` 
+and `stateCode/stateName`.)
+* Regenerated example datasets.
+* Updated tests to reflect regenerated example datasets.
+* Fixed bug in `table_findAdjacentDistances()` when only two locations are 
+adjacent.
+* Re-exporting location validation functions from **MazamaCoreUtils**.
+* `table_updateColumn()` now ignores `NA` values in `locationID`.
+
+# MazamaLocationUtils 0.2.1
+
+* Using **MazamaCoreUtils** version of `validateLonLat()`, `validateLonsLats()`,
+`createLocationID()`.
+* Removed dependency on **sp** package.
+
 # MazamaLocationUtils 0.2.0
 
 Version 0.2.x focuses on usability improvements after initial work with the package.

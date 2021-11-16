@@ -38,6 +38,7 @@ library(MazamaLocationUtils)
 lon <- -120.325278
 lat <- 47.423333
 locationID <- location_createID(lon, lat)
+print(locationID)
 }
 \references{
 \url{https://en.wikipedia.org/wiki/Decimal_degrees}

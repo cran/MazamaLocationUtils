@@ -21,7 +21,7 @@ columns of core metadata:
 \item{elevation}
 \item{countryCode}
 \item{stateCode}
-\item{county}
+\item{countyName}
 \item{timezone}
 \item{houseNumber}
 \item{street}
@@ -34,5 +34,6 @@ library(MazamaLocationUtils)
 
 # Create an empty Tbl
 emptyTbl <- table_initialize()
-print(emptyTbl)
+dplyr::glimpse(emptyTbl)
+
 }

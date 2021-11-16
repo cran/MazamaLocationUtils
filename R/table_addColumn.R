@@ -22,6 +22,7 @@
 #'   table_addColumn("siteName")
 #'   
 #' names(locationTbl)
+#' 
 #' @seealso \link{table_removeColumn}
 #' @seealso \link{table_updateColumn}
 #' @rdname table_addColumn

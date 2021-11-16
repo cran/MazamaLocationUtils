@@ -52,4 +52,5 @@ table_getLocationID(locationTbl, lon, lat, distanceThreshold = 50)
 
 # Expanding the distanceThreshold will find one
 table_getLocationID(locationTbl, lon, lat, distanceThreshold = 5000)
+
 }

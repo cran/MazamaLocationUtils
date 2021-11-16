@@ -30,13 +30,18 @@ MazamaSpatialUtils::loadSpatialData("USCensusCounties")
 \donttest{
 library(MazamaLocationUtils)
 
-# Set up directory for spatial data
-spatialDataDir <- tempdir() # typically "~/Data/Spatial"
-MazamaSpatialUtils::setSpatialDataDir(spatialDataDir)
+# Fail gracefully if any resources are not available
+try({
 
-exists("NaturalEarthAdm1")
-mazama_initialize(spatialDataDir)
-exists("NaturalEarthAdm1")
-class(NaturalEarthAdm1)
+  # Set up directory for spatial data
+  spatialDataDir <- tempdir() # typically "~/Data/Spatial"
+  MazamaSpatialUtils::setSpatialDataDir(spatialDataDir)
+
+  exists("NaturalEarthAdm1")
+  mazama_initialize(spatialDataDir)
+  exists("NaturalEarthAdm1")
+  class(NaturalEarthAdm1)
+  
+}, silent = FALSE)
 }
 }
