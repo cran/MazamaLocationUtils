@@ -10,7 +10,7 @@ table_initialize()
 Empty known location tibble with the specified metadata columns.
 }
 \description{
-Creates an empty known location tibble with the following 
+Creates an empty known location tibble with the following
 columns of core metadata:
 
 \itemize{

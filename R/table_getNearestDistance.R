@@ -15,7 +15,10 @@
 #' @param latitude Vector of latitudes in decimal degrees N.
 #' @param distanceThreshold Distance in meters.
 #' @param measure One of "haversine" "vincenty", "geodesic", or "cheap" 
-#' specifying desired method of geodesic distance calculation. See \code{?geodist::geodist}.
+#' specifying desired method of geodesic distance calculation. 
+#' 
+#' See \code{geodist::\link[geodist:geodist]{geodist}} for details.
+#' 
 #' @return Vector of distances from known locations.
 #' @examples
 #' library(MazamaLocationUtils)
@@ -42,7 +45,7 @@ table_getNearestDistance <- function(
   longitude = NULL,
   latitude = NULL,
   distanceThreshold = NULL,
-  measure = "geodesic"
+  measure = c("geodesic", "haversine", "vincenty", "cheap")
 ) {
 
   # ----- Validate parameters --------------------------------------------------
@@ -50,6 +53,7 @@ table_getNearestDistance <- function(
   MazamaLocationUtils::validateLocationTbl(locationTbl, locationOnly = TRUE)
   MazamaLocationUtils::validateLonsLats(longitude, latitude)
   MazamaCoreUtils::stopIfNull(distanceThreshold)
+  measure <- match.arg(measure)
 
   if ( !is.numeric(distanceThreshold) )
     stop("Parameter 'distanceThreshold' must be a numeric value.")

@@ -1,14 +1,18 @@
-
+#'
 #' @title Add a new column of metadata to a table
+#' 
 #' @description A new metadata column is added to the \code{locationTbl}. For
-#' matching \code{locationID} records the assaociated \code{locatioData} is
+#' matching \code{locationID} records, the associated \code{locatioData} is
 #' inserted. Otherwise, the new column will be initialized with \code{NA}.
+#' 
 #' @param locationTbl Tibble of known locations.
 #' @param columnName Name to use for the new column.
 #' @param locationID Vector of \code{locationID} strings.
 #' @param locationData Vector of data to used at matching records.
 #' @param verbose Logical controlling the generation of progress messages.
+#' 
 #' @return Updated tibble of known locations.
+#' 
 #' @examples
 #' library(MazamaLocationUtils)
 #' 
@@ -29,6 +33,7 @@
 #' @export 
 #' @importFrom MazamaCoreUtils stopIfNull
 #' @importFrom methods as
+#' 
 table_addColumn <- function(
   locationTbl = NULL,
   columnName = NULL,

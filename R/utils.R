@@ -1,7 +1,7 @@
 #' @title Validate proper setup of MazamaSpatialUtils
 #' @description The \pkg{MazamaSpatialUtils} package mus be properly installed
 #' and initialized before using functions from the \pkg{MazamaLocationUtils} 
-#' package. Functions can test for this 
+#' package. This function tests for this.
 #' @return Invisibly returns \code{TRUE} if no error message has been generated.
 #' @rdname validateMazamaSpatialUtils
 #' @export 
@@ -21,10 +21,10 @@ validateMazamaSpatialUtils <- function() {
       "  MazamaSpatialUtils::installSpatialData()\n\n",
       "Once installed, initialize spatial data with:\n\n",
       "  MazamaSpatialUtils::setSpatialDataDir(\"YOUR_DATA_DIR\")\n",
-      "  MazamaSpatialUtils::loadSpatialData(\"EEZCountries\")\n",
-      "  MazamaSpatialUtils::loadSpatialData(\"OSMTimezones\")\n",
-      "  MazamaSpatialUtils::loadSpatialData(\"NaturalEarthAdm1\")\n",
-      "  MazamaSpatialUtils::loadSpatialData(\"USCensusCounties\")\n"
+      "  MazamaSpatialUtils::loadSpatialData(\"EEZCountries.rda\")\n",
+      "  MazamaSpatialUtils::loadSpatialData(\"OSMTimezones.rda\")\n",
+      "  MazamaSpatialUtils::loadSpatialData(\"NaturalEarthAdm1.rda\")\n",
+      "  MazamaSpatialUtils::loadSpatialData(\"USCensusCounties.rda\")\n"
     ))
     
   }
@@ -36,7 +36,7 @@ validateMazamaSpatialUtils <- function() {
 
 #' @title Validate longitude and latitude vectors
 #'
-#' See \code{MazamaCoreUtils::\link[MazamaCoreUtils:validateLonsLats]{\%>\%}} for details.
+#' See \code{MazamaCoreUtils::\link[MazamaCoreUtils:validateLonsLats]{validateLonsLats}} for details.
 #'
 #' @name validateLonsLats
 #' @rdname validateLonsLats
@@ -49,7 +49,7 @@ NULL
 
 #' @title Validate longitude and latitude values
 #'
-#' See \code{MazamaCoreUtils::\link[MazamaCoreUtils:validateLonLat]{\%>\%}} for details.
+#' See \code{MazamaCoreUtils::\link[MazamaCoreUtils:validateLonLat]{validateLonLat}} for details.
 #'
 #' @name validateLonLat
 #' @rdname validateLonLat
@@ -62,8 +62,7 @@ NULL
 
 #' @title Validate a location table
 #' @description Ensures that the incoming table has numeric \code{longitude} and
-#' \code{latitude} columns. 
-#' \code{longitude} and latitude.
+#' \code{latitude} columns.
 #' @param locationTbl Tibble of known locations.
 #' @param locationOnly Logical specifying whether to check for all standard
 #' columns.

@@ -2,15 +2,15 @@
 #'
 #' @param map Leaflet map.
 #' @param locationTbl Tibble of known locations.
-#' @param extraVars Character vector of addition \code{locationTbl} column names
+#' @param extraVars Character vector of addition `locationTbl` column names
 #' to be shown in leaflet popups.  
 #' @param jitter Amount to use to slightly adjust locations so that multiple
-#' monitors at the same location can be seen. Use zero or \code{NA} to see
+#' monitors at the same location can be seen. Use zero or `NA` to see
 #' precise locations.
-#' @param ... Additional arguments passed to \code{leaflet::addCircleMarkers()}.
+#' @param ... Additional arguments passed to `leaflet::addCircleMarkers()`.
 #'
-#' @description This function adds interactive maps that will be displayed in
-#'   RStudio's 'Viewer' tab. The default setting of `jitter` will move locations
+#' @description This function adds a layer to an interactive map displayed in
+#' RStudio's 'Viewer' tab. The default setting of `jitter` will move locations
 #' randomly within an ~50 meter radius so that overlapping locations can be 
 #' identified. Set `jitter = 0` to see precise locations.
 #'
@@ -92,7 +92,7 @@ table_leafletAdd <- function(
       "timezone = ", locationTbl$timezone, "<br>",
       "ISO = ", locationTbl$countryCode, ".", locationTbl$stateCode, "<br>",
       "county = ", locationTbl$countyName, "<br>",
-      "address = ", locationTbl$houseNumber, ", ", locationTbl$street, ", ", locationTbl$city, ", ", 
+      "addr. = ", locationTbl$houseNumber, ", ", locationTbl$street, ", ", locationTbl$city, ", ", 
       locationTbl$stateCode, ", ", locationTbl$zip, "<br>"
     )
     

@@ -2,7 +2,7 @@
 % Please edit documentation in R/location_getSingleAddress_TexasAM.R
 \name{location_getSingleAddress_TexasAM}
 \alias{location_getSingleAddress_TexasAM}
-\title{Get an address from a Texas A&M web service}
+\title{Get an address from the Texas A&M reverse geocoding service}
 \usage{
 location_getSingleAddress_TexasAM(
   longitude = NULL,
@@ -34,10 +34,6 @@ library(MazamaLocationUtils)
 
 # Fail gracefully if any resources are not available
 try({
-
-  # Set up standard directories and spatial data
-  spatialDataDir <- tempdir() # typically "~/Data/Spatial"
-  mazama_initialize(spatialDataDir)
 
   # Wenatchee
   longitude <- -122.47

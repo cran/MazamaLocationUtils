@@ -39,9 +39,9 @@ is returned:
 \item{\code{countryName}}
 }
 
-The function makes an effort to convert both \code{state} and \code{country} 
-\code{Name} into \code{Code} with codes defaulting to \code{NA}. Both 
-\code{Name} and \code{Code} are returned so that improvements can be made in 
+The function makes an effort to convert both \code{state} and \code{country}
+\code{Name} into \code{Code} with codes defaulting to \code{NA}. Both
+\code{Name} and \code{Code} are returned so that improvements can be made in
 the conversion algorithm.
 }
 \examples{

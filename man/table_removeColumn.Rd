@@ -17,7 +17,7 @@ table_removeColumn(locationTbl = NULL, columnName = NULL, verbose = TRUE)
 Updated tibble of known locations.
 }
 \description{
-Remove the column matching \code{columnName}. This function 
+Remove the column matching \code{columnName}. This function
 can be used in pipelines.
 }
 \examples{

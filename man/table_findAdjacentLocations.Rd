@@ -7,7 +7,7 @@
 table_findAdjacentLocations(
   locationTbl = NULL,
   distanceThreshold = NULL,
-  measure = "geodesic"
+  measure = c("geodesic", "haversine", "vincenty", "cheap")
 )
 }
 \arguments{
@@ -15,16 +15,18 @@ table_findAdjacentLocations(
 
 \item{distanceThreshold}{Distance in meters.}
 
-\item{measure}{One of "haversine" "vincenty", "geodesic", or "cheap" 
-specifying desired method of geodesic distance calculation. See \code{?geodist::geodist}.}
+\item{measure}{One of "haversine" "vincenty", "geodesic", or "cheap"
+specifying desired method of geodesic distance calculation.
+
+See \code{geodist::\link[geodist:geodist]{geodist}} for details.}
 }
 \value{
-Tibble of known locations separated by less than 
+Tibble of known locations separated by less than
 \code{distanceThreshold} meters.
 }
 \description{
 Calculates distances between all locations within a known
-locations table and returns a tibble with the row indices and separation 
+locations table and returns a tibble with the row indices and separation
 distances of those records separated by less than \code{distanceThreshold} meters.
 
 It is useful when working with new metadata tables to identify ajacent
@@ -33,8 +35,8 @@ of the specified \code{distanceThreshold}.
 }
 \note{
 The measure \code{"cheap"} may be used to speed things up depending on
-the spatial scale being considered. Distances calculated with 
-\code{measure = "cheap"} will vary by a few meters compared with those 
+the spatial scale being considered. Distances calculated with
+\code{measure = "cheap"} will vary by a few meters compared with those
 calculated using \code{measure = "geodesic"}.
 }
 \examples{
@@ -45,11 +47,11 @@ meta <- wa_airfire_meta
 # Any locations closer than 2 km?
 meta \%>\%
   table_findAdjacentLocations(distanceThreshold = 2000) \%>\%
-  dplyr::select(monitorID, siteName, timezone)
+  dplyr::select(siteName, timezone)
 
 # How about 4 km?
 meta \%>\%
   table_findAdjacentLocations(distanceThreshold = 4000) \%>\%
-  dplyr::select(monitorID, siteName, timezone)
+  dplyr::select(siteName, timezone)
 
 }

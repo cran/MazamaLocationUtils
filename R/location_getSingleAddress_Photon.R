@@ -62,7 +62,7 @@ location_getSingleAddress_Photon <- function(
   baseUrl = "https://photon.komoot.io/reverse",
   verbose = TRUE
 ) {
-  
+
   validateMazamaSpatialUtils()
   
   # ----- Validate parameters --------------------------------------------------
@@ -108,8 +108,8 @@ location_getSingleAddress_Photon <- function(
     }
   })
   
-  # NOTE:  A careful check of the addresses returned by Photon shows them to
-  # NOTE:  incorrect by up to 6 blocks. So we will throw those away. Also, we
+  # NOTE:  A careful check of the addresses returned by Photon shows them to be
+  # NOTE:  incorrect by up to 6 blocks. So we will throw those away. Also, we saw
   # NOTE:  a zip in Colleville specified as "SUPER ONE FOODS". So we have to 
   # NOTE:  validate that as well.
   

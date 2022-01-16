@@ -28,10 +28,10 @@ table_addLocation(
 codes, Default: 'NaturalEarthAdm1'}
 
 \item{elevationService}{Name of the elevation service to use for determining
-the elevation. Default: NULL. Accepted values: "usgs".}
+the elevation. Default: NULL skips this step. Accepted values: "usgs".}
 
 \item{addressService}{Name of the address service to use for determining
-the street address. Default: NULL. Accepted values: "photon".}
+the street address. Default: NULL skips this step. Accepted values: "photon".}
 
 \item{verbose}{Logical controlling the generation of progress messages.}
 }
@@ -39,7 +39,7 @@ the street address. Default: NULL. Accepted values: "photon".}
 Updated tibble of known locations.
 }
 \description{
-Incoming \code{longitude} and \code{latitude} values are compared 
+Incoming \code{longitude} and \code{latitude} values are compared
 against the incoming \code{locationTbl} to see if they are already within
 \code{distanceThreshold} meters of an existing entry. A new record is created for
 each location that is not already found in \code{locationTbl}.

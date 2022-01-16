@@ -8,7 +8,7 @@ table_save(
   locationTbl = NULL,
   collectionName = NULL,
   backup = TRUE,
-  outputType = "rda"
+  outputType = c("rda", "csv")
 )
 }
 \arguments{
@@ -19,7 +19,7 @@ table_save(
 \item{backup}{Logical specifying whether to save a backup version of any
 existing tables sharing \code{collectionName}.}
 
-\item{outputType}{Output format, Default: 'rda'}
+\item{outputType}{Output format. One of "rda" or "csv".}
 }
 \value{
 File path of saved file.

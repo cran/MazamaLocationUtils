@@ -2,12 +2,12 @@
 % Please edit documentation in R/table_addCoreMetadata.R
 \name{table_addCoreMetadata}
 \alias{table_addCoreMetadata}
-\title{Addes missing metadata columns a known location table}
+\title{Add missing core metadata columns to a known location table}
 \usage{
 table_addCoreMetadata(locationTbl = NULL)
 }
 \arguments{
-\item{locationTbl}{Tibble of known locations. This input tibble need not be a 
+\item{locationTbl}{Tibble of known locations. This input tibble need not be a
 standardized "known location" with all required columns. They will be added.}
 }
 \value{
@@ -41,7 +41,7 @@ If any of these core metadata columns are found, they will be retained.
 The \code{locationID} will be generated (anew if already found) from existing
 longitude and latitude data.
 
-Other core metadata columns will be filled with \code{NA} values of the 
+Other core metadata columns will be filled with \code{NA} values of the
 proper type.
 
 The result is a tibble with all of the core metadata columns. Theses columns
@@ -50,6 +50,6 @@ must then be filled in to create a usable "known locations" table.
 \note{
 No check is performed for overlapping locations. The returned tibble
 has the structure of a "known locations" table and is a good starting place
-investigation. But further work is required to produce a valid table of
+for investigation. But further work is required to produce a valid table of
 "known locations" associated with a specific spatial scale.
 }

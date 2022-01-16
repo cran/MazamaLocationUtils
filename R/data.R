@@ -15,13 +15,13 @@
 #' lons <- monitor$meta$longitude
 #' lats <- monitor$meta$latitude
 #' 
-#' table_initialize() %>%
+#' table_initialize() \%>\%
 #'   table_addLocation(
 #'     lons, lats, 
 #'       distanceThreshold = 500,
 #'       elevationService = "usgs",
 #'       addressService = "photon"
-#'     ) %>%
+#'     ) \%>\%
 #'   table_save("id_monitors_500")
 #' }
 #' 
@@ -47,13 +47,13 @@
 #' lons <- monitor$meta$longitude
 #' lats <- monitor$meta$latitude
 #' 
-#' table_initialize() %>%
+#' table_initialize() \%>\%
 #'   table_addLocation(
 #'     lons, lats, 
 #'       distanceThreshold = 500,
 #'       elevationService = "usgs",
 #'       addressService = "photon"
-#'     ) %>%
+#'     ) \%>\%
 #'   table_save("or_monitors_500")
 #' }
 #' 
@@ -79,13 +79,13 @@
 #' lons <- monitor$meta$longitude
 #' lats <- monitor$meta$latitude
 #' 
-#' table_initialize() %>%
+#' table_initialize() \%>\%
 #'   table_addLocation(
 #'     lons, lats, 
 #'     distanceThreshold = 500,
 #'     elevationService = "usgs",
 #'     addressService = "photon"
-#'   ) %>%
+#'   ) \%>\%
 #'   table_save("wa_monitors_500")
 #' }
 #' 
@@ -105,7 +105,7 @@
 #' 
 #' wa_airfire_meta <- 
 #'   monitor_loadLatest() %>% 
-#'   monitor_subset(stateCodes = "WA") %>%
+#'   monitor_subset(stateCodes = "WA") \%>\%
 #'   monitor_extractMeta()
 #'  
 #' save(wa_airfire_meta, file = "data/wa_airfire_meta.rda")

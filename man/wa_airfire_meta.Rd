@@ -20,7 +20,7 @@ library(PWFSLSmoke)
 
 wa_airfire_meta <- 
   monitor_loadLatest() %>% 
-  monitor_subset(stateCodes = "WA") %>%
+  monitor_subset(stateCodes = "WA") \%>\%
   monitor_extractMeta()
  
 save(wa_airfire_meta, file = "data/wa_airfire_meta.rda")

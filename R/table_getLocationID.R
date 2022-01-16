@@ -41,7 +41,7 @@ table_getLocationID <- function(
   longitude = NULL,
   latitude = NULL,
   distanceThreshold = NULL,
-  measure = "geodesic"
+  measure = c("geodesic", "haversine", "vincenty", "cheap")
 ) {
   
   # ----- Validate parameters --------------------------------------------------
@@ -49,6 +49,7 @@ table_getLocationID <- function(
   MazamaLocationUtils::validateLocationTbl(locationTbl, locationOnly = FALSE)
   MazamaLocationUtils::validateLonsLats(longitude, latitude)
   MazamaCoreUtils::stopIfNull(distanceThreshold)
+  measure <- match.arg(measure)
   
   if ( !is.numeric(distanceThreshold) )
     stop("Parameter 'distanceThreshold' must be a numeric value.")

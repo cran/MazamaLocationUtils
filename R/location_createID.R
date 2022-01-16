@@ -1,21 +1,10 @@
-
+#'
 #' @title Create one or more unique locationIDs
 #' @description A unique locationID is created for each incoming
-#' \code{longitude} and \code{latitude}. The following code is used to generate
-#' each locationID. See the references for details.
+#' \code{longitude} and \code{latitude}. 
 #' 
-#' \preformatted{
-#' # Retain accuracy up to ~.1m
-#' locationString <- paste0(
-#'   sprintf("\%.7f", longitude),
-#'   "_",
-#'   sprintf("\%.7f", latitude)
-#' )
-#'   
-#' # Avoid collisions until billions of records
-#' locationID <- digest::digest(locationString, algo = "xxhash64")  
-#' }
-#' 
+#' See \code{MazamaCoreUtils::\link[MazamaCoreUtils:createLocationID]{createLocationID}} for details.
+#'
 #' @param longitude Vector of longitudes in decimal degrees E.
 #' @param latitude Vector of latitudes in decimal degrees N.
 #' @return Vector of character locationIDs.

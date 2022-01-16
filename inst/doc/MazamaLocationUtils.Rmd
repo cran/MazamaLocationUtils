@@ -1,7 +1,7 @@
 ---
 title: "Introduction to MazamaLocationUtils"
 author: "Mazama Science"
-date: "2021-10-26"
+date: "2022-01-16"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{Introduction to MazamaLocationUtils}
@@ -10,10 +10,10 @@ vignette: >
 ---
 
 ```{r, echo=FALSE}
-knitr::opts_chunk$set(fig.width=7, fig.height=5)
+knitr::opts_chunk$set(fig.width = 7, fig.height = 5)
 ```
 
-## Background
+# Background
 
 This package is intended for use in data management activities
 associated with fixed locations in space. The motivating fields include 
@@ -23,14 +23,14 @@ intervals.
 When working with environmental monitoring time series, one of the first things
 you have to do is create unique identifiers for each individual time series. In 
 an ideal world, each environmental time series would have both a 
-`deviceID` and a `locationID` that uniquely identify the specific instrument 
+`locationID` and a `deviceID` that uniquely identify the specific instrument 
 making measurements and the physical location where measurements are made. A 
 unique `timeseriesID` could
-be produced as `deviceID_locationID`. Metadata associated with each
+be produced as `locationID_deviceID`. Metadata associated with each
 `timeseriesID` would contain basic information needed for downstream analysis
 including at least:
 
-`timeseriesID, deviceID, locationID, longitude, latitude, ...`
+`timeseriesID, locationID, deviceID, longitude, latitude, ...`
 
 * An extended time series for a mobile sensor would group by `deviceID`.
 * Multiple sensors placed at a single location could be be grouped by `locationID`.
@@ -58,7 +58,7 @@ intensive unless saved and identified with a unique `locationID`.
 because of the non-infinite resolution of spatial datasets and must be corrected
 by hand.
 
-## Functionality
+# Functionality
 
 A solution to all these problems is possible if we store spatial metadata in
 simple tables in a standard directory. These tables will be referred to as 
@@ -78,7 +78,7 @@ load. This small size also makes it possible to store multiple _known locations_
 files, each created with different locations and different distance thresholds
 to address the needs of different scientific studies.
 
-## Example Usage
+# Example Usage
 
 The package comes with some example _known locations_ tables.
 
@@ -95,7 +95,7 @@ library(MazamaLocationUtils)
 wa_monitors_500 <- get(data("wa_monitors_500", package = "MazamaLocationUtils"))
 ```
 
-### Creating a Known Locations table
+## Creating a Known Locations table
 
 We can create a _known locations_ table for them with a minimum 500 meter
 separation between distinct locations:
@@ -119,7 +119,7 @@ spatial metadata:
 dplyr::glimpse(wa_monitors_500)
 ```
 
-### Merging external metadata
+## Merging external metadata
 
 Perhaps we would like to import some of the original metadata into our new 
 table. This is a very common use case where non-spatial metadata like site name
@@ -162,7 +162,7 @@ locationTbl[locationTbl_indices, c("city", "siteName")]
 Very nice. We have added `siteName` to our known locations table for a more 
 detailed description of each monitors' location.
 
-### Finding known locations
+## Finding known locations
 
 The whole point of a known locations table is to speed up access to spatial
 and other metadata. Here's how we can use it with a set of longitudes and
@@ -199,7 +199,7 @@ table_getNearestLocation(
 
 ```
 
-## Standard Setup
+# Standard Setup
 
 Before using **MazamaLocationUtils** you must first install 
 **MazamaSpatialUtils** and then install core spatial data with:
@@ -228,10 +228,10 @@ location and is just a wrapper for:
 ```{r standard_setup, echo = TRUE, eval = FALSE}
   MazamaSpatialUtils::setSpatialDataDir("~/Data/Spatial")
   
-  MazamaSpatialUtils::loadSpatialData("EEZCountries")
-  MazamaSpatialUtils::loadSpatialData("OSMTimezones")
-  MazamaSpatialUtils::loadSpatialData("NaturalEarthAdm1")
-  MazamaSpatialUtils::loadSpatialData("USCensusCounties")
+  MazamaSpatialUtils::loadSpatialData("EEZCountries.rda")
+  MazamaSpatialUtils::loadSpatialData("OSMTimezones.rda")
+  MazamaSpatialUtils::loadSpatialData("NaturalEarthAdm1.rda")
+  MazamaSpatialUtils::loadSpatialData("USCensusCounties.rda")
 ```
 
 Every time you `table_save()` your location table, a backup will be created

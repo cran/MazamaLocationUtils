@@ -6,8 +6,10 @@
 # MazamaLocationUtils
 
 ```
-A suite of utility functions for discovering and managaing metadata associated
-with sets of spatially unique "known locations".
+Utility functions for discovering and managing metadata associated 
+with spatially unique "known locations". Applications include all 
+fields of environmental monitoring (e.g. air and water quality) where 
+data are collected at stationary sites.
 ```
 
 ## Background
@@ -20,14 +22,14 @@ intervals.
 When working with environmental monitoring time series, one of the first things
 you have to do is create unique identifiers for each individual time series. In 
 an ideal world, each environmental time series would have both a 
-`deviceID` and a `locationID` that uniquely identify the specific instrument 
+`locationID` and a `deviceID` that uniquely identify the specific instrument 
 making measurements and the physical location where measurements are made. A 
 unique `timeseriesID` could
-be produced as `deviceID_locationID`. Metadata associated with each
+be produced as `locationID_deviceID`. Metadata associated with each
 `timeseriesID` would contain basic information needed for downstream analysis
 including at least:
 
-`timeseriesID, deviceID, locationID, longitude, latitude, ...`
+`timeseriesID, locationID, deviceID, longitude, latitude, ...`
 
 * An extended time series for a mobile sensor would group by `deviceID`.
 * Multiple sensors placed at a single location could be be grouped by `locationID`.
@@ -71,7 +73,7 @@ added to the growing collection.
 For collections of stationary environmental monitors that only number in the 
 thousands, this entire _collection_ can be stored as either a 
 `.rda` or `.csv` file and will be under a megabyte in size making it fast to 
-load. This small size also makes it possible to store multiple _known locations_ 
+load. This small size also makes it possible to save multiple _known locations_ 
 files, each created with different locations and different distance thresholds
 to address the needs of different scientific studies.
 
@@ -92,5 +94,5 @@ special software and skills, large datasets and many compute cycles to generate.
 
 ----
 
-This project is supported by Mazama Science.
+This project is supported with funding from the US Forest Service.
 

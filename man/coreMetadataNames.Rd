@@ -11,8 +11,8 @@ A vector with 3 elements
 coreMetadataNames
 }
 \description{
-Character string identifiers of the different types of spatial 
-metadata this package can generate.
+Character string identifiers of the minimum set of fields
+required for a table to be considered a valid "known locations" table.
 }
 \details{
 coreMetadataNames

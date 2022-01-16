@@ -12,6 +12,7 @@
 #' i.e. this information could and should be used to override information we get elsewhere.
 #' @param longitude Single longitude in decimal degrees E.
 #' @param latitude Single latitude in decimal degrees N.
+#' @param censusYear Year the census was taken.
 #' @param verbose Logical controlling the generation of progress messages.
 #' @return List of census block/county/state data.
 #' @examples 
@@ -30,7 +31,7 @@
 #'   
 #' }, silent = FALSE)
 #' }
-#' @references \url{https://geo.fcc.gov/api/census/#!/block/get_block_find}
+#' @references \url{https://anypoint.mulesoft.com/exchange/portals/fccdomain/}
 #' @rdname location_getCensusBlock
 #' @export 
 #' @importFrom utils capture.output
@@ -39,6 +40,7 @@
 location_getCensusBlock <- function(
   longitude = NULL,
   latitude = NULL,
+  censusYear = 2010,
   verbose = TRUE
 ) {
   
@@ -48,7 +50,7 @@ location_getCensusBlock <- function(
   
   # ----- Get FCC API data ----------------------------------------------
   
-  # https://geo.fcc.gov/api/census/block/find?latitude=38.26&longitude=-77.51&showall=false&format=json
+  # https://geo.fcc.gov/api/census/block/find?latitude=47.423333&longitude=-120.325278&censusYear=2010&showall=false&format=json
   
   # Create url
   
@@ -57,7 +59,8 @@ location_getCensusBlock <- function(
   url$query <- list(
     latitude = latitude, 
     longitude = longitude, 
-    showall = FALSE,
+    censusYear = censusYear,
+    showall = "False",
     format = "json"
   )
   

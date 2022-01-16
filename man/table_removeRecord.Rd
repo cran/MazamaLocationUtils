@@ -17,7 +17,7 @@ table_removeRecord(locationTbl = NULL, locationID = NULL, verbose = TRUE)
 Updated tibble of known locations.
 }
 \description{
-Incoming \code{locationID} values are compared 
+Incoming \code{locationID} values are compared
 against the incoming \code{locationTbl} and any matches are removed.
 }
 \examples{

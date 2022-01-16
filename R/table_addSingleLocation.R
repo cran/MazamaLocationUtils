@@ -11,7 +11,7 @@
 #' @param latitude Single latitude in decimal degrees N.
 #' @param distanceThreshold Distance in meters.
 #' @param stateDataset Name of spatial dataset to use for determining state
-#' codes, Default: 'NaturalEarthAdm1'
+#' codes, Default: "NaturalEarthAdm1".
 #' @param elevationService Name of the elevation service to use for determining
 #' the elevation. Default: NULL. Accepted values: "usgs".
 #' @param addressService Name of the address service to use for determining

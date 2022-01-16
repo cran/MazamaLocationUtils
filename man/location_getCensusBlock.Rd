@@ -4,12 +4,19 @@
 \alias{location_getCensusBlock}
 \title{Get census block data from the FCC API}
 \usage{
-location_getCensusBlock(longitude = NULL, latitude = NULL, verbose = TRUE)
+location_getCensusBlock(
+  longitude = NULL,
+  latitude = NULL,
+  censusYear = 2010,
+  verbose = TRUE
+)
 }
 \arguments{
 \item{longitude}{Single longitude in decimal degrees E.}
 
 \item{latitude}{Single latitude in decimal degrees N.}
+
+\item{censusYear}{Year the census was taken.}
 
 \item{verbose}{Logical controlling the generation of progress messages.}
 }
@@ -46,5 +53,5 @@ try({
 }
 }
 \references{
-\url{https://geo.fcc.gov/api/census/#!/block/get_block_find}
+\url{https://anypoint.mulesoft.com/exchange/portals/fccdomain/}
 }

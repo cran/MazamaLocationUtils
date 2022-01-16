@@ -17,7 +17,7 @@ table_getRecordIndex(locationTbl = NULL, locationID = NULL, verbose = TRUE)
 Vector of \code{locationTbl} row indexes.
 }
 \description{
-Returns a vector of \code{locationTbl} row indexes for the 
+Returns a vector of \code{locationTbl} row indexes for the
 locations associated with each \code{locationID}.
 }
 \examples{

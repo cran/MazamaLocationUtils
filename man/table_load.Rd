@@ -14,6 +14,11 @@ Tibble of known locations.
 }
 \description{
 Load a tibble of known locations from the preferred directory.
+
+The known location table must be named either \code{<collectionName>.rda}
+or \code{<collectionName>.csv}. If both are found, only
+\code{<collectionName>.rda} will be loaded to ensure that columns will have
+the proper type assigned.
 }
 \examples{
 library(MazamaLocationUtils)

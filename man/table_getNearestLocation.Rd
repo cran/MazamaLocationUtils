@@ -24,7 +24,7 @@ table_getNearestLocation(
 Tibble of known locations.
 }
 \description{
-Returns a tibble of known locations from \code{locationTbl}, one 
+Returns a tibble of known locations from \code{locationTbl}, one
 for each incoming location. If no known location is found for a particular
 incoming location, that record in the tibble will contain all \code{NA}.
 }

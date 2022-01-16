@@ -1,5 +1,5 @@
 ## ---- echo=FALSE--------------------------------------------------------------
-knitr::opts_chunk$set(fig.width=7, fig.height=5)
+knitr::opts_chunk$set(fig.width = 7, fig.height = 5)
 
 ## ----load_data----------------------------------------------------------------
 wa <- get(data("wa_airfire_meta", package = "MazamaLocationUtils"))
@@ -103,8 +103,8 @@ table_getNearestLocation(
 ## ----standard_setup, echo = TRUE, eval = FALSE--------------------------------
 #    MazamaSpatialUtils::setSpatialDataDir("~/Data/Spatial")
 #  
-#    MazamaSpatialUtils::loadSpatialData("EEZCountries")
-#    MazamaSpatialUtils::loadSpatialData("OSMTimezones")
-#    MazamaSpatialUtils::loadSpatialData("NaturalEarthAdm1")
-#    MazamaSpatialUtils::loadSpatialData("USCensusCounties")
+#    MazamaSpatialUtils::loadSpatialData("EEZCountries.rda")
+#    MazamaSpatialUtils::loadSpatialData("OSMTimezones.rda")
+#    MazamaSpatialUtils::loadSpatialData("NaturalEarthAdm1.rda")
+#    MazamaSpatialUtils::loadSpatialData("USCensusCounties.rda")
 

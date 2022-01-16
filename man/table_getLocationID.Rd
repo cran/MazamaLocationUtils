@@ -9,7 +9,7 @@ table_getLocationID(
   longitude = NULL,
   latitude = NULL,
   distanceThreshold = NULL,
-  measure = "geodesic"
+  measure = c("geodesic", "haversine", "vincenty", "cheap")
 )
 }
 \arguments{
@@ -21,7 +21,7 @@ table_getLocationID(
 
 \item{distanceThreshold}{Distance in meters.}
 
-\item{measure}{One of "haversine" "vincenty", "geodesic", or "cheap" 
+\item{measure}{One of "haversine" "vincenty", "geodesic", or "cheap"
 specifying desired method of geodesic distance calculation. See \code{?geodist::geodist}.}
 }
 \value{
@@ -31,13 +31,13 @@ Vector of known \code{locationID}s.
 Returns a vector of \code{locationID}s for the known locations
 that each incoming location will be assigned to within the given. If more
 than one known location exists within the given \code{distanceThreshold}, the closest will be
-assigned.  \code{NA} will be returned for each incoming that cannot be 
+assigned.  \code{NA} will be returned for each incoming that cannot be
 assigned to a known location in \code{locationTbl}.
 }
 \note{
 The measure \code{"cheap"} may be used to speed things up depending on
-the spatial scale being considered. Distances calculated with 
-\code{measure = "cheap"} will vary by a few meters compared with those 
+the spatial scale being considered. Distances calculated with
+\code{measure = "cheap"} will vary by a few meters compared with those
 calculated using \code{measure = "geodesic"}.
 }
 \examples{

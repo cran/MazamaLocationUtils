@@ -11,6 +11,6 @@ Invisibly returns \code{TRUE} if no error message has been generated.
 }
 \description{
 The \pkg{MazamaSpatialUtils} package mus be properly installed
-and initialized before using functions from the \pkg{MazamaLocationUtils} 
-package. Functions can test for this
+and initialized before using functions from the \pkg{MazamaLocationUtils}
+package. This function tests for this.
 }

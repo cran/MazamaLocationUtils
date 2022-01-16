@@ -9,7 +9,7 @@ table_getNearestDistance(
   longitude = NULL,
   latitude = NULL,
   distanceThreshold = NULL,
-  measure = "geodesic"
+  measure = c("geodesic", "haversine", "vincenty", "cheap")
 )
 }
 \arguments{
@@ -21,8 +21,10 @@ table_getNearestDistance(
 
 \item{distanceThreshold}{Distance in meters.}
 
-\item{measure}{One of "haversine" "vincenty", "geodesic", or "cheap" 
-specifying desired method of geodesic distance calculation. See \code{?geodist::geodist}.}
+\item{measure}{One of "haversine" "vincenty", "geodesic", or "cheap"
+specifying desired method of geodesic distance calculation.
+
+See \code{geodist::\link[geodist:geodist]{geodist}} for details.}
 }
 \value{
 Vector of distances from known locations.
@@ -35,8 +37,8 @@ incoming location, that distance in the vector will be \code{NA}.
 }
 \note{
 The measure \code{"cheap"} may be used to speed things up depending on
-the spatial scale being considered. Distances calculated with 
-\code{measure = "cheap"} will vary by a few meters compared with those 
+the spatial scale being considered. Distances calculated with
+\code{measure = "cheap"} will vary by a few meters compared with those
 calculated using \code{measure = "geodesic"}.
 }
 \examples{

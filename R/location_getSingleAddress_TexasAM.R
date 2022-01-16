@@ -1,7 +1,7 @@
 #' @rdname location_getSingleAddress_TexasAM
 #' @export 
 #' 
-#' @title Get an address from a Texas A&M web service
+#' @title Get an address from the Texas A&M reverse geocoding service
 #' 
 #' @param longitude Single longitude in decimal degrees E.
 #' @param latitude Single latitude in decimal degrees N.
@@ -20,10 +20,6 @@
 #' 
 #' # Fail gracefully if any resources are not available
 #' try({
-#' 
-#'   # Set up standard directories and spatial data
-#'   spatialDataDir <- tempdir() # typically "~/Data/Spatial"
-#'   mazama_initialize(spatialDataDir)
 #' 
 #'   # Wenatchee
 #'   longitude <- -122.47

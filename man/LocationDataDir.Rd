@@ -8,8 +8,8 @@
 Absolute path string.
 }
 \description{
-This package maintains an internal directory path which 
-users can set using \code{setLocationDataDir()}. All package functions use 
+This package maintains an internal directory path which
+users can set using \code{setLocationDataDir()}. All package functions use
 this directory whenever known location tables are accessed.
 
 The default setting when the package is loaded is \code{getwd()}.

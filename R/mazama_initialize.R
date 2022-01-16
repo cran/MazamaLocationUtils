@@ -16,10 +16,10 @@
 #' \preformatted{
 #' MazamaSpatialUtils::setSpatialDataDir(spatialDataDir)
 #' 
-#' MazamaSpatialUtils::loadSpatialData("EEZCountries")
-#' MazamaSpatialUtils::loadSpatialData("OSMTimezones")
-#' MazamaSpatialUtils::loadSpatialData("NaturalEarthAdm1")
-#' MazamaSpatialUtils::loadSpatialData("USCensusCounties")
+#' MazamaSpatialUtils::loadSpatialData("EEZCountries.rda")
+#' MazamaSpatialUtils::loadSpatialData("OSMTimezones.rda")
+#' MazamaSpatialUtils::loadSpatialData("NaturalEarthAdm1.rda")
+#' MazamaSpatialUtils::loadSpatialData("USCensusCounties.rda")
 #' }
 #' 
 #' @examples
@@ -60,10 +60,10 @@ mazama_initialize <- function(
       MazamaSpatialUtils::installSpatialData("NaturalEarthAdm1")
       MazamaSpatialUtils::installSpatialData("USCensusCounties")
       # Now load
-      MazamaSpatialUtils::loadSpatialData("EEZCountries")
-      MazamaSpatialUtils::loadSpatialData("OSMTimezones")
-      MazamaSpatialUtils::loadSpatialData("NaturalEarthAdm1")
-      MazamaSpatialUtils::loadSpatialData("USCensusCounties")
+      MazamaSpatialUtils::loadSpatialData("EEZCountries.rda")
+      MazamaSpatialUtils::loadSpatialData("OSMTimezones.rda")
+      MazamaSpatialUtils::loadSpatialData("NaturalEarthAdm1.rda")
+      MazamaSpatialUtils::loadSpatialData("USCensusCounties.rda")
     }, silent = TRUE)
     
     if ( "try-error" %in% class(result) ) {

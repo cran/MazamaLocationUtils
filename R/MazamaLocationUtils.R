@@ -12,26 +12,28 @@
 #'
 #' @details
 #' When working with environmental monitoring time series, one of the first things
-#' you have to do is create unique identifiers for each individual time series. 
-#' In an ideal world, each environmental time series would have both a 
-#' \code{locationID} and a \code{sensorID} that uniquely identify the spatial location and 
-#' specific instrument making measurements. A unique \code{timeseriesID} could
-#' be produced as \code{locationID_sensorID}. Metadata associated with each
-#' time series would contain basic information needed for downstream analysis
+#' you have to do is create unique identifiers for each individual time series. In 
+#' an ideal world, each environmental time series would have both a 
+#' \code{locationID} and a \code{deviceID} that uniquely identify the specific instrument 
+#' making measurements and the physical location where measurements are made. A 
+#' unique \code{timeseriesID} could
+#' be produced as \code{locationID_deviceID}. Metadata associated with each
+#' \code{timeseriesID} would contain basic information needed for downstream analysis
 #' including at least:
+#' 
 #' \preformatted{
-#'   timeseriesID, locationID, sensorID, longitude, latitude, ...
+#'   timeseriesID, locationID, deviceID, longitude, latitude, ...
 #' }
 #' 
 #' \itemize{
 #' \item{Multiple sensors placed at a location could be be grouped by \code{locationID}.}
-#' \item{An extended timeservers for a mobile sensor would group by \code{sensorID}.}
+#' \item{An extended timeservers for a mobile sensor would group by \code{deviceID}.}
 #' \item{Maps would be created using \code{longitude, latitude}.}
 #' \item{Time series would be accessed from a secondary \code{data} table with \code{timeseriesID}.}
 #' }
 #' 
 #' Unfortunately, we are rarely supplied with a truly unique and truly spatial 
-#' \code{locationID}. Instead we often use \code{sensorID} or an associated non-spatial
+#' \code{locationID}. Instead we often use \code{deviceID} or an associated non-spatial
 #' identifier as a standin for \code{locationID}.
 #' 
 #' Complications we have seen include:
@@ -83,23 +85,23 @@ NULL
 #' @name coreMetadataNames
 #' @title Names of standard spatial metadata columns
 #' @format A vector with 3 elements
-#' @description Character string identifiers of the different types of spatial 
-#' metadata this package can generate.
+#' @description Character string identifiers of the minimum set of fields 
+#' required for a table to be considered a valid "known locations" table.
 
 coreMetadataNames <- c(
-  "locationID",               # from MazamaLocationUtils::location_createID()
-  "locationName",             # from MazamaLocationUtils::location_initialize()
-  "longitude",                # user supplied
-  "latitude",                 # user supplied
-  "elevation",                # from https://nationalmap.gov/epqs/
-  "countryCode",              # from MazamaSpatialUtils::getCountryCode()
-  "stateCode",                # from MazamaSpatialUtils::getStateCode()
-  "countyName",               # from MazamaSpatialUtils::getUSCounty()
-  "timezone",                 # from MazamaSpatialUtils::getTimezone()
-  "houseNumber",              # from https://photon.komoot.io/
-  "street",                   # from https://photon.komoot.io/
-  "city",                     # from https://photon.komoot.io/
-  "zip"                       # from https://photon.komoot.io/
+  "locationID",           # from MazamaLocationUtils::location_createID()
+  "locationName",         # from MazamaLocationUtils::location_initialize()
+  "longitude",            # user supplied
+  "latitude",             # user supplied
+  "elevation",            # from MazamaLocationUtils::getSingleElevation_USGS()
+  "countryCode",          # from MazamaSpatialUtils::getCountryCode()
+  "stateCode",            # from MazamaSpatialUtils::getStateCode()
+  "countyName",           # from MazamaSpatialUtils::getUSCounty()
+  "timezone",             # from MazamaSpatialUtils::getTimezone()
+  "houseNumber",          # from MazamaLocationUtils::getSingleAddress_Photon()
+  "street",               # from MazamaLocationUtils::getSingleAddress_Photon()
+  "city",                 # from MazamaLocationUtils::getSingleAddress_Photon()
+  "zip"                   # from MazamaLocationUtils::getSingleAddress_Photon()
 )
 
 # ----- Internal Package State -------------------------------------------------

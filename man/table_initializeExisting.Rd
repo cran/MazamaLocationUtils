@@ -9,13 +9,13 @@ table_initializeExisting(
   stateDataset = "NaturalEarthAdm1",
   countryCodes = NULL,
   distanceThreshold = NULL,
-  measure = "geodesic",
+  measure = c("geodesic", "haversine", "vincenty", "cheap"),
   verbose = TRUE
 )
 }
 \arguments{
-\item{locationTbl}{Tibble of known locations. This input tibble need not be a 
-standardized "known location" table with all required columns. Missing 
+\item{locationTbl}{Tibble of known locations. This input tibble need not be a
+standardized "known location" table with all required columns. Missing
 columns will be added.}
 
 \item{stateDataset}{Name of spatial dataset to use for determining state
@@ -26,18 +26,18 @@ searching. (See ?MazamaSpatialUtils::getStateCode())}
 
 \item{distanceThreshold}{Distance in meters.}
 
-\item{measure}{One of "haversine" "vincenty", "geodesic", or "cheap" 
-specifying desired method of geodesic distance calculation. See 
+\item{measure}{One of "haversine" "vincenty", "geodesic", or "cheap"
+specifying desired method of geodesic distance calculation. See
 \code{?geodist::geodist}.}
 
 \item{verbose}{Logical controlling the generation of progress messages.}
 }
 \value{
-Known location tibble with the specified metadata columns. Any 
+Known location tibble with the specified metadata columns. Any
 locations whose circles (as defined by \code{distanceThreshold}) overlap will
-generate warning messages. 
+generate warning messages.
 
-It is incumbent upon the user to address these issue by one of:
+It is incumbent upon the user to address overlapping locations by one of:
 
 \enumerate{
 \item{reduce the distanceThreshold until no overlaps occur}
@@ -68,21 +68,22 @@ searches for required columns:
 The \code{longitude} and \code{latitude} columns are required but all others
 are optional.
 
-If any of these optional columns are found, they will be used and the often 
+If any of these optional columns are found, they will be used and the often
 slow and sometimes slightly inaccurate steps to generate that information
-will be skipped for locations with that data. Any additional columns of 
-information not part of the required core metadata will be retained.
+will be skipped for locations that have non-missing data. Any additional
+columns of information that are
+not part of the required core metadata will be retained.
 
 This method skips the assignment of columns like \code{elevation} and all
 address related fields that require web service requests.
 
-Compared to initializing a brand new table and populating one record at a
+Compared to initializing a brand new table and populating it one record at a
 time, this is a much faster way of creating a known location table from a
 pre-existing table of metadata.
 }
 \note{
 The measure \code{"cheap"} may be used to speed things up depending on
-the spatial scale being considered. Distances calculated with 
-\code{measure = "cheap"} will vary by a few meters compared with those 
+the spatial scale being considered. Distances calculated with
+\code{measure = "cheap"} will vary by a few meters compared with those
 calculated using \code{measure = "geodesic"}.
 }

@@ -13,7 +13,7 @@ table_updateSingleRecord(
 \arguments{
 \item{locationTbl}{Tibble of known locations.}
 
-\item{locationList}{List containing `locationID` and one or more named
+\item{locationList}{List containing \code{locationID} and one or more named
 columns whose values are to be replaced.}
 
 \item{verbose}{Logical controlling the generation of progress messages.}

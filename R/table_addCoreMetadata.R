@@ -1,5 +1,5 @@
-
-#' @title Addes missing metadata columns a known location table
+#'
+#' @title Add missing core metadata columns to a known location table
 #' 
 #' @description An existing table will be amended to guarantee that it includes
 #' the following core metadata columns.
@@ -36,7 +36,7 @@
 #' 
 #' @note No check is performed for overlapping locations. The returned tibble
 #' has the structure of a "known locations" table and is a good starting place
-#' investigation. But further work is required to produce a valid table of
+#' for investigation. But further work is required to produce a valid table of
 #' "known locations" associated with a specific spatial scale.
 #' 
 #' @param locationTbl Tibble of known locations. This input tibble need not be a 

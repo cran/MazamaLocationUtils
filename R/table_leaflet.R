@@ -27,7 +27,7 @@
 #' underlying map tile if available. See
 #' \url{https://leaflet-extras.github.io/leaflet-providers/} for a list of
 #' "provider tiles" to use as the background map.
-#'
+#' 
 #' @return A leaflet "plot" object which, if not assigned, is rendered in
 #' Rstudio's 'Viewer' tab.
 #'
@@ -64,7 +64,7 @@
 
 table_leaflet <- function(
   locationTbl = NULL,
-  maptype = "terrain",
+  maptype = c("terrain", "roadmap", "satellite", "toner"),
   extraVars = NULL,
   jitter = 5e-4,
   ...
@@ -73,7 +73,7 @@ table_leaflet <- function(
   # ----- Validate parameters --------------------------------------------------
   
   MazamaLocationUtils::validateLocationTbl(locationTbl, locationOnly = TRUE)
-  MazamaCoreUtils::stopIfNull(maptype)
+  maptype <- match.arg(maptype)
   
   if ( !is.null(extraVars) ) {
     unrecognizedVars <- setdiff(extraVars, names(locationTbl))
@@ -155,7 +155,7 @@ table_leaflet <- function(
       "timezone = ", locationTbl$timezone, "<br>",
       "ISO = ", locationTbl$countryCode, ".", locationTbl$stateCode, "<br>",
       "county = ", locationTbl$countyName, "<br>",
-      "address = ", locationTbl$houseNumber, ", ", locationTbl$street, ", ", locationTbl$city, ", ", 
+      "addr. = ", locationTbl$houseNumber, ", ", locationTbl$street, ", ", locationTbl$city, ", ", 
       locationTbl$stateCode, ", ", locationTbl$zip, "<br>"
     )
     

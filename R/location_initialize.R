@@ -11,9 +11,9 @@
 #' @param latitude Single latitude in decimal degrees N.
 #' @param stateDataset Name of spatial dataset to use for determining state
 #' @param elevationService Name of the elevation service to use for determining
-#' the elevation. Default: NULL. Accepted values: "usgs".
+#' the elevation. Default: NULL skips this step. Accepted values: "usgs".
 #' @param addressService Name of the address service to use for determining
-#' the street address. Default: NULL Accepted values: "photon".
+#' the street address. Default: NULL skips this step. Accepted values: "photon".
 #' @param verbose Logical controlling the generation of progress messages.
 #' 
 #' @return Tibble with a single new known location.

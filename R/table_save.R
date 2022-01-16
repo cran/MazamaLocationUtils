@@ -5,7 +5,7 @@
 #' @param collectionName Character identifier for this table.
 #' @param backup Logical specifying whether to save a backup version of any
 #' existing tables sharing \code{collectionName}.
-#' @param outputType Output format, Default: 'rda'
+#' @param outputType Output format. One of "rda" or "csv".
 #' @return File path of saved file.
 #' @examples
 #' library(MazamaLocationUtils)
@@ -37,24 +37,16 @@ table_save <- function(
   locationTbl = NULL,
   collectionName = NULL,
   backup = TRUE,
-  outputType = "rda"
+  outputType = c("rda", "csv")
 ) {
   
   # ----- Validate parameters --------------------------------------------------
   
   MazamaLocationUtils::validateLocationTbl(locationTbl, locationOnly = FALSE)
   MazamaCoreUtils::stopIfNull(collectionName)
+  outputType <- match.arg(outputType)
   
   dataDir <- getLocationDataDir()
-  
-  validOutputTypes <- c("rda", "csv")
-  validTypesString <- paste0(validOutputTypes, collapse = ", ")
-  if ( !outputType %in% validOutputTypes ) {
-    stop(sprintf(
-      "outputType \"%s\" is not recognized. Please use one of \"%s\"",
-      outputType, validTypesString
-    ))
-  }
   
   # ----- Save data ------------------------------------------------------------
   
@@ -82,8 +74,8 @@ table_save <- function(
       
     } else if ( outputType == "csv" ) {
       
-      readr::write_csv(locationTbl, path = filePath)
-      
+      readr::write_csv(locationTbl, file = filePath)
+
     }
     
   }, silent = TRUE)

@@ -1,3 +1,26 @@
+# MazamaLocationUtils 0.3.1
+
+* Updated `location_getCensusBlock()` to add `censusYear` argument.
+* Minor documentation improvements.
+
+# MazamaLocationUtils 0.3.0
+
+* Added `table_addOpenCageInfo()` with support for reverse geocoding using 
+**tidygeocoder**.
+* `mazama_initialize()` now only loads the high resolution datasets used in
+`location_initialize()`.
+
+# MazamaLocationUtils 0.2.9
+
+* Function signatures now provide multiple options where appropriate and these
+are checked with `match.arg()`.
+* Updated `table_load()` looks for .rda and then .csv versions.
+* Updated `table_save()` to avoid deprecated arguments to `readr::write_csv()`.
+
+# MazamaLocationUtils 0.2.8
+
+* Removed unused dependency on **digest**.
+
 # MazamaLocationUtils 0.2.7
 
 * All examples now meet the CRAN directive to avoid stopping if a web 

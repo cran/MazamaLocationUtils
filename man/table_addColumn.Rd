@@ -28,7 +28,7 @@ Updated tibble of known locations.
 }
 \description{
 A new metadata column is added to the \code{locationTbl}. For
-matching \code{locationID} records the assaociated \code{locatioData} is
+matching \code{locationID} records, the associated \code{locatioData} is
 inserted. Otherwise, the new column will be initialized with \code{NA}.
 }
 \examples{

@@ -1,6 +1,12 @@
 
 #' @title Load a known location table
 #' @description Load a tibble of known locations from the preferred directory.
+#' 
+#' The known location table must be named either \code{<collectionName>.rda}
+#' or \code{<collectionName>.csv}. If both are found, only 
+#' \code{<collectionName>.rda} will be loaded to ensure that columns will have
+#' the proper type assigned.
+#' 
 #' @param collectionName Character identifier for this table.
 #' @return Tibble of known locations.
 #' @examples
@@ -41,9 +47,25 @@ table_load <- function(
   
   result <- try({
     
+    # First try the .rda version
     fileName <- paste0(collectionName, ".rda")
     filePath <- file.path(dataDir, fileName)
-    locationTbl <- get(load(filePath))
+    if ( file.exists(filePath) ) {
+      locationTbl <- get(load(filePath))
+    } else {
+      # Then try the .csv version
+      fileName <- paste0(collectionName, ".csv")
+      filePath <- file.path(dataDir, fileName)
+      if ( file.exists(filePath) ) {
+        locationTbl <- readr::read_csv(
+          filePath,
+          progress = FALSE,
+          show_col_types = FALSE
+        )
+      } else {
+        stop(sprintf("No '%s' collection table found in ", collectionName, dataDir))
+      }
+    }
     
   }, silent = TRUE)
   

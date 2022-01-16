@@ -5,50 +5,52 @@
 \alias{MazamaLocationUtils}
 \title{Manage Spatial Metadata for Known Locations}
 \description{
-A suite of utility functions for discovering and managing 
+A suite of utility functions for discovering and managing
 metadata associated with sets of spatially unique "known locations".
 
 This package is intended to be used in support of data management activities
 associated with fixed locations in space. The motivating fields include both
-air and water quality monitoring where fixed sensors report at regular time 
+air and water quality monitoring where fixed sensors report at regular time
 intervals.
 }
 \details{
 When working with environmental monitoring time series, one of the first things
-you have to do is create unique identifiers for each individual time series. 
-In an ideal world, each environmental time series would have both a 
-\code{locationID} and a \code{sensorID} that uniquely identify the spatial location and 
-specific instrument making measurements. A unique \code{timeseriesID} could
-be produced as \code{locationID_sensorID}. Metadata associated with each
-time series would contain basic information needed for downstream analysis
+you have to do is create unique identifiers for each individual time series. In
+an ideal world, each environmental time series would have both a
+\code{locationID} and a \code{deviceID} that uniquely identify the specific instrument
+making measurements and the physical location where measurements are made. A
+unique \code{timeseriesID} could
+be produced as \code{locationID_deviceID}. Metadata associated with each
+\code{timeseriesID} would contain basic information needed for downstream analysis
 including at least:
+
 \preformatted{
-  timeseriesID, locationID, sensorID, longitude, latitude, ...
+  timeseriesID, locationID, deviceID, longitude, latitude, ...
 }
 
 \itemize{
 \item{Multiple sensors placed at a location could be be grouped by \code{locationID}.}
-\item{An extended timeservers for a mobile sensor would group by \code{sensorID}.}
+\item{An extended timeservers for a mobile sensor would group by \code{deviceID}.}
 \item{Maps would be created using \code{longitude, latitude}.}
 \item{Time series would be accessed from a secondary \code{data} table with \code{timeseriesID}.}
 }
 
-Unfortunately, we are rarely supplied with a truly unique and truly spatial 
-\code{locationID}. Instead we often use \code{sensorID} or an associated non-spatial
+Unfortunately, we are rarely supplied with a truly unique and truly spatial
+\code{locationID}. Instead we often use \code{deviceID} or an associated non-spatial
 identifier as a standin for \code{locationID}.
 
 Complications we have seen include:
-  
+
 \itemize{
-\item{GPS-reported longitude and latitude can have _jitter_ in the fourth or fifth 
+\item{GPS-reported longitude and latitude can have \emph{jitter} in the fourth or fifth
 decimal place making it challenging to use them to create a unique \code{locationID}.}
-\item{Sensors are sometimes _repositioned_ in what the scientist considers the "same 
+\item{Sensors are sometimes \emph{repositioned} in what the scientist considers the "same
 location".}
 \item{Data for a single sensor goes through different processing pipelines using
 different identifiers and is later brought together as two separate timeseries.}
-\item{The spatial scale of what constitutes a "single location" depends on the 
+\item{The spatial scale of what constitutes a "single location" depends on the
 instrumentation and scientific question being asked.}
-\item{Deriving location-based metadata from spatial datasets is computationally 
+\item{Deriving location-based metadata from spatial datasets is computationally
 intensive unless saved and identified with a unique \code{locationID}.}
 \item{Automated searches for spatial metadata occasionally produce incorrect results
 because of the non-infinite resolution of spatial datasets.}
@@ -60,18 +62,18 @@ already been performed. While requests to add new locations to the table may
 take some time, searches for spatial metadata associated with existing
 locations are simple lookups.
 
-Working in this manner will solve the problems initially mentioned but also 
+Working in this manner will solve the problems initially mentioned but also
 provides further useful functionality.
 
 \itemize{
-\item{Administrators can correct entries in the \code{collectionName} table.  
-(_e.g._ locations in river bends that even high resolution spatial datasets mis-assign)}
-\item{Additional, non-automatable metadata can be added to \code{collectionName}. 
-(_e.g._ commonly used location names within a community of practice)}
+\item{Administrators can correct entries in the \code{collectionName} table.
+(\emph{e.g.} locations in river bends that even high resolution spatial datasets mis-assign)}
+\item{Additional, non-automatable metadata can be added to \code{collectionName}.
+(\emph{e.g.} commonly used location names within a community of practice)}
 \item{Different field campaigns can have separate \code{collectionName} tables.}
 \item{\code{.csv} or \code{.rda} versions of well populated tables can be downloaded from a
 URL and used locally, giving scientists working with known locations instant
-access to spatial data that otherwise requires special skills, large datasets 
+access to spatial data that otherwise requires special skills, large datasets
 and lots of compute cycles.}
 }
 }

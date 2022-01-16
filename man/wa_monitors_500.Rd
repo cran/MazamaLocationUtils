@@ -26,13 +26,13 @@ monitor <- monitor_loadLatest() %>% monitor_subset(stateCodes = "WA")
 lons <- monitor$meta$longitude
 lats <- monitor$meta$latitude
 
-table_initialize() %>%
+table_initialize() \%>\%
   table_addLocation(
     lons, lats, 
     distanceThreshold = 500,
     elevationService = "usgs",
     addressService = "photon"
-  ) %>%
+  ) \%>\%
   table_save("wa_monitors_500")
 }
 }
