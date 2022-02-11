@@ -3,9 +3,10 @@
 #' 
 #' @description Calculate distances between all locations within a known
 #' locations table and return a tibble with the row indices and separation 
-#' distances of those records separated by less than \code{distanceThreshold} meters.
+#' distances of those records separated by less than \code{distanceThreshold} 
+#' meters. Records are returned in order of distance.
 #' 
-#' It is useful when working with new metadata tables to identify ajacent
+#' It is useful when working with new metadata tables to identify adjacent
 #' locations early on so that decisions can be made about the appropriateness
 #' of the specified \code{distanceThreshold}.
 #' 

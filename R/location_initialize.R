@@ -259,14 +259,14 @@ location_initialize <- function(
     "longitude" = longitude,
     "latitude" = latitude,
     "elevation" = elevation,
-    "countryCode" = countryCode,
-    "stateCode" = stateCode,
+    "countryCode" = toupper(countryCode),
+    "stateCode" = toupper(stateCode),
     "countyName" = countyName,
     "timezone" = timezone,
-    "houseNumber" = addressList$houseNumber,
-    "street" = addressList$street,
-    "city" = addressList$city,
-    "zip" = addressList$zip
+    "houseNumber" = as.character(addressList$houseNumber),
+    "street" = as.character(addressList$street),
+    "city" = as.character(addressList$city),
+    "zip" = as.character(addressList$zip)
   )
   
   return(locationTbl)

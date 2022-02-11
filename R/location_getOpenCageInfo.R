@@ -1,30 +1,13 @@
+#' @rdname location_getOpenCageInfo
 #' @export 
+#'
+#' @title Get location information from OpenCage
 #' 
-#' @title Add address fields to a known location table
+#' @description The OpenCage reverse geocoding service is used to obtain all 
+#' available information for a specific location.
 #' 
-#' @description The OpenCage reverse geocoding service is used to update an 
-#' existing table. Updated columns include:
-#' 
-#' \itemize{
-#' \item{countryCode}
-#' \item{stateCode}
-#' \item{countyName}
-#' \item{timezone}
-#' \item{houseNumber}
-#' \item{street}
-#' \item{city}
-#' \item{zip}
-#' \item{address}
-#' }
-#' 
-#' When \code{replaceExisting = TRUE}, all existing address fields are discarded
-#' in favor of the OpenCage versions. To only fill in missing values in
-#' \code{locationTbl}, use \code{replaceExisting = FALSE}.
-#' 
-#' The OpenCage service returns a large number of fields, some of which may be
-#' useful. To add all OpenCage fields to a location table, use 
-#' \code{retainOpenCage = TRUE}. This will append 78+ fields of information,
-#' each each named with a prefix of \code{"opencage_"}.
+#' The data from OpenCage should be considered to be the gold standard for address
+#' information could and should be used to override information we get elsewhere.
 #' 
 #' @note The OpenCage service requires an API key which can be obtained from 
 #' their web site. This API key must be set as an environment variable with:
@@ -33,65 +16,46 @@
 #' Sys.setenv("OPENCAGE_KEY" = "<your api key>")
 #' }
 #' 
-#' Parameters are set for use at the OpenCage "free trial" level which allows
-#' for 1 request/sec and a maximum of 2500 requests per day.
+#' The OpenCage "free trial" level allows for 1 request/sec and a maximum of 
+#' 2500 requests per day.
 #' 
-#' Because of the 1 request/sec default, it is recommended that
-#' \code{table_addOpenCageInfo()} only be used in an interactive session when 
-#' updating a table with a large number of records.
-#' 
-#' @param locationTbl Tibble of known locations.
-#' @param replaceExisting Logical specifying whether to replace existing data
-#' with data obtained from OpenCage.
-#' @param retainOpenCage Logical specifying whether to retain all fields obtained
-#' from OpenCage, each named with a prefix of \code{opencage_}.
+#' @param longitude Single longitude in decimal degrees E.
+#' @param latitude Single latitude in decimal degrees N.
 #' @param verbose Logical controlling the generation of progress messages.
 #' 
-#' @return Tibble of "known locations" enhanced with information from the 
-#' OpenCage reverse geocoding service.
+#' @return Single-row tibble with OpenCage information.
 #' 
 #' @references \url{https://opencagedata.com}
 #' 
-#' @examples
+#' @examples 
 #' \donttest{
 #' library(MazamaLocationUtils)
 #' 
 #' # Fail gracefully if any resources are not available
 #' try({
 #' 
-#'   myTbl <- id_monitors_500[1:3,]
-#'   myTbl$countryCode[1] <- NA
-#'   myTbl$countryCode[2] <- "WRONG"
-#'   myTbl$countyName[3] <- "WRONG"
-#'   myTbl$timezone <- NA
-#' 
-#'   dplyr::glimpse(myTbl)
-#' 
 #'   Sys.setenv("OPENCAGE_KEY" = "<YOUR_KEY>")
 #' 
-#'   table_addOpenCageInfo(myTbl) %>% 
-#'     dplyr::glimpse()
+#'   # Wenatchee
+#'   lon <- -120.325278
+#'   lat <- 47.423333
 #' 
-#'   table_addOpenCageInfo(myTbl, replaceExisting = TRUE) %>% 
-#'     dplyr::glimpse()
-#' 
-#'   table_addOpenCageInfo(myTbl, replaceExisting = TRUE, retainOpenCage = TRUE) %>% 
-#'     dplyr::glimpse()
+#'   openCageTbl <- location_getOpenCageInfo(lon, lat)
+#'   dplyr::glimpse(openCageTbl)
 #'   
 #' }, silent = FALSE)
 #' }
-
-table_addOpenCageInfo <- function(
-  locationTbl = NULL,
-  replaceExisting = FALSE,
-  retainOpenCage = FALSE,
+#' 
+location_getOpenCageInfo <- function(
+  longitude = NULL,
+  latitude = NULL,
   verbose = FALSE
 ) {
   
   # ----- Validate parameters --------------------------------------------------
   
-  MazamaLocationUtils::validateLocationTbl(locationTbl, locationOnly = FALSE)
-
+  validateLonLat(longitude, latitude)  
+  
   if ( Sys.getenv("OPENCAGE_KEY") == "" )  {
     stop("Revese geocoding with OpenCage requires an API key 
 Please set one with Sys.setenv(\"OPENCAGE_KEY\" = \"<YOUR_KEY>\").")
@@ -99,20 +63,18 @@ Please set one with Sys.setenv(\"OPENCAGE_KEY\" = \"<YOUR_KEY>\").")
   
   # ----- Reverse geocode ------------------------------------------------------
   
-  openCageTbl <- tidygeocoder::reverse_geocode(
-    locationTbl,
-    lat = "latitude", 
-    long = "longitude",  
+  openCageTbl <- tidygeocoder::reverse_geo(
+    latitude, 
+    longitude,  
     method = "opencage",
     address = "address",
-    return_input = FALSE,
     limit = 1,
     full_results = TRUE,
     mode = "",
     unique_only = FALSE,
     return_coords = TRUE,
     min_time = NULL,
-    progress_bar = FALSE,
+    progress_bar = verbose,
     quiet = !verbose,
     api_url = NULL,
     timeout = 20,
@@ -206,112 +168,19 @@ Please set one with Sys.setenv(\"OPENCAGE_KEY\" = \"<YOUR_KEY>\").")
   # $ components.village                          <chr> NA, "West Salmon", NA
   # $ components.city                             <chr> NA, NA, "Meridian", N
   
-  # ----- Replace values -------------------------------------------------------
-  
-  # * countryCode -----
-  
-  if ( replaceExisting ) {
-    locationTbl$countryCode <- toupper(openCageTbl$components.country_code)
-  } else {
-    mask <- is.na(locationTbl$countryCode)
-    locationTbl$countryCode[mask] <- toupper(openCageTbl$components.country_code[mask])
-  }
-  
-  # * stateCode -----
-  
-  if ( replaceExisting ) {
-    locationTbl$stateCode <- toupper(openCageTbl$components.state_code)
-  } else {
-    mask <- is.na(locationTbl$stateCode)
-    locationTbl$stateCode[mask] <- toupper(openCageTbl$components.state_code[mask])
-  }
-  
-  # * countyName -----
-  
-  if ( replaceExisting ) {
-    locationTbl$countyName <- 
-      stringr::str_replace(openCageTbl$components.county, " County", "")
-  } else {
-    mask <- is.na(locationTbl$countyName)
-    locationTbl$countyName[mask] <- 
-      stringr::str_replace(openCageTbl$components.county[mask], " County", "")
-  }
-  
-  # * timezone -----
-  
-  if ( replaceExisting ) {
-    locationTbl$timezone <- openCageTbl$annotations.timezone.name
-  } else {
-    mask <- is.na(locationTbl$timezone)
-    locationTbl$timezone[mask] <- openCageTbl$annotations.timezone.name[mask]
-  }
-  
-  # * houseNumber -----
-  
-  if ( replaceExisting ) {
-    locationTbl$houseNumber <- as.character(openCageTbl$components.house_number)
-  } else {
-    mask <- is.na(locationTbl$houseNumber)
-    locationTbl$houseNumber[mask] <- as.character(openCageTbl$components.house_number[mask])
-  }
-  
-  # * street -----
-  
-  if ( replaceExisting ) {
-    locationTbl$street <- as.character(openCageTbl$components.road)
-  } else {
-    mask <- is.na(locationTbl$street)
-    locationTbl$street[mask] <- as.character(openCageTbl$components.road[mask])
-  }
-  
-  # * city -----
-  
-  if ( replaceExisting ) {
-    locationTbl$city <- as.character(openCageTbl$components.town)
-  } else {
-    mask <- is.na(locationTbl$city)
-    locationTbl$city[mask] <- as.character(openCageTbl$components.town[mask])
-  }
-  
-  # NOTE:  Some OpenCage records are missing "town" but have "city" so add this
-  # NOTE:  where records are still missing a value
-  mask <- is.na(locationTbl$city)
-  locationTbl$city[mask] <- as.character(openCageTbl$components.city[mask])
-  
-  # * city -----
-  
-  if ( replaceExisting ) {
-    locationTbl$zip <- as.character(openCageTbl$components.postcode)
-  } else {
-    mask <- is.na(locationTbl$zip)
-    locationTbl$zip[mask] <- as.character(openCageTbl$components.postcode[mask])
-  }
-  
-  # * address -----
-  
-  # NOTE:  'address' is not part of the core metdata but is very useful
-  if ( !"address" %in% names(locationTbl) ) 
-    locationTbl$address <- as.character(NA)
-  
-  if ( replaceExisting ) {
-    locationTbl$address <- as.character(openCageTbl$address)
-  } else {
-    mask <- is.na(locationTbl$address)
-    locationTbl$address[mask] <- as.character(openCageTbl$address[mask])
-  }
 
-  # ----- Add openCage ---------------------------------------------------------
+  # ----- Fixes ----------------------------------------------------------------
   
-  if ( retainOpenCage ) {
-    
-    names(openCageTbl) <- paste0("opencage_", names(openCageTbl))
-    locationTbl <- dplyr::bind_cols(locationTbl, openCageTbl)
-    
+  # NOTE:  Fix any column types (typically <int> or <dbl> needs to become <character>)
+  
+  if ( "components.road_reference" %in% names(openCageTbl) ) {
+    openCageTbl$components.road_reference <-
+      as.character(openCageTbl$components.road_reference)
   }
   
   # ----- Return ---------------------------------------------------------------
   
-  return(locationTbl)
+  return(openCageTbl)
   
 }
 
@@ -320,13 +189,15 @@ Please set one with Sys.setenv(\"OPENCAGE_KEY\" = \"<YOUR_KEY>\").")
 if ( FALSE ) {
   
   library(MazamaLocationUtils)
-
-  locationTbl <- 
-    MazamaLocationUtils::id_monitors_500 %>%
-    dplyr::slice(1:5)
   
-  replaceExisting <- TRUE
-  retainOpenCage <- TRUE
-  verbose <- FALSE
+  locationTbl <- 
+    MazamaLocationUtils::id_monitors_500
+  
+  i <- 22
+  longitude <- locationTbl$longitude[i]
+  latitude <- locationTbl$latitude[i]
+  verbose <- TRUE
+  
+  
   
 }

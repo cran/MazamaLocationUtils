@@ -1,3 +1,16 @@
+# MazamaLocationUtils 0.3.3
+
+* Updated `table_findAdjacentLocations()` to only only return unique locations
+and to ensure they are returned in order of separation distance.
+* Corrected behavior when using `jitter = 0` in `table_leaflet()` and 
+`table_leafletAdd()`.
+* Added `table_filterByDistance()`.
+
+# MazamaLocationUtils 0.3.2
+
+* Ensure that address components are of class "character" throughout the code.
+* Added `location_getOpenCageInfo()` to get OpenCage information for a single location.
+
 # MazamaLocationUtils 0.3.1
 
 * Updated `location_getCensusBlock()` to add `censusYear` argument.

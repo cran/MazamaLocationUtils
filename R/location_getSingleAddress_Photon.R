@@ -139,14 +139,14 @@ location_getSingleAddress_Photon <- function(
   # ----- Create addressList ---------------------------------------------------
   
   addressList <- list(
-    houseNumber = photonList$housenumber,
-    street = photonList$street,
-    city = photonList$city,
+    houseNumber = as.character(photonList$housenumber),
+    street = as.character(photonList$street),
+    city = as.character(photonList$city),
     stateName = photonList$stateName,
-    stateCode = photonList$stateCode,
-    zip = photonList$postcode,
+    stateCode = toupper(photonList$stateCode),
+    zip = as.character(photonList$postcode),
     countryName = photonList$country,
-    countryCode = photonList$countrycode
+    countryCode = toupper(photonList$countrycode)
   )
   
   # countryCode 

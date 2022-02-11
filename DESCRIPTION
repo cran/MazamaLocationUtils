@@ -1,6 +1,6 @@
 Type: Package
 Package: MazamaLocationUtils
-Version: 0.3.1
+Version: 0.3.3
 Title: Manage Spatial Metadata for Known Locations
 Authors@R: c(
     person("Jonathan", "Callahan", email="jonathan.s.callahan@gmail.com", role=c("aut","cre")),
@@ -26,9 +26,9 @@ VignetteBuilder: knitr
 LazyData: true
 RoxygenNote: 7.1.2
 NeedsCompilation: no
-Packaged: 2022-01-16 17:10:22 UTC; jonathancallahan
+Packaged: 2022-02-11 00:58:52 UTC; jonathancallahan
 Author: Jonathan Callahan [aut, cre],
   Eli Grosman [ctb],
   Oliver Fogelin [ctb]
 Repository: CRAN
-Date/Publication: 2022-01-16 17:52:42 UTC
+Date/Publication: 2022-02-11 03:20:02 UTC

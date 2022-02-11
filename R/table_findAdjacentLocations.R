@@ -1,11 +1,12 @@
 #'
 #' @title Finds adjacent locations in a known locations table.
 #' 
-#' @description Calculates distances between all locations within a known
-#' locations table and returns a tibble with the row indices and separation 
-#' distances of those records separated by less than \code{distanceThreshold} meters.
+#' @description Calculate distances between all locations within a known
+#' locations table and return a tibble containing all records that have an 
+#' adjacent location separated by less than \code{distanceThreshold} meters.
+#' The return tibble is ordered by separation distance.
 #' 
-#' It is useful when working with new metadata tables to identify ajacent
+#' It is useful when working with new metadata tables to identify adjacent
 #' locations early on so that decisions can be made about the appropriateness
 #' of the specified \code{distanceThreshold}.
 #' 
@@ -63,7 +64,26 @@ table_findAdjacentLocations <- function(
   # ----- Subset locationTbl ---------------------------------------------------
   
   adjacentDistanceTbl <- table_findAdjacentDistances(locationTbl, distanceThreshold, measure)
-  indices <- c(dplyr::pull(adjacentDistanceTbl, 1), dplyr::pull(adjacentDistanceTbl, 2))
+  
+  # > head(adjacentDistanceTbl)
+  # # A tibble: 6 × 3
+  #    row1  row2 distance
+  #   <int> <int>    <dbl>
+  # 1   117   800    0.334
+  # 2   282   652    0.444
+  # 3   250   269    0.445
+  # 4   117   795    0.445
+  # 5    22   910    0.445
+  # 6    22   518    0.445
+  
+  # Base R tricks to return unique set of indices in order of separation distance
+  indices <- 
+    adjacentDistanceTbl[,1:2] %>%
+    as.matrix() %>%
+    t() %>%
+    as.numeric() %>%
+    unique()
+  
   adjacentLocationTbl <- locationTbl[indices,]
   
   # ----- Return ---------------------------------------------------------------

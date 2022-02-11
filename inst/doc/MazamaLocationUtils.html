@@ -478,10 +478,9 @@ code > span.er { color: #a61717; background-color: #e3d2d2; }
 <span id="cb10-5"><a href="#cb10-5" aria-hidden="true"></a>  <span class="dt">latitude =</span> lats,</span>
 <span id="cb10-6"><a href="#cb10-6" aria-hidden="true"></a>  <span class="dt">distanceThreshold =</span> <span class="dv">500</span></span>
 <span id="cb10-7"><a href="#cb10-7" aria-hidden="true"></a>) <span class="op">%&gt;%</span><span class="st"> </span>dplyr<span class="op">::</span><span class="kw">pull</span>(city)</span></code></pre></div>
-<pre><code>##  [1] &quot;Okanogan County&quot; NA                NA                &quot;Auburn&quot;         
-##  [5] &quot;Anacortes&quot;       &quot;Quincy&quot;          &quot;Tulalip Bay&quot;     NA               
-##  [9] NA                &quot;Wenatchee&quot;       &quot;Walla Walla&quot;     &quot;Chehalis&quot;       
-## [13] &quot;Tacoma&quot;</code></pre>
+<pre><code>##  [1] NA           NA           NA           &quot;Auburn&quot;     &quot;Anacortes&quot; 
+##  [6] &quot;Quincy&quot;     NA           &quot;Shelton&quot;    &quot;Ellensburg&quot; &quot;Wenatchee&quot; 
+## [11] NA           NA           NA</code></pre>
 <div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true"></a><span class="co"># How about 5000 meters?</span></span>
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true"></a><span class="kw">table_getNearestLocation</span>(</span>
 <span id="cb12-3"><a href="#cb12-3" aria-hidden="true"></a>  wa_monitors_<span class="dv">500</span>,</span>

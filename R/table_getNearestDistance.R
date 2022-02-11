@@ -1,7 +1,9 @@
 
 #' @title Return distances to nearest known locations
-#' @description Returns distances from known locations in \code{locationTbl},
-#' one for each incoming location. If no known location is found within
+#' @description Returns distances between known locations in \code{locationTbl},
+#' and a vector of target locations specified by \code{longitude} and \code{latitude}.
+#' Only a single distance to the closest known location is returned for each 
+#' incoming target location. If no known location is found within
 #' \code{distanceThreshold} meters for a particular
 #' incoming location, that distance in the vector will be \code{NA}.
 #' 

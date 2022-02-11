@@ -125,11 +125,11 @@ location_getSingleAddress_TexasAM <- function(
     
     # Assemble the addressList
     addressList <- list(
-      houseNumber = houseNumber,
-      street = street,
-      city = locationInfo$City,
-      stateCode = locationInfo$State,
-      zip = locationInfo$Zip,
+      houseNumber = as.character(houseNumber),
+      street = as.character(street),
+      city = as.character(locationInfo$City),
+      stateCode = toupper(locationInfo$State),
+      zip = as.character(locationInfo$Zip),
       countryCode = "US",
       countryName = "United States of America" # Texas A&M ONLY works in US
     )

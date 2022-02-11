@@ -82,9 +82,9 @@ location_getCensusBlock <- function(
     
     returnObj <- httr::content(r)
     censusList <- list(
-      stateCode = returnObj$State$code,
-      countyName = returnObj$County$name,
-      censusBlock = returnObj$Block$FIPS
+      stateCode = toupper(returnObj$State$code),
+      countyName = as.character(returnObj$County$name),
+      censusBlock = as.character(returnObj$Block$FIPS)
     )
     
     if (is.null(censusList$censusBlock) ) {

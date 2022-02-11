@@ -73,24 +73,24 @@ library(MazamaLocationUtils)
 # Fail gracefully if any resources are not available
 try({
 
-myTbl <- id_monitors_500[1:3,]
-myTbl$countryCode[1] <- NA
-myTbl$countryCode[2] <- "WRONG"
-myTbl$countyName[3] <- "WRONG"
-myTbl$timezone <- NA
+  myTbl <- id_monitors_500[1:3,]
+  myTbl$countryCode[1] <- NA
+  myTbl$countryCode[2] <- "WRONG"
+  myTbl$countyName[3] <- "WRONG"
+  myTbl$timezone <- NA
 
-dplyr::glimpse(myTbl)
+  dplyr::glimpse(myTbl)
 
-Sys.setenv("OPENCAGE_KEY" = "<YOUR_KEY>")
+  Sys.setenv("OPENCAGE_KEY" = "<YOUR_KEY>")
 
-table_addOpenCageInfo(myTbl) \%>\% 
-  dplyr::glimpse()
+  table_addOpenCageInfo(myTbl) \%>\% 
+    dplyr::glimpse()
 
-table_addOpenCageInfo(myTbl, replaceExisting = TRUE) \%>\% 
-  dplyr::glimpse()
+  table_addOpenCageInfo(myTbl, replaceExisting = TRUE) \%>\% 
+    dplyr::glimpse()
 
-table_addOpenCageInfo(myTbl, replaceExisting = TRUE, retainOpenCage = TRUE) \%>\% 
-  dplyr::glimpse()
+  table_addOpenCageInfo(myTbl, replaceExisting = TRUE, retainOpenCage = TRUE) \%>\% 
+    dplyr::glimpse()
   
 }, silent = FALSE)
 }

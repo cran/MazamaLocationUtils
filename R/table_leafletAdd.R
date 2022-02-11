@@ -54,6 +54,10 @@ table_leafletAdd <- function(
   
   hasCoreMetadata <- all(coreMetadataNames %in% names(locationTbl))
   
+  if ( is.null(jitter) || is.na(jitter) || jitter == 0 ) {
+    jitter <- 1e-9
+  }
+  
   # * argsList -----
   
   argsList <- list(...)
