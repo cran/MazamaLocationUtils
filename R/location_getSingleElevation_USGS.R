@@ -9,8 +9,10 @@
 #' 
 #' @return Numeric elevation value.
 #' 
-#' @description USGS APIs are used to determine the elevation associated with
-#' the \code{longitude} and \code{latitude}.
+#' @description USGS APIs are used to determine the elevation in meters 
+#' associated with the \code{longitude} and \code{latitude}.
+#' 
+#' _Note: The conversion factor for meters to feet is 3.28084._
 #' 
 #' @examples
 #' \donttest{

@@ -54,8 +54,6 @@ table_addCoreMetadata <- function(
   locationTbl = NULL
 ) {
   
-  validateMazamaSpatialUtils()
-  
   # ----- Validate parameters --------------------------------------------------
   
   MazamaLocationUtils::validateLocationTbl(locationTbl, locationOnly = TRUE)

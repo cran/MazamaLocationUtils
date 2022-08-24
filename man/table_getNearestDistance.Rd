@@ -15,34 +15,48 @@ table_getNearestDistance(
 \arguments{
 \item{locationTbl}{Tibble of known locations.}
 
-\item{longitude}{Vector of longitudes in decimal degrees E.}
+\item{longitude}{Vector of target longitudes in decimal degrees E.}
 
-\item{latitude}{Vector of latitudes in decimal degrees N.}
+\item{latitude}{Vector of target latitudes in decimal degrees N.}
 
 \item{distanceThreshold}{Distance in meters.}
 
 \item{measure}{One of "haversine" "vincenty", "geodesic", or "cheap"
-specifying desired method of geodesic distance calculation.
-
-See \code{geodist::\link[geodist:geodist]{geodist}} for details.}
+specifying desired method of geodesic distance calculation.}
 }
 \value{
-Vector of distances from known locations.
+Vector of closest distances between target locations and known locations.
 }
 \description{
-Returns distances between known locations in \code{locationTbl},
-and a vector of target locations specified by \code{longitude} and \code{latitude}.
-Only a single distance to the closest known location is returned for each
-incoming target location. If no known location is found within
-\code{distanceThreshold} meters for a particular
-incoming location, that distance in the vector will be \code{NA}.
+Returns distances between target locations and the closest
+location found in \code{locationTbl} (if any). Target locations are specified
+with \code{longitude} and \code{latitude}.
+
+For each target location, only a single distance to the closest known location
+is returned. If no known location is found within
+\code{distanceThreshold}, the distance associated with that target location
+will be \code{NA}. The length and order of resulting distances will match the
+order of the incoming target locations.
 }
 \note{
 The measure \code{"cheap"} may be used to speed things up depending on
 the spatial scale being considered. Distances calculated with
 \code{measure = "cheap"} will vary by a few meters compared with those
 calculated using \code{measure = "geodesic"}.
+
+See \code{geodist::\link[geodist:geodist]{geodist}} for details.
 }
+\section{Use Case}{
+
+You may have a set of locations of interest for which you want to assess whether
+any monitoring locations are nearby. In this case, the locations of interest
+will provide \code{longitude} and \code{latitude} while \code{locationTbl}
+will be the known location table associated with the monitoring locations.
+
+The resulting vector of distances will tell you the distance, for each
+target location, to the nearst monitoring location.
+}
+
 \examples{
 library(MazamaLocationUtils)
 

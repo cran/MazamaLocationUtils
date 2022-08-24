@@ -15,11 +15,13 @@ table_updateColumn(
 \arguments{
 \item{locationTbl}{Tibble of known locations.}
 
-\item{columnName}{Name to use for the new column.}
+\item{columnName}{Name of an existing/new column in \code{locationTbl} whose data
+will be updated/created.}
 
 \item{locationID}{Vector of \code{locationID} strings.}
 
-\item{locationData}{Vector of data to used at matching records.}
+\item{locationData}{Vector of data to be inserted at records identified by
+\code{locationID}.}
 
 \item{verbose}{Logical controlling the generation of progress messages.}
 }
@@ -27,9 +29,14 @@ table_updateColumn(
 Updated tibble of known locations.
 }
 \description{
-For matching \code{locationID}, records the associated
-\code{locationData} is used to replace any existing value in \code{columnName}.
-\code{NA} values in \code{locationID} will be ignored.
+Updates records in a location table. Records are identified
+by \code{locationID} and the data found in \code{locationData} is used to
+replace any existing value in the \code{columnName} column.
+\code{locationID} and \code{locationData} must be of the same length.
+Any \code{NA} values in \code{locationID} will be ignored.
+
+If \code{columnName} is not a named column within \code{locationTbl}, a new
+column will be created.
 }
 \examples{
 library(MazamaLocationUtils)

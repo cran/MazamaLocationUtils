@@ -91,7 +91,7 @@ table_addOpenCageInfo <- function(
   # ----- Validate parameters --------------------------------------------------
   
   MazamaLocationUtils::validateLocationTbl(locationTbl, locationOnly = FALSE)
-
+  
   if ( Sys.getenv("OPENCAGE_KEY") == "" )  {
     stop("Revese geocoding with OpenCage requires an API key 
 Please set one with Sys.setenv(\"OPENCAGE_KEY\" = \"<YOUR_KEY>\").")
@@ -210,96 +210,116 @@ Please set one with Sys.setenv(\"OPENCAGE_KEY\" = \"<YOUR_KEY>\").")
   
   # * countryCode -----
   
-  if ( replaceExisting ) {
-    locationTbl$countryCode <- toupper(openCageTbl$components.country_code)
-  } else {
-    mask <- is.na(locationTbl$countryCode)
-    locationTbl$countryCode[mask] <- toupper(openCageTbl$components.country_code[mask])
+  if ( "components.country_code" %in% names(openCageTbl) ) {
+    if ( replaceExisting ) {
+      locationTbl$countryCode <- toupper(openCageTbl$components.country_code)
+    } else {
+      mask <- is.na(locationTbl$countryCode)
+      locationTbl$countryCode[mask] <- toupper(openCageTbl$components.country_code[mask])
+    }
   }
   
   # * stateCode -----
   
-  if ( replaceExisting ) {
-    locationTbl$stateCode <- toupper(openCageTbl$components.state_code)
-  } else {
-    mask <- is.na(locationTbl$stateCode)
-    locationTbl$stateCode[mask] <- toupper(openCageTbl$components.state_code[mask])
+  if ( "components.state_code" %in% names(openCageTbl) ) {
+    if ( replaceExisting ) {
+      locationTbl$stateCode <- toupper(openCageTbl$components.state_code)
+    } else {
+      mask <- is.na(locationTbl$stateCode)
+      locationTbl$stateCode[mask] <- toupper(openCageTbl$components.state_code[mask])
+    }
   }
   
   # * countyName -----
   
-  if ( replaceExisting ) {
-    locationTbl$countyName <- 
-      stringr::str_replace(openCageTbl$components.county, " County", "")
-  } else {
-    mask <- is.na(locationTbl$countyName)
-    locationTbl$countyName[mask] <- 
-      stringr::str_replace(openCageTbl$components.county[mask], " County", "")
+  if ( "components.county" %in% names(openCageTbl) ) {
+    if ( replaceExisting ) {
+      locationTbl$countyName <- 
+        stringr::str_replace(openCageTbl$components.county, " County", "")
+    } else {
+      mask <- is.na(locationTbl$countyName)
+      locationTbl$countyName[mask] <- 
+        stringr::str_replace(openCageTbl$components.county[mask], " County", "")
+    }
   }
   
   # * timezone -----
   
-  if ( replaceExisting ) {
-    locationTbl$timezone <- openCageTbl$annotations.timezone.name
-  } else {
-    mask <- is.na(locationTbl$timezone)
-    locationTbl$timezone[mask] <- openCageTbl$annotations.timezone.name[mask]
+  if ( "annotations.timezone.name" %in% names(openCageTbl) ) {
+    if ( replaceExisting ) {
+      locationTbl$timezone <- openCageTbl$annotations.timezone.name
+    } else {
+      mask <- is.na(locationTbl$timezone)
+      locationTbl$timezone[mask] <- openCageTbl$annotations.timezone.name[mask]
+    }
   }
   
   # * houseNumber -----
   
-  if ( replaceExisting ) {
-    locationTbl$houseNumber <- as.character(openCageTbl$components.house_number)
-  } else {
-    mask <- is.na(locationTbl$houseNumber)
-    locationTbl$houseNumber[mask] <- as.character(openCageTbl$components.house_number[mask])
+  if ( "components.house_number" %in% names(openCageTbl) ) {
+    if ( replaceExisting ) {
+      locationTbl$houseNumber <- as.character(openCageTbl$components.house_number)
+    } else {
+      mask <- is.na(locationTbl$houseNumber)
+      locationTbl$houseNumber[mask] <- as.character(openCageTbl$components.house_number[mask])
+    }
   }
   
   # * street -----
   
-  if ( replaceExisting ) {
-    locationTbl$street <- as.character(openCageTbl$components.road)
-  } else {
-    mask <- is.na(locationTbl$street)
-    locationTbl$street[mask] <- as.character(openCageTbl$components.road[mask])
+  if ( "components.road" %in% names(openCageTbl) ) {
+    if ( replaceExisting ) {
+      locationTbl$street <- as.character(openCageTbl$components.road)
+    } else {
+      mask <- is.na(locationTbl$street)
+      locationTbl$street[mask] <- as.character(openCageTbl$components.road[mask])
+    }
   }
   
   # * city -----
   
-  if ( replaceExisting ) {
-    locationTbl$city <- as.character(openCageTbl$components.town)
-  } else {
-    mask <- is.na(locationTbl$city)
-    locationTbl$city[mask] <- as.character(openCageTbl$components.town[mask])
+  if ( "components.town" %in% names(openCageTbl) ) {
+    if ( replaceExisting ) {
+      locationTbl$city <- as.character(openCageTbl$components.town)
+    } else {
+      mask <- is.na(locationTbl$city)
+      locationTbl$city[mask] <- as.character(openCageTbl$components.town[mask])
+    }
   }
   
   # NOTE:  Some OpenCage records are missing "town" but have "city" so add this
   # NOTE:  where records are still missing a value
-  mask <- is.na(locationTbl$city)
-  locationTbl$city[mask] <- as.character(openCageTbl$components.city[mask])
+  if ( "components.city" %in% names(openCageTbl) ) {
+    mask <- is.na(locationTbl$city)
+    locationTbl$city[mask] <- as.character(openCageTbl$components.city[mask])
+  }
   
-  # * city -----
+  # * zip -----
   
-  if ( replaceExisting ) {
-    locationTbl$zip <- as.character(openCageTbl$components.postcode)
-  } else {
-    mask <- is.na(locationTbl$zip)
-    locationTbl$zip[mask] <- as.character(openCageTbl$components.postcode[mask])
+  if ( "components.postcode" %in% names(openCageTbl) ) {
+    if ( replaceExisting ) {
+      locationTbl$zip <- as.character(openCageTbl$components.postcode)
+    } else {
+      mask <- is.na(locationTbl$zip)
+      locationTbl$zip[mask] <- as.character(openCageTbl$components.postcode[mask])
+    }
   }
   
   # * address -----
   
-  # NOTE:  'address' is not part of the core metdata but is very useful
+  # NOTE:  'address' is not part of the core metadata but is very useful
   if ( !"address" %in% names(locationTbl) ) 
     locationTbl$address <- as.character(NA)
   
-  if ( replaceExisting ) {
-    locationTbl$address <- as.character(openCageTbl$address)
-  } else {
-    mask <- is.na(locationTbl$address)
-    locationTbl$address[mask] <- as.character(openCageTbl$address[mask])
+  if ( "address" %in% names(openCageTbl) ) {
+    if ( replaceExisting ) {
+      locationTbl$address <- as.character(openCageTbl$address)
+    } else {
+      mask <- is.na(locationTbl$address)
+      locationTbl$address[mask] <- as.character(openCageTbl$address[mask])
+    }
   }
-
+  
   # ----- Add openCage ---------------------------------------------------------
   
   if ( retainOpenCage ) {
@@ -320,7 +340,7 @@ Please set one with Sys.setenv(\"OPENCAGE_KEY\" = \"<YOUR_KEY>\").")
 if ( FALSE ) {
   
   library(MazamaLocationUtils)
-
+  
   locationTbl <- 
     MazamaLocationUtils::id_monitors_500 %>%
     dplyr::slice(1:5)

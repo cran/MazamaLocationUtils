@@ -178,6 +178,12 @@ Please set one with Sys.setenv(\"OPENCAGE_KEY\" = \"<YOUR_KEY>\").")
       as.character(openCageTbl$components.road_reference)
   }
   
+  if ( "components.building" %in% names(openCageTbl) ) {
+    cat(sprintf("location with 'building'= %f, %f\n", longitude, latitude))
+    openCageTbl$components.building <-
+      as.character(openCageTbl$components.building)
+  }
+  
   # ----- Return ---------------------------------------------------------------
   
   return(openCageTbl)

@@ -1,12 +1,21 @@
 
 #' @title Update a column of metadata in a table
-#' @description For matching \code{locationID}, records the associated 
-#' \code{locationData} is used to replace any existing value in \code{columnName}.
-#' \code{NA} values in \code{locationID} will be ignored.
+#' 
+#' @description Updates records in a location table. Records are identified
+#' by \code{locationID} and the data found in \code{locationData} is used to 
+#' replace any existing value in the \code{columnName} column.
+#' \code{locationID} and \code{locationData} must be of the same length.
+#' Any \code{NA} values in \code{locationID} will be ignored.
+#' 
+#' If \code{columnName} is not a named column within \code{locationTbl}, a new
+#' column will be created.
+#' 
 #' @param locationTbl Tibble of known locations.
-#' @param columnName Name to use for the new column.
+#' @param columnName Name of an existing/new column in \code{locationTbl} whose data
+#' will be updated/created.
 #' @param locationID Vector of \code{locationID} strings.
-#' @param locationData Vector of data to used at matching records.
+#' @param locationData Vector of data to be inserted at records identified by 
+#' \code{locationID}.
 #' @param verbose Logical controlling the generation of progress messages.
 #' @return Updated tibble of known locations.
 #' @examples
@@ -47,6 +56,7 @@
 #' @export 
 #' @importFrom MazamaCoreUtils stopIfNull
 #' @importFrom dplyr bind_rows
+
 table_updateColumn <- function(
   locationTbl = NULL,
   columnName = NULL,
@@ -86,8 +96,15 @@ table_updateColumn <- function(
     locationTbl <- table_addColumn(locationTbl, columnName)
   
   if ( !is.null(locationData) ) {
-    # Get the indices to be updated
+    # Get the record indices to be updated
     recordIndex <- table_getRecordIndex(locationTbl, locationID)
+
+    # Remove incoming locationData not associated with any record
+    mask <- !is.na(recordIndex)
+    recordIndex <- recordIndex[mask]
+    locationData <- locationData[mask]
+  
+    # Updated record data
     locationTbl[[columnName]][recordIndex] <- locationData
   }
   
