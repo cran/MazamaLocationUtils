@@ -112,7 +112,7 @@ table_getNearestDistance <- function(
   
   for ( index in seq_len(nrow(myUniqueTbl)) ) {
     
-    if ( any(distance[,index] <= distanceThreshold) ) {
+    if ( any(distance[,index] <= distanceThreshold, na.rm = TRUE) ) {
       myUniqueTbl$nearestDistance[index] <-  min(distance[,index], na.rm = TRUE)
     }
     

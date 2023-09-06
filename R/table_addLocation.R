@@ -89,7 +89,7 @@ table_addLocation <- function(
   longitude <- longitude[!naMask]
   latitude <- latitude[!naMask]
   
-  if ( verbose && any(naMask) ) {
+  if ( verbose && any(naMask, na.rm = TRUE) ) {
     message(sprintf(
       "%d of the %d requested locations have NA values",
       length(which(naMask)), incomingCount

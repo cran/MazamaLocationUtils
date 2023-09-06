@@ -2,15 +2,11 @@
 % Please edit documentation in R/utils.R
 \name{validateLonsLats}
 \alias{validateLonsLats}
-\title{Validate longitude and latitude vectors
-
-See \code{MazamaCoreUtils::\link[MazamaCoreUtils:validateLonsLats]{validateLonsLats}} for details.}
+\title{Validate longitude and latitude vectors}
 \usage{
 validateLonsLats(longitude = NULL, latitude = NULL, na.rm = FALSE)
 }
 \description{
-Validate longitude and latitude vectors
-
 See \code{MazamaCoreUtils::\link[MazamaCoreUtils:validateLonsLats]{validateLonsLats}} for details.
 }
 \keyword{internal}

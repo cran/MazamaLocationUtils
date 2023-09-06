@@ -35,7 +35,7 @@ validateMazamaSpatialUtils <- function() {
 
 
 #' @title Validate longitude and latitude vectors
-#'
+#' @description
 #' See \code{MazamaCoreUtils::\link[MazamaCoreUtils:validateLonsLats]{validateLonsLats}} for details.
 #'
 #' @name validateLonsLats
@@ -48,7 +48,7 @@ NULL
 
 
 #' @title Validate longitude and latitude values
-#'
+#' @description
 #' See \code{MazamaCoreUtils::\link[MazamaCoreUtils:validateLonLat]{validateLonLat}} for details.
 #'
 #' @name validateLonLat

@@ -1,6 +1,7 @@
 #'
 #' @docType package
 #' @name MazamaLocationUtils
+#' @aliases MazamaLocationUtils-package
 #' @title Manage Spatial Metadata for Known Locations
 #' @description A suite of utility functions for discovering and managing 
 #' metadata associated with sets of spatially unique "known locations".

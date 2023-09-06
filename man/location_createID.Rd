@@ -4,12 +4,18 @@
 \alias{location_createID}
 \title{Create one or more unique locationIDs}
 \usage{
-location_createID(longitude = NULL, latitude = NULL)
+location_createID(
+  longitude = NULL,
+  latitude = NULL,
+  algorithm = c("digest", "geohash")
+)
 }
 \arguments{
 \item{longitude}{Vector of longitudes in decimal degrees E.}
 
 \item{latitude}{Vector of latitudes in decimal degrees N.}
+
+\item{algorithm}{Algorithm to use -- either \code{"digest"} or \code{"geohash"}.}
 }
 \value{
 Vector of character locationIDs.
@@ -28,6 +34,10 @@ lon <- -120.325278
 lat <- 47.423333
 locationID <- location_createID(lon, lat)
 print(locationID)
+
+geohashID <- location_createID(lon, lat, algorithm = "geohash")
+print(geohashID)
+
 }
 \references{
 \url{https://en.wikipedia.org/wiki/Decimal_degrees}

@@ -1,3 +1,18 @@
+# MazamaLocationUtils 0.3.11
+
+* Added `algorithm argument` to location_createID() to select between "digest"
+and "geohash".
+* Addressed CRAN package documentation issue.
+
+# MazamaLocationUtils 0.3.10
+
+* Added `na.rm = TRUE` to all calls to `any(...)` in various `table_~()` functions.
+
+# MazamaLocationUtils 0.3.9
+
+* Updated `location_getSingleElevation_USGS()` to use the new web service at
+https://apps.nationalmap.gov/pqs/.
+
 # MazamaLocationUtils 0.3.8
 
 * Updated documentation in `location_getSingleElevation_USGS()`.

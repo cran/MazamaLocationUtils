@@ -44,5 +44,5 @@ try({
 
 }
 \references{
-\url{https://nationalmap.gov/epqs/}
+\url{https://apps.nationalmap.gov/pqs/}
 }

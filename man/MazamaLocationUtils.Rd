@@ -3,6 +3,7 @@
 \docType{package}
 \name{MazamaLocationUtils}
 \alias{MazamaLocationUtils}
+\alias{MazamaLocationUtils-package}
 \title{Manage Spatial Metadata for Known Locations}
 \description{
 A suite of utility functions for discovering and managing

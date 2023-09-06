@@ -93,7 +93,7 @@ table_getLocationID <- function(
   
   for ( index in seq_len(nrow(myUniqueTbl)) ) {
 
-    if ( any(distance[,index] <= distanceThreshold) ) {
+    if ( any(distance[,index] <= distanceThreshold, na.rm = TRUE) ) {
       row <- which(distance[,index] == min(distance[,index], na.rm = TRUE))
       myUniqueTbl$locationID[index] <- locationTbl$locationID[row]
     }

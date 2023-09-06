@@ -7,6 +7,7 @@
 #'
 #' @param longitude Vector of longitudes in decimal degrees E.
 #' @param latitude Vector of latitudes in decimal degrees N.
+#' @param algorithm Algorithm to use -- either \code{"digest"} or \code{"geohash"}.
 #' @return Vector of character locationIDs.
 #' @examples
 #' library(MazamaLocationUtils)
@@ -16,6 +17,10 @@
 #' lat <- 47.423333
 #' locationID <- location_createID(lon, lat)
 #' print(locationID)
+#' 
+#' geohashID <- location_createID(lon, lat, algorithm = "geohash")
+#' print(geohashID)
+#' 
 #' @references \url{https://en.wikipedia.org/wiki/Decimal_degrees}
 #' @references \url{https://www.johndcook.com/blog/2017/01/10/probability-of-secure-hash-collisions/}
 #' @rdname location_createID
@@ -23,10 +28,11 @@
 #' 
 location_createID <- function(
   longitude = NULL,
-  latitude = NULL
+  latitude = NULL,
+  algorithm = c("digest", "geohash")
 ) {
-  
-  returnVal <- MazamaCoreUtils::createLocationID(longitude, latitude)
+
+  returnVal <- MazamaCoreUtils::createLocationID(longitude, latitude, algorithm)
   return(returnVal)
   
 }

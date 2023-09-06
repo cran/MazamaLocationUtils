@@ -45,7 +45,7 @@ table_getRecordIndex <- function(
   for ( index in seq_along(locationID) ) {
     
     if ( !is.na(locationID[index]) ) {
-      if ( any(locationTbl$locationID == locationID[index]) ) {
+      if ( any(locationTbl$locationID == locationID[index], na.rm = TRUE) ) {
         recordIndex[index] <- which(locationTbl$locationID == locationID[index])
       }
     }

@@ -30,7 +30,7 @@
 #' }, silent = FALSE)
 #' }
 #' 
-#' @references \url{https://nationalmap.gov/epqs/}
+#' @references \url{https://apps.nationalmap.gov/pqs/}
 #' 
 location_getSingleElevation_USGS <- function(
   longitude = NULL,
@@ -44,20 +44,37 @@ location_getSingleElevation_USGS <- function(
 
   # ----- Get USGS elevation data ----------------------------------------------
   
-  # https://nationalmap.gov/epqs/pqs.php?x=-123.4&y=47.24&units=Meters&output=json
+  # https://apps.nationalmap.gov/pqs/#/result?x=-122.2345&y=47.1234&units=Meters&format=JSON&wkid=4326&includeDate=False
   
-  # Create url
-  url <- httr::parse_url("https://nationalmap.gov/epqs/pqs.php")
+  # {
+  #   "location": {
+  #     "x": -122.2345,
+  #     "y": 47.1234,
+  #     "spatialReference": {
+  #       "wkid": 4326,
+  #       "latestWkid": 4326
+  #     }
+  #   },
+  #   "locationId": 0,
+  #   "value": "42.277534485",
+  #   "rasterId": 56925,
+  #   "resolution": 1
+  # }
   
-  url$query <- list(
-    x= longitude,
-    y = latitude,
-    units = 'Meters',
-    output = 'json'
+  # Under the hood:
+  
+  # https://elevation.nationalmap.gov/arcgis/rest/services/3DEPElevation/ImageServer/getSamples?geometry={%27x%27:-122.234000,%27y%27:47.567000,%27spatialReference%27:{%27wkid%27:4326}}&geometryType=esriGeometryPoint&returnFirstValueOnly=true&f=json
+  
+  # Returns:
+  
+  # {"samples":[{"location":{"x":-122.23399999999999,"y":47.234000000000002,"spatialReference":{"wkid":4326,"latestWkid":4326}},"locationId":0,"value":"16.342819214","rasterId":76313,"resolution":1}]}
+  
+  url <- sprintf(
+    "https://elevation.nationalmap.gov/arcgis/rest/services/3DEPElevation/ImageServer/getSamples?geometry={'x':%f,'y':%f,'spatialReference':{'wkid':4326}}&geometryType=esriGeometryPoint&returnFirstValueOnly=true&f=json",
+    longitude, latitude
   )
   
-  # Get and parse the return
-  r <- httr::GET(httr::build_url(url))
+  r <- httr::GET(url)
   
   if ( httr::http_error(r) ) {
     
@@ -66,19 +83,18 @@ location_getSingleElevation_USGS <- function(
     if ( verbose ) {
       warning(sprintf(
         "USGS elevation service failed for URL %s", 
-        httr::build_url(url)
+        url
       ))
     }
     
   } else {
     
     returnObj <- httr::content(r)
-    eq <- returnObj$USGS_Elevation_Point_Query_Service$Elevation_Query
+    sample <- returnObj$samples[[1]]
     
-    if ( !is.null(eq) ) {
+    if ( !is.null(sample) ) {
       
-      # See https://nationalmap.gov/epqs/
-      elevation <- ifelse(eq$Elevation < -999999, 0, eq$Elevation)
+      elevation <- as.numeric(sample$value)
       
       # NOTE:  If we were being extra careful we would check the returned x,y
       # NOTE:  to see how much they differ from the requested lon,lat.
@@ -98,6 +114,25 @@ location_getSingleElevation_USGS <- function(
     
   }
   
-  return(elevation)
+  # This page says the vertical accuracy has a RMSE of .53 meters
+  # https://www.usgs.gov/faqs/what-vertical-accuracy-3d-elevation-program-3dep-dems
+  return(round(elevation, 1))
+  
+}
+
+# ===== DEBUGGING ==============================================================
+
+if ( FALSE ) {
+  
+  library(MazamaCoreUtils)
+  
+  longitude <- -112.234
+  latitude <- 57.234
+  verbose <- FALSE
+  
+  
+  location_getSingleElevation_USGS(longitude, latitude, verbose)
+  
+  
   
 }

@@ -31,7 +31,7 @@
 #'   
 #' }, silent = FALSE)
 #' }
-#' @references \url{https://anypoint.mulesoft.com/exchange/portals/fccdomain/}
+#' @references \url{https://geo.fcc.gov/api/census/}
 #' @rdname location_getCensusBlock
 #' @export 
 #' @importFrom utils capture.output
