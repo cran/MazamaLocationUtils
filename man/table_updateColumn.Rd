@@ -58,17 +58,17 @@ locationID <-
     distanceThreshold = 500
   )
   
-locationData <- wa_sub$siteName
+locationData <- wa_sub$AQSID
 
 locationTbl <- 
-  table_updateColumn(locationTbl, "siteName", locationID, locationData)
+  table_updateColumn(locationTbl, "AQSID", locationID, locationData)
 
 # Look at the data we attempted to merge
-wa$siteName[wa_indices]
+wa$AQSID[wa_indices]
 
 # And two columns from the updated locationTbl
 locationTbl_indices <- table_getRecordIndex(locationTbl, locationID)
-locationTbl[locationTbl_indices, c("city", "siteName")]
+locationTbl[locationTbl_indices, c("city", "AQSID")]
 
 }
 \seealso{

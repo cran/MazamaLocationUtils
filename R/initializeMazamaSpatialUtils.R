@@ -1,27 +1,22 @@
-#' @rdname mazama_initialize
-#' 
-#' @export 
-#' @importFrom MazamaSpatialUtils setSpatialDataDir loadSpatialData
-#' 
-#' @title Initialize with MazamaScience standard directories
-#' 
-#' @param spatialDataDir Directory where spatial datasets are found, 
-#' Default: "~/Data/Spatial"
-#' 
-#' @return No return value.
-#' 
-#' @description Convenience function to initialize spatial data. Wraps the 
-#' following setup lines:
-#' 
+#' @export
+#'
+#' @title Initialize MazamaSpatialUtils package
+#'
+#' @param spatialDataDir Directory where \pkg{MazamaSpatialUtils} datasets are found.
+#'
+#' @description Convenience function that wraps:
+#'
 #' \preformatted{
-#' MazamaSpatialUtils::setSpatialDataDir(spatialDataDir)
-#' 
-#' MazamaSpatialUtils::loadSpatialData("EEZCountries.rda")
-#' MazamaSpatialUtils::loadSpatialData("OSMTimezones.rda")
-#' MazamaSpatialUtils::loadSpatialData("NaturalEarthAdm1.rda")
-#' MazamaSpatialUtils::loadSpatialData("USCensusCounties.rda")
+#'   MazamaSpatialUtils::setSpatialDataDir("~/Data/Spatial")
+#'   MazamaSpatialUtils::loadSpatialData("EEZCountries.rda")
+#'.  MazamaSpatialUtils::loadSpatialData("OSMTimezones.rda")
+#'   MazamaSpatialUtils::loadSpatialData("NaturalEarthAdm1.rda")
+#'   MazamaSpatialUtils::loadSpatialData("USCensusCounties.rda")
 #' }
 #' 
+#' If spatial data has not yet been installed, an error is returned with an 
+#' extended message detailing how to install the appropriate data.
+#'
 #' @examples
 #' \donttest{
 #' library(MazamaLocationUtils)
@@ -34,21 +29,27 @@
 #'   MazamaSpatialUtils::setSpatialDataDir(spatialDataDir)
 #' 
 #'   exists("NaturalEarthAdm1")
-#'   mazama_initialize(spatialDataDir)
+#'   initializeMazamaSpatialUtils(spatialDataDir)
 #'   exists("NaturalEarthAdm1")
 #'   class(NaturalEarthAdm1)
 #'   
 #' }, silent = FALSE)
 #' }
-mazama_initialize <- function(
+
+initializeMazamaSpatialUtils <- function(
   spatialDataDir = "~/Data/Spatial"
 ) {
-  
+
+  # ----- Validate Parameters --------------------------------------------------
+
+
+  # ----- Load spatial data ----------------------------------------------------
+
   # Is everything already initialized?
   result <- try({
     validateMazamaSpatialUtils() # swallow warning messages
   }, silent = TRUE)
-
+  
   if ( "try-error" %in% class(result) ) {
     
     # Not initialized, so try to initialize
@@ -70,7 +71,11 @@ mazama_initialize <- function(
       # Installation failed so spit out warning messages
       validateMazamaSpatialUtils()
     }
-   
+    
   }
+  
+  # ----- Return ---------------------------------------------------------------
+  
+  return(invisible(NULL))
   
 }

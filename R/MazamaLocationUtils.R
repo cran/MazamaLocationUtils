@@ -27,25 +27,25 @@
 #' }
 #' 
 #' \itemize{
-#' \item{Multiple sensors placed at a location could be be grouped by \code{locationID}.}
-#' \item{An extended timeservers for a mobile sensor would group by \code{deviceID}.}
+#' \item{An extended time series for an occasionally re-positioned sensor would group by \code{deviceID}.}
+#' \item{Multiple sensors placed at a single location could be be grouped by \code{locationID}.}
 #' \item{Maps would be created using \code{longitude, latitude}.}
 #' \item{Time series would be accessed from a secondary \code{data} table with \code{timeseriesID}.}
 #' }
 #' 
 #' Unfortunately, we are rarely supplied with a truly unique and truly spatial 
 #' \code{locationID}. Instead we often use \code{deviceID} or an associated non-spatial
-#' identifier as a standin for \code{locationID}.
+#' identifier as a stand-in for \code{locationID}.
 #' 
 #' Complications we have seen include:
 #'   
 #' \itemize{
 #' \item{GPS-reported longitude and latitude can have _jitter_ in the fourth or fifth 
 #' decimal place making it challenging to use them to create a unique \code{locationID}.}
-#' \item{Sensors are sometimes _repositioned_ in what the scientist considers the "same 
+#' \item{Sensors are sometimes _re-positioned_ in what the scientist considers the "same 
 #' location".}
 #' \item{Data for a single sensor goes through different processing pipelines using
-#' different identifiers and is later brought together as two separate timeseries.}
+#' different identifiers and is later brought together as two separate time series.}
 #' \item{The spatial scale of what constitutes a "single location" depends on the 
 #' instrumentation and scientific question being asked.}
 #' \item{Deriving location-based metadata from spatial datasets is computationally 
@@ -88,6 +88,24 @@ NULL
 #' @format A vector with 3 elements
 #' @description Character string identifiers of the minimum set of fields 
 #' required for a table to be considered a valid "known locations" table.
+#' 
+#' \preformatted{
+#' coreMetadataNames <- c(
+#'   "locationID",           # from MazamaLocationUtils::location_createID()
+#'   "locationName",         # from MazamaLocationUtils::location_initialize()
+#'   "longitude",            # user supplied
+#'   "latitude",             # user supplied
+#'   "elevation",            # from MazamaLocationUtils::getSingleElevation_USGS()
+#'   "countryCode",          # from MazamaSpatialUtils::getCountryCode()
+#'   "stateCode",            # from MazamaSpatialUtils::getStateCode()
+#'   "countyName",           # from MazamaSpatialUtils::getUSCounty()
+#'   "timezone",             # from MazamaSpatialUtils::getTimezone()
+#'   "houseNumber",          # from MazamaLocationUtils::getSingleAddress_Photon()
+#'   "street",               # from MazamaLocationUtils::getSingleAddress_Photon()
+#'   "city",                 # from MazamaLocationUtils::getSingleAddress_Photon()
+#'   "postalCode"            # from MazamaLocationUtils::getSingleAddress_Photon()
+#' )
+#' }
 
 coreMetadataNames <- c(
   "locationID",           # from MazamaLocationUtils::location_createID()
@@ -102,7 +120,7 @@ coreMetadataNames <- c(
   "houseNumber",          # from MazamaLocationUtils::getSingleAddress_Photon()
   "street",               # from MazamaLocationUtils::getSingleAddress_Photon()
   "city",                 # from MazamaLocationUtils::getSingleAddress_Photon()
-  "zip"                   # from MazamaLocationUtils::getSingleAddress_Photon()
+  "postalCode"            # from MazamaLocationUtils::getSingleAddress_Photon()
 )
 
 # ----- Internal Package State -------------------------------------------------

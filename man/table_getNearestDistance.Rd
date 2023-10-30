@@ -21,7 +21,7 @@ table_getNearestDistance(
 
 \item{distanceThreshold}{Distance in meters.}
 
-\item{measure}{One of "haversine" "vincenty", "geodesic", or "cheap"
+\item{measure}{One of "geodesic", "haversine", "vincenty" or "cheap"
 specifying desired method of geodesic distance calculation.}
 }
 \value{
@@ -44,7 +44,7 @@ the spatial scale being considered. Distances calculated with
 \code{measure = "cheap"} will vary by a few meters compared with those
 calculated using \code{measure = "geodesic"}.
 
-See \code{geodist::\link[geodist:geodist]{geodist}} for details.
+See \code{\link[geodist]{geodist}} for details.
 }
 \section{Use Case}{
 

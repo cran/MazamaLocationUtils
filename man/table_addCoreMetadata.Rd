@@ -4,11 +4,13 @@
 \alias{table_addCoreMetadata}
 \title{Add missing core metadata columns to a known location table}
 \usage{
-table_addCoreMetadata(locationTbl = NULL)
+table_addCoreMetadata(locationTbl = NULL, precision = 10)
 }
 \arguments{
 \item{locationTbl}{Tibble of known locations. This input tibble need not be a
 standardized "known location" with all required columns. They will be added.}
+
+\item{precision}{\code{precision} argument passed on to \link{location_createID}.}
 }
 \value{
 Tibble with the metadata columns required in a "known locations" table.
@@ -30,7 +32,7 @@ the following core metadata columns.
 \item{houseNumber}
 \item{street}
 \item{city}
-\item{zip}
+\item{postalCode}
 }
 
 The \code{longitude} and \code{latitude} columns are required to exist in the

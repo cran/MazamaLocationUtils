@@ -34,7 +34,7 @@ is returned:
 \item{\code{city}}
 \item{\code{stateCode}}
 \item{\code{stateName}}
-\item{\code{zip}}
+\item{\code{postalCode}}
 \item{\code{countryCode}}
 \item{\code{countryName}}
 }
@@ -53,7 +53,7 @@ try({
 
   # Set up standard directories and spatial data
   spatialDataDir <- tempdir() # typically "~/Data/Spatial"
-  mazama_initialize(spatialDataDir)
+  initializeMazamaSpatialUtils(spatialDataDir)
 
   # Wenatchee
   lon <- -120.325278

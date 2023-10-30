@@ -5,7 +5,7 @@
 \alias{wa_airfire_meta}
 \title{Washington monitor metadata dataset}
 \format{
-A tibble with 73 rows and 19 columns of data.
+A tibble with 92 rows and 29 columns of data.
 }
 \usage{
 wa_airfire_meta
@@ -13,16 +13,20 @@ wa_airfire_meta
 \description{
 The \code{wa_pwfsl_meta} dataset provides a set of Washington
 state air quality monitor metadata used by the USFS AirFire group.
-This dataset was generated on 2021-10-19 by running:
+This dataset was generated on 2023-10-24 by running:
 
 \preformatted{
-library(PWFSLSmoke)
+library(AirMonitor)
 
-wa_airfire_meta <- 
-  monitor_loadLatest() %>% 
-  monitor_subset(stateCodes = "WA") \%>\%
-  monitor_extractMeta()
- 
+wa_airfire_meta <-
+  airnow_loadLatest() \%>\%
+  monitor_filter(stateCode == "WA") \%>\%
+  monitor_getMeta() \%>\%
+  # On 2023-10-24, this metdata still uses zip instead of postalCode
+  dplyr::rename(postalCode = zip) \%>\%
+  # Remove internal fields
+  dplyr::select(-dplyr::starts_with("airnow_"))
+
 save(wa_airfire_meta, file = "data/wa_airfire_meta.rda")
 }
 }

@@ -13,7 +13,7 @@
 #' \item{houseNumber}
 #' \item{street}
 #' \item{city}
-#' \item{zip}
+#' \item{postalCode}
 #' \item{address}
 #' }
 #' 
@@ -294,14 +294,14 @@ Please set one with Sys.setenv(\"OPENCAGE_KEY\" = \"<YOUR_KEY>\").")
     locationTbl$city[mask] <- as.character(openCageTbl$components.city[mask])
   }
   
-  # * zip -----
+  # * postalCode -----
   
   if ( "components.postcode" %in% names(openCageTbl) ) {
     if ( replaceExisting ) {
-      locationTbl$zip <- as.character(openCageTbl$components.postcode)
+      locationTbl$postalCode <- as.character(openCageTbl$components.postcode)
     } else {
-      mask <- is.na(locationTbl$zip)
-      locationTbl$zip[mask] <- as.character(openCageTbl$components.postcode[mask])
+      mask <- is.na(locationTbl$postalCode)
+      locationTbl$postalCode[mask] <- as.character(openCageTbl$components.postcode[mask])
     }
   }
   

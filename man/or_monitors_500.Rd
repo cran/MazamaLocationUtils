@@ -5,7 +5,7 @@
 \alias{or_monitors_500}
 \title{Oregon monitor locations dataset}
 \format{
-A tibble with 69 rows and 13 columns of data.
+A tibble with 64 rows and 13 columns of data.
 }
 \usage{
 or_monitors_500
@@ -13,16 +13,16 @@ or_monitors_500
 \description{
 The \code{or_monitor_500} dataset provides a set of known
 locations associated with Oregon state air quality monitors.
-This dataset was generated on 2021-10-19 by running:
+This dataset was generated on 2023-10-24 by running:
 
 \preformatted{
-library(PWFSLSmoke)
+library(AirMonitor)
 library(MazamaLocationUtils)
 
-mazama_initialize()
+initializeMazamaSpatialUtils()
 setLocationDataDir("./data")
 
-monitor <- monitor_loadLatest() %>% monitor_subset(stateCodes = "OR")
+monitor <- monitor_loadLatest() \%>\% monitor_filter(stateCode == "OR")
 lons <- monitor$meta$longitude
 lats <- monitor$meta$latitude
 

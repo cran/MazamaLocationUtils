@@ -7,13 +7,15 @@ names(wa)
 
 ## ----load_data_hidden, eval = TRUE, echo = FALSE------------------------------
 library(MazamaLocationUtils)
-wa_monitors_500 <- get(data("wa_monitors_500", package = "MazamaLocationUtils"))
+wa_monitors_500 <- 
+  get(data("wa_monitors_500", package = "MazamaLocationUtils")) %>%
+  dplyr::mutate(elevation = as.numeric(NA))
 
 ## ----create_table, eval = FALSE, echo = TRUE----------------------------------
 #  library(MazamaLocationUtils)
 #  
 #  # Initialize with standard directories
-#  mazama_initialize()
+#  initializeMazamaSpatialUtils()
 #  setLocationDataDir("./data")
 #  
 #  wa_monitors_500 <-
@@ -21,7 +23,7 @@ wa_monitors_500 <- get(data("wa_monitors_500", package = "MazamaLocationUtils"))
 #    table_addLocation(wa$longitude, wa$latitude, distanceThreshold = 500)
 
 ## ----basic_columns------------------------------------------------------------
-dplyr::glimpse(wa_monitors_500)
+dplyr::glimpse(wa_monitors_500, width = 75)
 
 ## ----import_colmns------------------------------------------------------------
 # Use a subset of the wa metadata
@@ -39,18 +41,18 @@ locationID <- table_getLocationID(
   distanceThreshold = 500
 )
 
-# Now add the "siteName" column for our subset of locations
-locationData <- wa_sub$siteName
+# Now add the "AQSID" column for our subset of locations
+locationData <- wa_sub$AQSID
 locationTbl <- table_updateColumn(
   locationTbl, 
-  columnName = "siteName", 
+  columnName = "AQSID", 
   locationID = locationID, 
   locationData = locationData
 )
 
 # Lets see how we did
 locationTbl_indices <- table_getRecordIndex(locationTbl, locationID)
-locationTbl[locationTbl_indices, c("city", "siteName")]
+locationTbl[locationTbl_indices, c("city", "AQSID")]
 
 ## ----new_locations------------------------------------------------------------
 # Create new locations near our known locations
@@ -65,12 +67,12 @@ table_getNearestLocation(
   distanceThreshold = 50
 ) %>% dplyr::pull(city)
 
-# Any known locations within 500 meters
+# Any known locations within 250 meters
 table_getNearestLocation(
   wa_monitors_500,
   longitude = lons,
   latitude = lats,
-  distanceThreshold = 500
+  distanceThreshold = 250
 ) %>% dplyr::pull(city)
 
 # How about 5000 meters?
@@ -90,15 +92,6 @@ table_getNearestLocation(
 #    installSpatialData("OSMTimezones")
 #    installSpatialData("NaturalEarthAdm1")
 #    installSpatialData("USCensusCounties")
-#  
-#  Once the required datasets have been installed, the easiest way to set things
-#  up each session is with:
-#  
-
-## ----easy_setup, echo = TRUE, eval = FALSE------------------------------------
-#    library(MazamaLocationUtils)
-#    mazama_initialize()
-#    setLocationDataDir("~/Data/KnownLocations")
 
 ## ----standard_setup, echo = TRUE, eval = FALSE--------------------------------
 #    MazamaSpatialUtils::setSpatialDataDir("~/Data/Spatial")
@@ -107,4 +100,9 @@ table_getNearestLocation(
 #    MazamaSpatialUtils::loadSpatialData("OSMTimezones.rda")
 #    MazamaSpatialUtils::loadSpatialData("NaturalEarthAdm1.rda")
 #    MazamaSpatialUtils::loadSpatialData("USCensusCounties.rda")
+
+## ----easy_setup, echo = TRUE, eval = FALSE------------------------------------
+#    library(MazamaLocationUtils)
+#    initializeMazamaSpatialData()
+#    setLocationDataDir("~/Data/KnownLocations")
 

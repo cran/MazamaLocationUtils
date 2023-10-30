@@ -4,7 +4,7 @@ test_that("table_addLocation() works", {
   skip_on_cran()
   skip_on_travis()
   
-  mazama_initialize()
+  initializeMazamaSpatialUtils()
   locationTbl <- get(data("wa_monitors_500"))
   # Add a new record
   testTbl <- table_addLocation(locationTbl, -111.111, 44.444, 500, verbose = FALSE)

@@ -30,25 +30,25 @@ including at least:
 }
 
 \itemize{
-\item{Multiple sensors placed at a location could be be grouped by \code{locationID}.}
-\item{An extended timeservers for a mobile sensor would group by \code{deviceID}.}
+\item{An extended time series for an occasionally re-positioned sensor would group by \code{deviceID}.}
+\item{Multiple sensors placed at a single location could be be grouped by \code{locationID}.}
 \item{Maps would be created using \code{longitude, latitude}.}
 \item{Time series would be accessed from a secondary \code{data} table with \code{timeseriesID}.}
 }
 
 Unfortunately, we are rarely supplied with a truly unique and truly spatial
 \code{locationID}. Instead we often use \code{deviceID} or an associated non-spatial
-identifier as a standin for \code{locationID}.
+identifier as a stand-in for \code{locationID}.
 
 Complications we have seen include:
 
 \itemize{
 \item{GPS-reported longitude and latitude can have \emph{jitter} in the fourth or fifth
 decimal place making it challenging to use them to create a unique \code{locationID}.}
-\item{Sensors are sometimes \emph{repositioned} in what the scientist considers the "same
+\item{Sensors are sometimes \emph{re-positioned} in what the scientist considers the "same
 location".}
 \item{Data for a single sensor goes through different processing pipelines using
-different identifiers and is later brought together as two separate timeseries.}
+different identifiers and is later brought together as two separate time series.}
 \item{The spatial scale of what constitutes a "single location" depends on the
 instrumentation and scientific question being asked.}
 \item{Deriving location-based metadata from spatial datasets is computationally

@@ -34,7 +34,7 @@ test_that("passing distanceThreshold = 1000 returns empty tibble", {
   expect_equal(class(result), c("tbl_df", "tbl", "data.frame"))
   
   # Is it empty?
-  expect_equal(nrow(result), 1)
+  expect_equal(nrow(result), 0)
   
 })
 
@@ -46,7 +46,7 @@ test_that("passing distanceThreshold = 4000 returns expected output", {
   expect_equal(class(result), c("tbl_df", "tbl", "data.frame"))
   
   # Is it the expected tibble?
-  correctTbl <- dplyr::tibble(row1 = c(72, 1, 2, 1), row2 = c(73, 2, 32, 42), distance = c(461, 2412, 3329, 3628))
+  correctTbl <- dplyr::tibble(row1 = c(46, 30, 39, 49), row2 = c(74, 46, 70, 74), distance = c(2412, 3329, 3599, 3628))
   expect_equal(result$row1, correctTbl$row1)
   expect_equal(result$row2, correctTbl$row2)
   expect_equal(round(result$distance, 0), correctTbl$distance)

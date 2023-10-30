@@ -15,8 +15,10 @@
 #' @param longitude Vector of longitudes in decimal degrees E.
 #' @param latitude Vector of latitudes in decimal degrees N.
 #' @param distanceThreshold Distance in meters.
-#' @param measure One of "haversine" "vincenty", "geodesic", or "cheap" 
-#' specifying desired method of geodesic distance calculation. See \code{?geodist::geodist}.
+#' @param measure One of "geodesic", "haversine", "vincenty" or "cheap" 
+#' specifying desired method of geodesic distance calculation. 
+#' See \code{\link[geodist]{geodist}}.
+#' 
 #' @return Vector of known \code{locationID}s.
 #' @examples
 #' locationTbl <- get(data("wa_monitors_500"))

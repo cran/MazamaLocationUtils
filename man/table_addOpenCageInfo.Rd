@@ -38,7 +38,7 @@ existing table. Updated columns include:
 \item{houseNumber}
 \item{street}
 \item{city}
-\item{zip}
+\item{postalCode}
 \item{address}
 }
 

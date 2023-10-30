@@ -26,7 +26,7 @@ columns of core metadata:
 \item{houseNumber}
 \item{street}
 \item{city}
-\item{zip}
+\item{postalCode}
 }
 }
 \examples{

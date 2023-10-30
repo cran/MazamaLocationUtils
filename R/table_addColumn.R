@@ -2,7 +2,7 @@
 #' @title Add a new column of metadata to a table
 #' 
 #' @description A new metadata column is added to the \code{locationTbl}. For
-#' matching \code{locationID} records, the associated \code{locatioData} is
+#' matching \code{locationID} records, the associated \code{locationData} is
 #' inserted. Otherwise, the new column will be initialized with \code{NA}.
 #' 
 #' @param locationTbl Tibble of known locations.
@@ -23,7 +23,7 @@
 #' # Add an empty column
 #' locationTbl <-
 #'   locationTbl %>%
-#'   table_addColumn("siteName")
+#'   table_addColumn("AQSID")
 #'   
 #' names(locationTbl)
 #' 

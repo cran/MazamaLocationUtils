@@ -53,9 +53,11 @@ try({
 
   # Set up standard directories and spatial data
   spatialDataDir <- tempdir() # typically "~/Data/Spatial"
-  mazama_initialize(spatialDataDir)
+  initializeMazamaSpatialUtils(spatialDataDir)
 
   locationTbl <- get(data("wa_monitors_500"))
+  
+  nrow(locationTbl)
 
   # Coulee City, WA
   lon <- -119.290904
@@ -64,6 +66,8 @@ try({
   locationTbl <- 
     locationTbl \%>\%
     table_addSingleLocation(lon, lat, distanceThreshold = 500)
+    
+  nrow(locationTbl)
   
 }, silent = FALSE)
 }

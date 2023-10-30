@@ -1,21 +1,45 @@
+# ----- API Keys ---------------------------------------------------------------
 
-#' @title Get API key
+#' @docType data
+#' @keywords environment
+#' @name APIKeys
+#' @title API keys for data services.
+#' @format Character strings.
+#' @description This package maintains an internal set of API keys which
+#' users can set using \code{setAPIKey()}. These keys will be remembered for
+#' the duration of an R session. This functionality provides an abstraction
+#' layer in dependent packages so that data access functions can test for and
+#' access specific API keys with generic code.
+#' 
+#' @details
+#' The following functions help with the management of API keys:
+#' 
+#' \code{getAPIKey()} -- Returns the API key associated with a web service.
+#' If \code{provider == NULL} a list is returned containing all recognized
+#' API keys.
+#' 
+#' \code{setAPIKey()} -- Sets the API key associated with a web service.
+#' Silently returns previous value of the API key.
+#' 
+#' \code{showAPIKeys()} -- Returns a list of all currently set API keys.
+#'
+NULL
+
+
+#' @rdname APIKeys
 #' @name getAPIKey
 #' @export
 #' @importFrom MazamaCoreUtils getAPIKey
-#' @description Returns the API key associated with a web service.
 NULL
 
-#' @title Set API key
+#' @rdname APIKeys
 #' @name setAPIKey
 #' @export
 #' @importFrom MazamaCoreUtils setAPIKey
-#' @description Sets the API key associated with a web service.
 NULL
 
-#' @title Show API keys
+#' @rdname APIKeys
 #' @name showAPIKeys
 #' @export
 #' @importFrom MazamaCoreUtils showAPIKeys
-#' @description Prints a list of all currently set API keys.
 NULL

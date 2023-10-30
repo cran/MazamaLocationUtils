@@ -16,11 +16,11 @@
 #'
 #' @details The \code{maptype} argument is mapped onto leaflet "ProviderTile"
 #'   names. Current mappings include:
-#' \enumerate{
-#' \item{"roadmap"}{ -- "OpenStreetMap"}
-#' \item{"satellite"}{ -- "Esri.WorldImagery"}
-#' \item{"terrain"}{ -- "Esri.WorldTopoMap"}
-#' \item{"toner"}{ -- "Stamen.Toner"}
+#' \itemize{
+#' \item{"roadmap" => "OpenStreetMap"}
+#' \item{"satellite" => "Esri.WorldImagery"}
+#' \item{"terrain" => "Esri.WorldTopoMap"}
+#' \item{"toner" => "Stamen.Toner"}
 #' }
 #'
 #' If a character string not listed above is provided, it will be used as the
@@ -156,7 +156,7 @@ table_leaflet <- function(
       "ISO = ", locationTbl$countryCode, ".", locationTbl$stateCode, "<br>",
       "county = ", locationTbl$countyName, "<br>",
       "addr. = ", locationTbl$houseNumber, ", ", locationTbl$street, ", ", locationTbl$city, ", ", 
-      locationTbl$stateCode, ", ", locationTbl$zip, "<br>"
+      locationTbl$stateCode, ", ", locationTbl$postalCode, "<br>"
     )
     
     

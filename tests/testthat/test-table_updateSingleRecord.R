@@ -20,7 +20,7 @@ test_that("table_updateSingleRecord() works", {
     dplyr::filter(city == "Wenatchee") %>%
     dplyr::pull(locationName)
   
-  expect_equal(wenatcheeOldName, "us.wa_8e5431")
+  expect_equal(wenatcheeOldName, "us.wa_c26mvd")
   expect_equal(wenatcheeNewName, "Wenatchee-Fifth St")
 })
 

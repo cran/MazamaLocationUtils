@@ -30,14 +30,14 @@ names(locationTbl)
 # Add a new column
 locationTbl <-
   locationTbl \%>\%
-  table_addColumn("siteName")
+  table_addColumn("AQSID")
   
 names(locationTbl)
 
 # Now remove it
 locationTbl <-
   locationTbl \%>\%
-  table_removeColumn("siteName")
+  table_removeColumn("AQSID")
 
 names(locationTbl)
 
@@ -45,7 +45,7 @@ try({
   # Cannot remove "core" metadata
   locationTbl <-
     locationTbl \%>\%
-    table_removeColumn("zip")
+    table_removeColumn("longitude")
 }, silent = FALSE)
 
 }

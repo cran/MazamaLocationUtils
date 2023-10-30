@@ -21,8 +21,9 @@ table_getLocationID(
 
 \item{distanceThreshold}{Distance in meters.}
 
-\item{measure}{One of "haversine" "vincenty", "geodesic", or "cheap"
-specifying desired method of geodesic distance calculation. See \code{?geodist::geodist}.}
+\item{measure}{One of "geodesic", "haversine", "vincenty" or "cheap"
+specifying desired method of geodesic distance calculation.
+See \code{\link[geodist]{geodist}}.}
 }
 \value{
 Vector of known \code{locationID}s.

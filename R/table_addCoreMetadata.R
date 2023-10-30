@@ -17,7 +17,7 @@
 #' \item{houseNumber}
 #' \item{street}
 #' \item{city}
-#' \item{zip}
+#' \item{postalCode}
 #' }
 #' 
 #' The \code{longitude} and \code{latitude} columns are required to exist in the
@@ -41,6 +41,7 @@
 #' 
 #' @param locationTbl Tibble of known locations. This input tibble need not be a 
 #' standardized "known location" with all required columns. They will be added.
+#' @param precision \code{precision} argument passed on to \link{location_createID}.
 #' 
 #' @return Tibble with the metadata columns required in a "known locations" table.
 #' 
@@ -51,7 +52,8 @@
 #' @importFrom rlang .data
 #' 
 table_addCoreMetadata <- function(
-  locationTbl = NULL
+  locationTbl = NULL,
+  precision = 10
 ) {
   
   # ----- Validate parameters --------------------------------------------------
@@ -66,7 +68,9 @@ table_addCoreMetadata <- function(
   
   locationTbl$locationID <- location_createID(
     longitude = locationTbl$longitude,
-    latitude = locationTbl$latitude
+    latitude = locationTbl$latitude,
+    algorithm = "geohash",
+    precision = precision
   )
   
   # * elevation -----
@@ -123,10 +127,10 @@ table_addCoreMetadata <- function(
     locationTbl$city <- as.character(NA)
   }
   
-  # * zip -----
+  # * postalCode -----
   
-  if ( !"zip" %in% incomingTblColumns ) {
-    locationTbl$zip <- as.character(NA)
+  if ( !"postalCode" %in% incomingTblColumns ) {
+    locationTbl$postalCode <- as.character(NA)
   }
   
   # ----- Reorganize locationTbl -----------------------------------------------
@@ -135,7 +139,7 @@ table_addCoreMetadata <- function(
     "locationID", "locationName", 
     "longitude", "latitude", "elevation", 
     "countryCode", "stateCode", "countyName", "timezone", 
-    "houseNumber", "street", "city", "zip"
+    "houseNumber", "street", "city", "postalCode"
   )
   
   extraColumns <- setdiff(incomingTblColumns, requiredColumns)

@@ -13,26 +13,26 @@ id_monitors_500
 \description{
 The \code{id_monitor_500} dataset provides a set of known
 locations associated with Idaho state air quality monitors.
-This dataset was generated on 2021-10-19 by running:
+This dataset was generated on 2023-10-24 by running:
 
 \preformatted{
-library(PWFSLSmoke)
+library(AirMonitor)
 library(MazamaLocationUtils)
 
-mazama_initialize()
+initializeMazamaSpatialUtils()
 setLocationDataDir("./data")
 
-monitor <- monitor_loadLatest() %>% monitor_subset(stateCodes = "ID")
+monitor <- monitor_loadLatest() \%>\% monitor_filter(stateCode == "ID")
 lons <- monitor$meta$longitude
 lats <- monitor$meta$latitude
 
 table_initialize() \%>\%
   table_addLocation(
-    lons, lats, 
-      distanceThreshold = 500,
-      elevationService = "usgs",
-      addressService = "photon"
-    ) \%>\%
+    lons, lats,
+    distanceThreshold = 500,
+    elevationService = "usgs",
+    addressService = "photon"
+  ) \%>\%
   table_save("id_monitors_500")
 }
 }

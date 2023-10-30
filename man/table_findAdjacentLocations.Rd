@@ -48,11 +48,11 @@ meta <- wa_airfire_meta
 # Any locations closer than 2 km?
 meta \%>\%
   table_findAdjacentLocations(distanceThreshold = 2000) \%>\%
-  dplyr::select(siteName, timezone)
+  dplyr::select(AQSID, timezone)
 
 # How about 4 km?
 meta \%>\%
   table_findAdjacentLocations(distanceThreshold = 4000) \%>\%
-  dplyr::select(siteName, timezone)
+  dplyr::select(AQSID, timezone)
 
 }

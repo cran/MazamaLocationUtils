@@ -97,7 +97,7 @@ table_leafletAdd <- function(
       "ISO = ", locationTbl$countryCode, ".", locationTbl$stateCode, "<br>",
       "county = ", locationTbl$countyName, "<br>",
       "addr. = ", locationTbl$houseNumber, ", ", locationTbl$street, ", ", locationTbl$city, ", ", 
-      locationTbl$stateCode, ", ", locationTbl$zip, "<br>"
+      locationTbl$stateCode, ", ", locationTbl$postalCode, "<br>"
     )
     
     

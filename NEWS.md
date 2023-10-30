@@ -1,3 +1,17 @@
+# MazamaLocationUtils 0.4.1
+
+* Documentation fixes for CRAN submission.
+
+# MazamaLocationUtils 0.4.0
+
+* Added `clusterByDistance()` and `table_addClustering()` functions.
+* Renamed `zip` to `postalCode` in the core metadata.
+* `location_createID()` now defaults to the `"geohash"` algorithm.
+* Renamed `mazama_initialize()` to `initializeMazamaSpatialUtils()`.
+* Updated example data to October, 2023.
+* Added "Developer Style Guide" vignette.
+* Improved documentation.
+
 # MazamaLocationUtils 0.3.11
 
 * Added `algorithm argument` to location_createID() to select between "digest"

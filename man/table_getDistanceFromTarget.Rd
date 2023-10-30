@@ -18,7 +18,7 @@ table_getDistanceFromTarget(
 
 \item{latitude}{Target latitude in decimal degrees N.}
 
-\item{measure}{One of "haversine" "vincenty", "geodesic", or "cheap"
+\item{measure}{One of "geodesic", "haversine", "vincenty" or "cheap"
 specifying desired method of geodesic distance calculation.}
 }
 \value{

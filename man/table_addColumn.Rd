@@ -28,7 +28,7 @@ Updated tibble of known locations.
 }
 \description{
 A new metadata column is added to the \code{locationTbl}. For
-matching \code{locationID} records, the associated \code{locatioData} is
+matching \code{locationID} records, the associated \code{locationData} is
 inserted. Otherwise, the new column will be initialized with \code{NA}.
 }
 \examples{
@@ -41,7 +41,7 @@ names(locationTbl)
 # Add an empty column
 locationTbl <-
   locationTbl \%>\%
-  table_addColumn("siteName")
+  table_addColumn("AQSID")
   
 names(locationTbl)
 

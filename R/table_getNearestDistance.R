@@ -10,7 +10,7 @@
 #' @param longitude Vector of target longitudes in decimal degrees E.
 #' @param latitude Vector of target latitudes in decimal degrees N.
 #' @param distanceThreshold Distance in meters.
-#' @param measure One of "haversine" "vincenty", "geodesic", or "cheap" 
+#' @param measure One of "geodesic", "haversine", "vincenty" or "cheap" 
 #' specifying desired method of geodesic distance calculation. 
 #' 
 #' @description Returns distances between target locations and the closest
@@ -37,7 +37,7 @@
 #' \code{measure = "cheap"} will vary by a few meters compared with those 
 #' calculated using \code{measure = "geodesic"}.
 #' 
-#' See \code{geodist::\link[geodist:geodist]{geodist}} for details.
+#' See \code{\link[geodist]{geodist}} for details.
 #' 
 #' @return Vector of closest distances between target locations and known locations.
 #' @examples

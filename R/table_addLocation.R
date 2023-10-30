@@ -31,7 +31,7 @@
 #' 
 #'   # Set up standard directories and spatial data
 #'   spatialDataDir <- tempdir() # typically "~/Data/Spatial"
-#'   mazama_initialize(spatialDataDir)
+#'   initializeMazamaSpatialUtils(spatialDataDir)
 #' 
 #'   locationTbl <- get(data("wa_monitors_500"))
 #' 
@@ -156,6 +156,7 @@ table_addLocation <- function(
           longitude[i], latitude[i]
         ))
       }
+      
       locationTbl <- table_addSingleLocation(
         locationTbl = locationTbl,
         longitude = longitude[i],
@@ -186,5 +187,22 @@ table_addLocation <- function(
   # ----- Return ---------------------------------------------------------------
   
   return(locationTbl)
+  
+}
+
+# ===== DEBUGGING ==============================================================
+
+if ( FALSE ) {
+  
+  
+  locationTbl = table_initialize()
+  longitude = -113.7868
+  latitude = 42.60782
+  distanceThreshold = 500
+  stateDataset = "NaturalEarthAdm1"
+  elevationService = "usgs"
+  addressService = "photon"
+  verbose = TRUE
+  
   
 }

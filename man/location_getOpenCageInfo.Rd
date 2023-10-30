@@ -28,7 +28,7 @@ The OpenCage service requires an API key which can be obtained from
 their web site. This API key must be set as an environment variable with:
 
 \preformatted{
-Sys.setenv("OPENCAGE_KEY" = "<your api key>")
+Sys.setenv("OPENCAGE_KEY" = "YOUR_PERSONAL_API_KEY")
 }
 
 The OpenCage "free trial" level allows for 1 request/sec and a maximum of
@@ -41,11 +41,11 @@ library(MazamaLocationUtils)
 # Fail gracefully if any resources are not available
 try({
 
-  Sys.setenv("OPENCAGE_KEY" = "<YOUR_KEY>")
-
   # Wenatchee
   lon <- -120.325278
   lat <- 47.423333
+
+  Sys.setenv("OPENCAGE_KEY" = "YOUR_PERSONAL_API_KEY")
 
   openCageTbl <- location_getOpenCageInfo(lon, lat)
   dplyr::glimpse(openCageTbl)

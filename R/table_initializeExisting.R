@@ -18,7 +18,7 @@
 #' \item{houseNumber}
 #' \item{street}
 #' \item{city}
-#' \item{zip}
+#' \item{postalCode}
 #' }
 #' 
 #' The \code{longitude} and \code{latitude} columns are required but all others
@@ -53,6 +53,7 @@
 #' @param measure One of "haversine" "vincenty", "geodesic", or "cheap" 
 #' specifying desired method of geodesic distance calculation. See 
 #' \code{?geodist::geodist}.
+#' @param precision \code{precision} argument passed on to \link{location_createID}.
 #' @param verbose Logical controlling the generation of progress messages.
 #' 
 #' @return Known location tibble with the specified metadata columns. Any 
@@ -78,6 +79,7 @@ table_initializeExisting <- function(
   countryCodes = NULL,
   distanceThreshold = NULL,
   measure = c("geodesic", "haversine", "vincenty", "cheap"),
+  precision = 10,
   verbose = TRUE
 ) {
   
@@ -109,7 +111,9 @@ table_initializeExisting <- function(
   if ( anyNA(locationTbl$locationID) ) {
     locationTbl$locationID <- location_createID(
       longitude = locationTbl$longitude,
-      latitude = locationTbl$latitude
+      latitude = locationTbl$latitude,
+      algorithm = "geohash",
+      precision = precision
     )
   }
   
@@ -243,7 +247,7 @@ table_initializeExisting <- function(
   
   # Slow web service so skip for now
 
-  # * zip -----
+  # * postalCode -----
   
   # Slow web service so skip for now
 

@@ -7,7 +7,7 @@
 #' @param latitude Single latitude in decimal degrees N.
 #' @param verbose Logical controlling the generation of progress messages.
 #' @param apiKey Texas A&M Geocoding requires an API key. The first 2500 requests
-#' are free. Default: NULL
+#' are free.
 #' 
 #' @return Numeric elevation value.
 #' 
@@ -56,7 +56,7 @@ location_getSingleAddress_TexasAM <- function(
   
   url$query <- list(
     apikey = apiKey,
-    version = "4.10",
+    version = "4.01",
     lat = latitude,
     lon = longitude,
     format = "json"
@@ -78,7 +78,7 @@ location_getSingleAddress_TexasAM <- function(
       street = as.character(NA),
       city = as.character(NA),
       stateCode = as.character(NA),
-      zip = as.character(NA),
+      postalCode = as.character(NA),
       countryCode = as.character(NA),
       countryName = as.character(NA)
     ) 
@@ -129,7 +129,7 @@ location_getSingleAddress_TexasAM <- function(
       street = as.character(street),
       city = as.character(locationInfo$City),
       stateCode = toupper(locationInfo$State),
-      zip = as.character(locationInfo$Zip),
+      postalCode = as.character(locationInfo$Zip),
       countryCode = "US",
       countryName = "United States of America" # Texas A&M ONLY works in US
     )

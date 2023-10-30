@@ -23,7 +23,7 @@
 #' \item{\code{city}}
 #' \item{\code{stateCode}}
 #' \item{\code{stateName}}
-#' \item{\code{zip}}
+#' \item{\code{postalCode}}
 #' \item{\code{countryCode}}
 #' \item{\code{countryName}}
 #' }
@@ -42,7 +42,7 @@
 #' 
 #'   # Set up standard directories and spatial data
 #'   spatialDataDir <- tempdir() # typically "~/Data/Spatial"
-#'   mazama_initialize(spatialDataDir)
+#'   initializeMazamaSpatialUtils(spatialDataDir)
 #' 
 #'   # Wenatchee
 #'   lon <- -120.325278
@@ -110,7 +110,7 @@ location_getSingleAddress_Photon <- function(
   
   # NOTE:  A careful check of the addresses returned by Photon shows them to be
   # NOTE:  incorrect by up to 6 blocks. So we will throw those away. Also, we saw
-  # NOTE:  a zip in Colleville specified as "SUPER ONE FOODS". So we have to 
+  # NOTE:  a postalCode in Colleville specified as "SUPER ONE FOODS". So we have to 
   # NOTE:  validate that as well.
   
   photonList$housenumber <- as.character(NA)
@@ -144,7 +144,7 @@ location_getSingleAddress_Photon <- function(
     city = as.character(photonList$city),
     stateName = photonList$stateName,
     stateCode = toupper(photonList$stateCode),
-    zip = as.character(photonList$postcode),
+    postalCode = as.character(photonList$postcode),
     countryName = photonList$country,
     countryCode = toupper(photonList$countrycode)
   )

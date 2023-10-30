@@ -8,7 +8,7 @@
 #' @param locationTbl Tibble of known locations.
 #' @param longitude Target longitude in decimal degrees E.
 #' @param latitude Target latitude in decimal degrees N.
-#' @param measure One of "haversine" "vincenty", "geodesic", or "cheap" 
+#' @param measure One of "geodesic", "haversine", "vincenty" or "cheap" 
 #' specifying desired method of geodesic distance calculation. 
 #' 
 #' @return Tibble of distances in meters and cardinal directions from a target location.

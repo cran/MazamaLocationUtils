@@ -10,6 +10,7 @@ table_initializeExisting(
   countryCodes = NULL,
   distanceThreshold = NULL,
   measure = c("geodesic", "haversine", "vincenty", "cheap"),
+  precision = 10,
   verbose = TRUE
 )
 }
@@ -29,6 +30,8 @@ searching. (See ?MazamaSpatialUtils::getStateCode())}
 \item{measure}{One of "haversine" "vincenty", "geodesic", or "cheap"
 specifying desired method of geodesic distance calculation. See
 \code{?geodist::geodist}.}
+
+\item{precision}{\code{precision} argument passed on to \link{location_createID}.}
 
 \item{verbose}{Logical controlling the generation of progress messages.}
 }
@@ -62,7 +65,7 @@ searches for required columns:
 \item{houseNumber}
 \item{street}
 \item{city}
-\item{zip}
+\item{postalCode}
 }
 
 The \code{longitude} and \code{latitude} columns are required but all others

@@ -13,6 +13,24 @@ coreMetadataNames
 \description{
 Character string identifiers of the minimum set of fields
 required for a table to be considered a valid "known locations" table.
+
+\preformatted{
+coreMetadataNames <- c(
+  "locationID",           # from MazamaLocationUtils::location_createID()
+  "locationName",         # from MazamaLocationUtils::location_initialize()
+  "longitude",            # user supplied
+  "latitude",             # user supplied
+  "elevation",            # from MazamaLocationUtils::getSingleElevation_USGS()
+  "countryCode",          # from MazamaSpatialUtils::getCountryCode()
+  "stateCode",            # from MazamaSpatialUtils::getStateCode()
+  "countyName",           # from MazamaSpatialUtils::getUSCounty()
+  "timezone",             # from MazamaSpatialUtils::getTimezone()
+  "houseNumber",          # from MazamaLocationUtils::getSingleAddress_Photon()
+  "street",               # from MazamaLocationUtils::getSingleAddress_Photon()
+  "city",                 # from MazamaLocationUtils::getSingleAddress_Photon()
+  "postalCode"            # from MazamaLocationUtils::getSingleAddress_Photon()
+)
+}
 }
 \details{
 coreMetadataNames

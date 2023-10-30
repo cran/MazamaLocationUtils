@@ -17,7 +17,7 @@
 #' \item{houseNumber}
 #' \item{street}
 #' \item{city}
-#' \item{zip}
+#' \item{postalCode}
 #' }
 #' 
 #' @return Empty known location tibble with the specified metadata columns.
@@ -55,7 +55,7 @@ table_initialize <- function() {
     "houseNumber" = as.character(NA),
     "street" = as.character(NA),
     "city" = as.character(NA),
-    "zip" = as.character(NA)
+    "postalCode" = as.character(NA)
   )
   
   # Now search for an ID we won't find to end up with an empty tibble with 
