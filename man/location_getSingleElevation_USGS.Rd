@@ -34,15 +34,15 @@ library(MazamaLocationUtils)
 try({
 
   # Wenatchee
-  lon <- -120.325278
-  lat <- 47.423333
+  longitude <- -120.325278
+  latitude <- 47.423333
 
-  location_getSingleElevation_USGS(lon, lat)
+  location_getSingleElevation_USGS(longitude, latitude)
   
 }, silent = FALSE)
 }
 
 }
 \references{
-\url{https://apps.nationalmap.gov/pqs/}
+\url{https://epqs.nationalmap.gov/v1/docs}
 }

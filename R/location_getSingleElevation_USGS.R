@@ -22,15 +22,15 @@
 #' try({
 #' 
 #'   # Wenatchee
-#'   lon <- -120.325278
-#'   lat <- 47.423333
+#'   longitude <- -120.325278
+#'   latitude <- 47.423333
 #' 
-#'   location_getSingleElevation_USGS(lon, lat)
+#'   location_getSingleElevation_USGS(longitude, latitude)
 #'   
 #' }, silent = FALSE)
 #' }
 #' 
-#' @references \url{https://apps.nationalmap.gov/pqs/}
+#' @references \url{https://apps.nationalmap.gov/epqs/}
 #' 
 location_getSingleElevation_USGS <- function(
   longitude = NULL,
@@ -44,7 +44,7 @@ location_getSingleElevation_USGS <- function(
 
   # ----- Get USGS elevation data ----------------------------------------------
   
-  # https://apps.nationalmap.gov/pqs/#/result?x=-122.2345&y=47.1234&units=Meters&format=JSON&wkid=4326&includeDate=False
+  # https://epqs.nationalmap.gov/v1/json?x=-122.5&y=47.5&wkid=4326&units=Meters&includeDate=false
   
   # {
   #   "location": {
@@ -61,24 +61,17 @@ location_getSingleElevation_USGS <- function(
   #   "resolution": 1
   # }
   
-  # Under the hood:
-  
-  # https://elevation.nationalmap.gov/arcgis/rest/services/3DEPElevation/ImageServer/getSamples?geometry={%27x%27:-122.234000,%27y%27:47.567000,%27spatialReference%27:{%27wkid%27:4326}}&geometryType=esriGeometryPoint&returnFirstValueOnly=true&f=json
-  
-  # Returns:
-  
-  # {"samples":[{"location":{"x":-122.23399999999999,"y":47.234000000000002,"spatialReference":{"wkid":4326,"latestWkid":4326}},"locationId":0,"value":"16.342819214","rasterId":76313,"resolution":1}]}
-  
   url <- sprintf(
-    "https://elevation.nationalmap.gov/arcgis/rest/services/3DEPElevation/ImageServer/getSamples?geometry={'x':%f,'y':%f,'spatialReference':{'wkid':4326}}&geometryType=esriGeometryPoint&returnFirstValueOnly=true&f=json",
+    "https://epqs.nationalmap.gov/v1/json?x=%f&y=%f&wkid=4326&units=Meters&includeDate=false",
     longitude, latitude
   )
   
   r <- httr::GET(url)
   
+  # Default to NA unless we get a result
+  elevation <- as.numeric(NA)
+  
   if ( httr::http_error(r) ) {
-    
-    elevation <- as.numeric(NA)
     
     if ( verbose ) {
       warning(sprintf(
@@ -89,27 +82,20 @@ location_getSingleElevation_USGS <- function(
     
   } else {
     
-    returnObj <- httr::content(r)
-    sample <- returnObj$samples[[1]]
+    result <- try({
+      
+      returnObj <- httr::content(r)
+      elevation <- as.numeric(returnObj$value)
+      
+    }, silent = TRUE)
     
-    if ( !is.null(sample) ) {
-      
-      elevation <- as.numeric(sample$value)
-      
-      # NOTE:  If we were being extra careful we would check the returned x,y
-      # NOTE:  to see how much they differ from the requested lon,lat.
-      # NOTE:  Initial tests show the results to be pretty good.
-      
-    } else {
-      
-      elevation <- as.numeric(NA)
-      
+    if ( "try-error" %in% class(result) ) {
       if ( verbose ) {
         warning(sprintf(
-          "USGS elevation service returned a NULL Elevation_Query object"
+          "USGS elevation service returned an error for this request:\n  %s",
+          url
         ))
       }
-      
     }
     
   }

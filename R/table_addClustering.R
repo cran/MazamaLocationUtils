@@ -151,6 +151,7 @@ table_addClustering <- function(
         lonVar = "longitude",                # the renamed clusterLon
         latVar = "latitude",                 # the renamed clusterLat
         maxClusters = maxClusters
+        #maxClusters = floor(nrow(distinctTbl) / 2) - 1
       )
 
     clusterCount <- max(as.numeric(distinctTbl$clusterID), na.rm = TRUE)

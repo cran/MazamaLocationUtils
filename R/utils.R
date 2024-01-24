@@ -95,12 +95,18 @@ validateLocationTbl <- function(
     stop("'locationTbl$latitude' is not numeric. Please ensure that decimal latitudes are used.")
   
   if ( !locationOnly ) {
+    
     missingNames <- 
       setdiff(MazamaLocationUtils::coreMetadataNames, names(locationTbl))
+    
     if ( length(missingNames) > 0 ) {
       missingNamesString <- paste0(missingNames, collapse = ", ")
       stop(sprintf("'locationTbl' is missing '%s'", missingNamesString))
     }
+ 
+    if ( any(duplicated(locationTbl$locationID)) ) 
+      stop("'locationTbl$locationID' is not unique.")
+    
   }
   
   return(invisible(TRUE))

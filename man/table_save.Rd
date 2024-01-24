@@ -8,7 +8,7 @@ table_save(
   locationTbl = NULL,
   collectionName = NULL,
   backup = TRUE,
-  outputType = c("rda", "csv")
+  outputType = "rda"
 )
 }
 \arguments{
@@ -19,13 +19,15 @@ table_save(
 \item{backup}{Logical specifying whether to save a backup version of any
 existing tables sharing \code{collectionName}.}
 
-\item{outputType}{Output format. One of "rda" or "csv".}
+\item{outputType}{Vecctor of output formats. (Currently only "rda" or "csv" are supported.)}
 }
 \value{
 File path of saved file.
 }
 \description{
-Save a tibble of known locations to the preferred directory.
+Save a tibble of known locations to the preferred directory. If
+\code{outputType} is a vector, the known locations table will be saved to the
+preferred directory in multiple formats.
 }
 \details{
 Backup files are saved with "YYYY-mm-ddTHH:MM:SS"
@@ -43,7 +45,7 @@ dim(locationTbl)
 # Save it as "table_save_example"
 table_save(locationTbl, "table_save_example")
 
-# Add a column and save again
+# Add a column and save again 
 locationTbl \%>\% 
   table_addColumn("my_column") \%>\% 
   table_save("table_save_example")

@@ -1,11 +1,14 @@
 
 #' @title Save a known location table
-#' @description Save a tibble of known locations to the preferred directory.
+#' @description Save a tibble of known locations to the preferred directory. If
+#' \code{outputType} is a vector, the known locations table will be saved to the 
+#' preferred directory in multiple formats.
+#' 
 #' @param locationTbl Tibble of known locations.
 #' @param collectionName Character identifier for this table.
 #' @param backup Logical specifying whether to save a backup version of any
 #' existing tables sharing \code{collectionName}.
-#' @param outputType Output format. One of "rda" or "csv".
+#' @param outputType Vecctor of output formats. (Currently only "rda" or "csv" are supported.)
 #' @return File path of saved file.
 #' @examples
 #' library(MazamaLocationUtils)
@@ -20,7 +23,7 @@
 #' # Save it as "table_save_example"
 #' table_save(locationTbl, "table_save_example")
 #' 
-#' # Add a column and save again
+#' # Add a column and save again 
 #' locationTbl %>% 
 #'   table_addColumn("my_column") %>% 
 #'   table_save("table_save_example")
@@ -34,55 +37,62 @@
 #' @importFrom MazamaCoreUtils stopIfNull
 #' @importFrom lubridate now
 table_save <- function(
-  locationTbl = NULL,
-  collectionName = NULL,
-  backup = TRUE,
-  outputType = c("rda", "csv")
+    locationTbl = NULL,
+    collectionName = NULL,
+    backup = TRUE,
+    outputType = "rda"
 ) {
   
   # ----- Validate parameters --------------------------------------------------
   
   MazamaLocationUtils::validateLocationTbl(locationTbl, locationOnly = FALSE)
   MazamaCoreUtils::stopIfNull(collectionName)
-  outputType <- match.arg(outputType)
+  
+  for ( type in outputType ) {
+    if ( !type %in% c("rda", "csv") ) 
+      stop("outputType '%s' is not supported.", type)
+  }
   
   dataDir <- getLocationDataDir()
   
   # ----- Save data ------------------------------------------------------------
   
-  result <- try({
+  for ( type in outputType ) {
     
-    fileName <- paste0(collectionName, ".", outputType)
-    filePath <- file.path(dataDir, fileName)
-
-    # Save backups
-    if ( backup && file.exists(filePath) ) {
-      backupName <- paste0(
-        collectionName, ".",
-        strftime(lubridate::now(), "%Y-%m-%dT%H:%M:%S"),
-        ".rda"
-      )
-      backupPath <- file.path(dataDir, backupName)
-      file.rename(filePath, backupPath)
+    result <- try({
+      
+      fileName <- paste0(collectionName, ".", type)
+      filePath <- file.path(dataDir, fileName)
+      
+      # Save backups
+      if ( backup && file.exists(filePath) ) {
+        backupName <- paste0(
+          collectionName, ".",
+          strftime(lubridate::now(), "%Y-%m-%dT%H:%M:%S"),
+          ".rda"
+        )
+        backupPath <- file.path(dataDir, backupName)
+        file.rename(filePath, backupPath)
+      }
+      
+      if ( type == "rda" ) {
+        # Assign a name and save
+        assign(collectionName, locationTbl)
+        save(list = c(collectionName), file = filePath)
+      }
+      
+      if ( type == "csv" ) {
+        readr::write_csv(locationTbl, file = filePath)
+      }
+      
+    }, silent = TRUE)
+    
+    if ( "try-error" %in% class(result) ) {
+      warning(sprintf("Could not write %s", filePath))
     }
     
-    if ( outputType == "rda" ) {
-      
-      # Assign a name and save
-      assign(collectionName, locationTbl)
-      save(list = c(collectionName), file = filePath)
-      
-    } else if ( outputType == "csv" ) {
-      
-      readr::write_csv(locationTbl, file = filePath)
-
-    }
-    
-  }, silent = TRUE)
+  } # END of type loop
   
-  if ( "try-error" %in% class(result) ) {
-    stop(sprintf("Could not write %s", filePath))
-  }
   
   # ----- Return ---------------------------------------------------------------
   

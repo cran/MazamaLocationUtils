@@ -49,11 +49,17 @@ table_getNearestLocation <- function(
 
   # ----- Subset ---------------------------------------------------------------
 
-  incomingIDTbl <- dplyr::tibble(
+  targetLocationIDsTbl <- dplyr::tibble(
     locationID = table_getLocationID(locationTbl, longitude, latitude, distanceThreshold)
   )
   
-  subsetTbl <- dplyr::left_join(incomingIDTbl, locationTbl, by = "locationID")
+  # NOTE:  dplyr::left_join() guarantees *at least* one record per X depending on
+  # NOTE:  how many matches are found in Y. Because validateLocationTbl() ensures
+  # NOTE:  that locationID is never duplicated in a locationTbl, this ends up
+  # NOTE:  handling the situation of multiple target locations that refer to the
+  # NOTE:  same record in locationTbl.
+  
+  subsetTbl <- dplyr::left_join(targetLocationIDsTbl, locationTbl, by = "locationID")
 
   # ----- Return ---------------------------------------------------------------
 
