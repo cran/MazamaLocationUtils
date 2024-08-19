@@ -128,10 +128,14 @@ clusterByDistance <- function(
 
   # Perform clustering
   for ( clusterCount in 1:maxClusters ) {
-    if ( nrow(tbl) < 2000 ) {
-      clusterObj <- cluster::pam(tbl[,c(lonVar,latVar)],clusterCount)
+    
+    if ( nrow(tbl) <= clusterCount ) {
+      # NOTE:  k = positive integer specifying the number of clusters, less than the number of observations.
+      clusterObj <- cluster::pam(tbl[,c(lonVar,latVar)], nrow(tbl) - 1)
+    } else if ( nrow(tbl) < 2000 ) {
+      clusterObj <- cluster::pam(tbl[,c(lonVar,latVar)], clusterCount)
     } else {
-      clusterObj <- cluster::clara(tbl[,c(lonVar,latVar)],clusterCount, samples = 50)
+      clusterObj <- cluster::clara(tbl[,c(lonVar,latVar)], clusterCount, samples = 50)
     }
     clusterLats <- clusterObj$medoids[,latVar]
     diameters <- 2 * clusterObj$clusinfo[,'max_diss'] # decimal degrees
@@ -141,6 +145,19 @@ clusterByDistance <- function(
     radianClusterLats <- clusterLats * pi/180
     meters <- diameters * (1 + cos(radianClusterLats))/2 * 111320
     if ( max(meters) < clusterDiameter ) break
+    
+  }
+  
+  # NOTE:  If we only had a very small table with widely separate locations,
+  # NOTE:  we can end up never satisfying max(meters) < clusterDiameter. In this
+  # NOTE:  case, every location represents a separate cluster
+  if ( nrow(tbl) <= clusterCount ) {
+    for ( i in 1:seq_len(nrow(tbl)) ) {
+      tbl$clusterLon <- as.numeric(tbl[[lonVar]][i])
+      tbl$clusterLat <- as.numeric(tbl[[latVar]][i])
+      tbl$clusterID <- i
+    }
+    return(tbl)
   }
 
   # Create the vector of deployment identifiers
