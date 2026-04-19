@@ -18,7 +18,7 @@ table_findAdjacentLocations(
 \item{measure}{One of "haversine" "vincenty", "geodesic", or "cheap"
 specifying desired method of geodesic distance calculation.
 
-See \code{geodist::\link[geodist:geodist]{geodist}} for details.}
+See \code{\link[geodist:geodist]{geodist::geodist()}} for details.}
 }
 \value{
 Tibble of known locations separated by less than

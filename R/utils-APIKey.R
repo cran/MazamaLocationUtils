@@ -6,7 +6,7 @@
 #' @title API keys for data services.
 #' @format Character strings.
 #' @description This package maintains an internal set of API keys which
-#' users can set using \code{setAPIKey()}. These keys will be remembered for
+#' users can set using `setAPIKey()`. These keys will be remembered for
 #' the duration of an R session. This functionality provides an abstraction
 #' layer in dependent packages so that data access functions can test for and
 #' access specific API keys with generic code.
@@ -14,14 +14,14 @@
 #' @details
 #' The following functions help with the management of API keys:
 #' 
-#' \code{getAPIKey()} -- Returns the API key associated with a web service.
-#' If \code{provider == NULL} a list is returned containing all recognized
+#' `getAPIKey()` -- Returns the API key associated with a web service.
+#' If `provider == NULL` a list is returned containing all recognized
 #' API keys.
 #' 
-#' \code{setAPIKey()} -- Sets the API key associated with a web service.
+#' `setAPIKey()` -- Sets the API key associated with a web service.
 #' Silently returns previous value of the API key.
 #' 
-#' \code{showAPIKeys()} -- Returns a list of all currently set API keys.
+#' `showAPIKeys()` -- Returns a list of all currently set API keys.
 #'
 NULL
 

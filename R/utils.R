@@ -2,7 +2,7 @@
 #' @description The \pkg{MazamaSpatialUtils} package mus be properly installed
 #' and initialized before using functions from the \pkg{MazamaLocationUtils} 
 #' package. This function tests for this.
-#' @return Invisibly returns \code{TRUE} if no error message has been generated.
+#' @return Invisibly returns `TRUE` if no error message has been generated.
 #' @rdname validateMazamaSpatialUtils
 #' @export 
 #' 
@@ -36,7 +36,7 @@ validateMazamaSpatialUtils <- function() {
 
 #' @title Validate longitude and latitude vectors
 #' @description
-#' See \code{MazamaCoreUtils::\link[MazamaCoreUtils:validateLonsLats]{validateLonsLats}} for details.
+#' See [MazamaCoreUtils::validateLonsLats()] for details.
 #'
 #' @name validateLonsLats
 #' @rdname validateLonsLats
@@ -49,7 +49,7 @@ NULL
 
 #' @title Validate longitude and latitude values
 #' @description
-#' See \code{MazamaCoreUtils::\link[MazamaCoreUtils:validateLonLat]{validateLonLat}} for details.
+#' See [MazamaCoreUtils::validateLonLat()] for details.
 #'
 #' @name validateLonLat
 #' @rdname validateLonLat
@@ -61,12 +61,12 @@ NULL
 
 
 #' @title Validate a location table
-#' @description Ensures that the incoming table has numeric \code{longitude} and
-#' \code{latitude} columns.
+#' @description Ensures that the incoming table has numeric `longitude` and
+#' `latitude` columns.
 #' @param locationTbl Tibble of known locations.
 #' @param locationOnly Logical specifying whether to check for all standard
 #' columns.
-#' @return Invisibly returns \code{TRUE} if no error message has been generated.
+#' @return Invisibly returns `TRUE` if no error message has been generated.
 #' @rdname validateLocationTbl
 #' @export 
 #' 

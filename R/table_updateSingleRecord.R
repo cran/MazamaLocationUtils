@@ -1,10 +1,10 @@
 
 #' @title Update a single known location record in a table
-#' @description Information in the \code{locationList} is used to replace
-#' existing information found in \code{locationTbl}. This function can be used
-#' for small tweaks to an existing \code{locationTbl}. Wholesale replacement of
-#' records should be performed with \code{table_removeRecord()} followed by
-#' \code{table_addLocation()}. 
+#' @description Information in the `locationList` is used to replace
+#' existing information found in `locationTbl`. This function can be used
+#' for small tweaks to an existing `locationTbl`. Wholesale replacement of
+#' records should be performed with `table_removeRecord()` followed by
+#' `table_addLocation()`. 
 #' @param locationTbl Tibble of known locations.
 #' @param locationList List containing `locationID` and one or more named
 #' columns whose values are to be replaced.
@@ -37,9 +37,9 @@
 #'   dplyr::filter(city == "Wenatchee") %>%
 #'   str()
 #' 
-#' @seealso \link{table_addLocation}
-#' @seealso \link{table_addSingleLocation}
-#' @seealso \link{table_removeRecord}
+#' @seealso [table_addLocation()]
+#' @seealso [table_addSingleLocation()]
+#' @seealso [table_removeRecord()]
 #' @rdname table_updateSingleRecord
 #' @export 
 #' @importFrom rlang .data

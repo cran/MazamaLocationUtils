@@ -1,12 +1,12 @@
 
 #' @title Get census block data from the FCC API
 #' @description The FCC Block API is used get census block, county, and state FIPS associated with
-#' the \code{longitude} and \code{latitude}. The following list of data
+#' the `longitude` and `latitude`. The following list of data
 #' is returned:
 #' \itemize{
-#' \item{\code{stateCode}}
-#' \item{\code{countyName}}
-#' \item{\code{censusBlock}}
+#' \item{`stateCode`}
+#' \item{`countyName`}
+#' \item{`censusBlock`}
 #' }
 #' The data from this function should be considered to be the gold standard for state and county.
 #' i.e. this information could and should be used to override information we get elsewhere.

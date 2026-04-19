@@ -13,10 +13,10 @@
 #' 
 #' @return Tibble of distances in meters and cardinal directions from a target location.
 #' 
-#' @description Returns a tibble with the same number of rows as \code{locationTbl} 
+#' @description Returns a tibble with the same number of rows as `locationTbl` 
 #' containing the distance and direction from the target location specified by 
-#' \code{longitude} and \code{latitude} to each known location found in 
-#' \code{locationTbl}. 
+#' `longitude` and `latitude` to each known location found in 
+#' `locationTbl`. 
 #' 
 #' @note Only a single target location is allowed.
 #' 

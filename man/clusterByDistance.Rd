@@ -25,7 +25,7 @@ clusters (see description).}
 \item{maxClusters}{Maximum number of clusters to try.}
 }
 \value{
-Input tibble with additional columns: \code{clusterLon, clusterLat, clusterID}.
+Input tibble with additional columns: \verb{clusterLon, clusterLat, clusterID}.
 }
 \description{
 Distance clustering is used to identify unique deployments of a
@@ -41,7 +41,7 @@ The value of \code{clusterDiameter} is compared with the output of
 \code{cluster::pam(...)$clusinfo[,'av_diss']} to determine the number of clusters.
 }
 \note{
-In most applications, the \link{table_addClustering} function should be
+In most applications, the \code{\link[=table_addClustering]{table_addClustering()}} function should be
 used as it implements two-stage clustering using \code{clusterbyDistance()}.
 }
 \examples{
@@ -76,5 +76,5 @@ plot(tbl$longitude, tbl$latitude, pch = tbl$clusterID)
 \href{https://working-with-data.mazamascience.com/2021/07/15/when-k-means-clustering-fails/}{When k-means clustering fails}
 }
 \seealso{
-\link{table_removeRecord}
+\code{\link[=table_removeRecord]{table_removeRecord()}}
 }

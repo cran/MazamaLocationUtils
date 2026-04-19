@@ -31,7 +31,7 @@ searching. (See ?MazamaSpatialUtils::getStateCode())}
 specifying desired method of geodesic distance calculation. See
 \code{?geodist::geodist}.}
 
-\item{precision}{\code{precision} argument passed on to \link{location_createID}.}
+\item{precision}{\code{precision} argument passed on to \code{\link[=location_createID]{location_createID()}}.}
 
 \item{verbose}{Logical controlling the generation of progress messages.}
 }

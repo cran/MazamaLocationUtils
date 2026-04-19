@@ -14,30 +14,30 @@
 #' specifying desired method of geodesic distance calculation. 
 #' 
 #' @description Returns distances between target locations and the closest
-#' location found in \code{locationTbl} (if any). Target locations are specified 
-#' with \code{longitude} and \code{latitude}.
+#' location found in `locationTbl` (if any). Target locations are specified 
+#' with `longitude` and `latitude`.
 #' 
 #' For each target location, only a single distance to the closest known location 
 #' is returned. If no known location is found within
-#' \code{distanceThreshold}, the distance associated with that target location
-#' will be \code{NA}. The length and order of resulting distances will match the
+#' `distanceThreshold`, the distance associated with that target location
+#' will be `NA`. The length and order of resulting distances will match the
 #' order of the incoming target locations.
 #' 
 #' @section Use Case:
 #' You may have a set of locations of interest for which you want to assess whether
 #' any monitoring locations are nearby. In this case, the locations of interest
-#' will provide \code{longitude} and \code{latitude} while \code{locationTbl}
+#' will provide `longitude` and `latitude` while `locationTbl`
 #' will be the known location table associated with the monitoring locations. 
 #' 
 #' The resulting vector of distances will tell you the distance, for each 
 #' target location, to the nearst monitoring location.
 #' 
-#' @note The measure \code{"cheap"} may be used to speed things up depending on
+#' @note The measure `"cheap"` may be used to speed things up depending on
 #' the spatial scale being considered. Distances calculated with 
-#' \code{measure = "cheap"} will vary by a few meters compared with those 
-#' calculated using \code{measure = "geodesic"}.
+#' `measure = "cheap"` will vary by a few meters compared with those 
+#' calculated using `measure = "geodesic"`.
 #' 
-#' See \code{\link[geodist]{geodist}} for details.
+#' See [geodist::geodist()] for details.
 #' 
 #' @return Vector of closest distances between target locations and known locations.
 #' @examples

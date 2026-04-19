@@ -74,9 +74,9 @@ try({
 
 }
 \seealso{
-\link{table_addLocation}
+\code{\link[=table_addLocation]{table_addLocation()}}
 
-\link{table_removeRecord}
+\code{\link[=table_removeRecord]{table_removeRecord()}}
 
-\link{table_updateSingleRecord}
+\code{\link[=table_updateSingleRecord]{table_updateSingleRecord()}}
 }

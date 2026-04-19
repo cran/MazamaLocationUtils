@@ -7,6 +7,6 @@
 validateLonLat(longitude = NULL, latitude = NULL)
 }
 \description{
-See \code{MazamaCoreUtils::\link[MazamaCoreUtils:validateLonLat]{validateLonLat}} for details.
+See \code{\link[MazamaCoreUtils:validateLonLat]{MazamaCoreUtils::validateLonLat()}} for details.
 }
 \keyword{internal}

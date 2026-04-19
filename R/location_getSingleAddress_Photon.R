@@ -14,23 +14,23 @@
 #' @return List of address components.
 #' 
 #' @description The Photon API is used get address data associated with
-#' the \code{longitude} and \code{latitude}. The following list of data
+#' the `longitude` and `latitude`. The following list of data
 #' is returned:
 #' 
 #' \itemize{
-#' \item{\code{houseNumber}}
-#' \item{\code{street}}
-#' \item{\code{city}}
-#' \item{\code{stateCode}}
-#' \item{\code{stateName}}
-#' \item{\code{postalCode}}
-#' \item{\code{countryCode}}
-#' \item{\code{countryName}}
+#' \item{`houseNumber`}
+#' \item{`street`}
+#' \item{`city`}
+#' \item{`stateCode`}
+#' \item{`stateName`}
+#' \item{`postalCode`}
+#' \item{`countryCode`}
+#' \item{`countryName`}
 #' }
 #' 
-#' The function makes an effort to convert both \code{state} and \code{country} 
-#' \code{Name} into \code{Code} with codes defaulting to \code{NA}. Both 
-#' \code{Name} and \code{Code} are returned so that improvements can be made in 
+#' The function makes an effort to convert both `state` and `country` 
+#' `Name` into `Code` with codes defaulting to `NA`. Both 
+#' `Name` and `Code` are returned so that improvements can be made in 
 #' the conversion algorithm.
 #' 
 #' @examples

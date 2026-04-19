@@ -1,12 +1,12 @@
 
 #' @title Add new known location records to a table
 #' 
-#' @description Incoming \code{longitude} and \code{latitude} values are compared 
-#' against the incoming \code{locationTbl} to see if they are already within
-#' \code{distanceThreshold} meters of an existing entry. A new record is created for
-#' each location that is not already found in \code{locationTbl}.
+#' @description Incoming `longitude` and `latitude` values are compared 
+#' against the incoming `locationTbl` to see if they are already within
+#' `distanceThreshold` meters of an existing entry. A new record is created for
+#' each location that is not already found in `locationTbl`.
 #' 
-#' @note This function is a vectorized version of \code{table_addSingleLocation()}.
+#' @note This function is a vectorized version of `table_addSingleLocation()`.
 #' 
 #' @param locationTbl Tibble of known locations.
 #' @param longitude Vector of longitudes in decimal degrees E.
@@ -47,9 +47,9 @@
 #'   
 #' }, silent = FALSE)
 #' }
-#' @seealso \link{table_addSingleLocation}
-#' @seealso \link{table_removeRecord}
-#' @seealso \link{table_updateSingleRecord}
+#' @seealso [table_addSingleLocation()]
+#' @seealso [table_removeRecord()]
+#' @seealso [table_updateSingleRecord()]
 #' @rdname table_addLocation
 #' @export 
 #' @importFrom MazamaCoreUtils stopIfNull

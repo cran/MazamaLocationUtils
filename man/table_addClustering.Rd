@@ -25,7 +25,7 @@ clusters (see description).}
 \item{maxClusters}{Maximum number of clusters to try.}
 }
 \value{
-Input tibble with additional columns: \code{clusterLon, clusterLat}.
+Input tibble with additional columns: \verb{clusterLon, clusterLat}.
 }
 \description{
 Clustering is used to identify unique deployments of a
@@ -47,7 +47,7 @@ The value of \code{clusterRadius} is compared with the output of
 }
 \note{
 The \code{table_addClustering()} function implements two-stage clustering
-using \link{clusterByDistance}. If the first attempt at clustering produces
+using \code{\link[=clusterByDistance]{clusterByDistance()}}. If the first attempt at clustering produces
 clustered locations that are still too close to eachother, another round
 of clustering is performed using the results of the previous attempt. This
 two-stage approach seems to work well in. practice.
@@ -84,5 +84,5 @@ plot(tbl$longitude, tbl$latitude, pch = tbl$clusterID)
 \href{https://working-with-data.mazamascience.com/2021/07/15/when-k-means-clustering-fails/}{When k-means clustering fails}
 }
 \seealso{
-\link{clusterByDistance}
+\code{\link[=clusterByDistance]{clusterByDistance()}}
 }

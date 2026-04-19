@@ -1,6 +1,6 @@
 #' @title Idaho monitor locations dataset
 #' @format A tibble with 30 rows and 13 columns of data.
-#' @description The \code{id_monitor_500} dataset provides a set of known
+#' @description The `id_monitor_500` dataset provides a set of known
 #' locations associated with Idaho state air quality monitors.
 #' This dataset was generated on 2023-10-24 by running:
 #' 
@@ -25,14 +25,14 @@
 #'   table_save("id_monitors_500")
 #' }
 #' 
-#' @seealso \link{or_monitors_500}
-#' @seealso \link{wa_monitors_500}
+#' @seealso [or_monitors_500()]
+#' @seealso [wa_monitors_500()]
 "id_monitors_500"
 
 
 #' @title Oregon monitor locations dataset
 #' @format A tibble with 64 rows and 13 columns of data.
-#' @description The \code{or_monitor_500} dataset provides a set of known
+#' @description The `or_monitor_500` dataset provides a set of known
 #' locations associated with Oregon state air quality monitors.
 #' This dataset was generated on 2023-10-24 by running:
 #' 
@@ -57,14 +57,14 @@
 #'   table_save("or_monitors_500")
 #' }
 #' 
-#' @seealso \link{id_monitors_500}
-#' @seealso \link{wa_monitors_500}
+#' @seealso [id_monitors_500()]
+#' @seealso [wa_monitors_500()]
 "or_monitors_500"
 
 
 #' @title Wshington monitor locations dataset
 #' @format A tibble with 78 rows and 13 columns of data.
-#' @description The \code{wa_monitor_500} dataset provides a set of known
+#' @description The `wa_monitor_500` dataset provides a set of known
 #' locations associated with Washington state air quality monitors.
 #' This dataset was generated on 2023-10-24 by running:
 #' 
@@ -89,14 +89,14 @@
 #'   table_save("wa_monitors_500")
 #' }
 #' 
-#' @seealso \link{id_monitors_500}
-#' @seealso \link{or_monitors_500}
+#' @seealso [id_monitors_500()]
+#' @seealso [or_monitors_500()]
 "wa_monitors_500"
 
 
 #' @title Washington monitor metadata dataset
 #' @format A tibble with 92 rows and 29 columns of data.
-#' @description The \code{wa_pwfsl_meta} dataset provides a set of Washington
+#' @description The `wa_pwfsl_meta` dataset provides a set of Washington
 #' state air quality monitor metadata used by the USFS AirFire group.
 #' This dataset was generated on 2023-10-24 by running:
 #' 

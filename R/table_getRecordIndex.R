@@ -1,11 +1,11 @@
 
 #' @title Return indexes of known location records
-#' @description Returns a vector of \code{locationTbl} row indexes for the 
-#' locations associated with each \code{locationID}.
+#' @description Returns a vector of `locationTbl` row indexes for the 
+#' locations associated with each `locationID`.
 #' @param locationTbl Tibble of known locations.
-#' @param locationID Vector of \code{locationID} strings.
+#' @param locationID Vector of `locationID` strings.
 #' @param verbose Logical controlling the generation of progress messages.
-#' @return Vector of \code{locationTbl} row indexes.
+#' @return Vector of `locationTbl` row indexes.
 #' @examples
 #' library(MazamaLocationUtils)
 #' 

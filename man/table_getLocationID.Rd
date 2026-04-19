@@ -23,7 +23,7 @@ table_getLocationID(
 
 \item{measure}{One of "geodesic", "haversine", "vincenty" or "cheap"
 specifying desired method of geodesic distance calculation.
-See \code{\link[geodist]{geodist}}.}
+See \code{\link[geodist:geodist]{geodist::geodist()}}.}
 }
 \value{
 Vector of known \code{locationID}s.

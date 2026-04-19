@@ -27,7 +27,7 @@ Vector of character locationIDs.
 A unique locationID is created for each incoming
 \code{longitude} and \code{latitude}.
 
-See \code{MazamaCoreUtils::\link[MazamaCoreUtils:createLocationID]{createLocationID}} for details.
+See \code{\link[MazamaCoreUtils:createLocationID]{MazamaCoreUtils::createLocationID()}} for details.
 
 At \code{precision = 10}, this results in a maximum error of 0.6 meters which
 is more than precise enough for environmental monitoring studies making use

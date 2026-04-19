@@ -1,7 +1,5 @@
-#'
-#' @docType package
+#' @keywords internal
 #' @name MazamaLocationUtils
-#' @aliases MazamaLocationUtils-package
 #' @title Manage Spatial Metadata for Known Locations
 #' @description A suite of utility functions for discovering and managing 
 #' metadata associated with sets of spatially unique "known locations".
@@ -15,11 +13,11 @@
 #' When working with environmental monitoring time series, one of the first things
 #' you have to do is create unique identifiers for each individual time series. In 
 #' an ideal world, each environmental time series would have both a 
-#' \code{locationID} and a \code{deviceID} that uniquely identify the specific instrument 
+#' `locationID` and a `deviceID` that uniquely identify the specific instrument 
 #' making measurements and the physical location where measurements are made. A 
-#' unique \code{timeseriesID} could
-#' be produced as \code{locationID_deviceID}. Metadata associated with each
-#' \code{timeseriesID} would contain basic information needed for downstream analysis
+#' unique `timeseriesID` could
+#' be produced as `locationID_deviceID`. Metadata associated with each
+#' `timeseriesID` would contain basic information needed for downstream analysis
 #' including at least:
 #' 
 #' \preformatted{
@@ -27,21 +25,21 @@
 #' }
 #' 
 #' \itemize{
-#' \item{An extended time series for an occasionally re-positioned sensor would group by \code{deviceID}.}
-#' \item{Multiple sensors placed at a single location could be be grouped by \code{locationID}.}
-#' \item{Maps would be created using \code{longitude, latitude}.}
-#' \item{Time series would be accessed from a secondary \code{data} table with \code{timeseriesID}.}
+#' \item{An extended time series for an occasionally re-positioned sensor would group by `deviceID`.}
+#' \item{Multiple sensors placed at a single location could be be grouped by `locationID`.}
+#' \item{Maps would be created using `longitude, latitude`.}
+#' \item{Time series would be accessed from a secondary `data` table with `timeseriesID`.}
 #' }
 #' 
 #' Unfortunately, we are rarely supplied with a truly unique and truly spatial 
-#' \code{locationID}. Instead we often use \code{deviceID} or an associated non-spatial
-#' identifier as a stand-in for \code{locationID}.
+#' `locationID`. Instead we often use `deviceID` or an associated non-spatial
+#' identifier as a stand-in for `locationID`.
 #' 
 #' Complications we have seen include:
 #'   
 #' \itemize{
 #' \item{GPS-reported longitude and latitude can have _jitter_ in the fourth or fifth 
-#' decimal place making it challenging to use them to create a unique \code{locationID}.}
+#' decimal place making it challenging to use them to create a unique `locationID`.}
 #' \item{Sensors are sometimes _re-positioned_ in what the scientist considers the "same 
 #' location".}
 #' \item{Data for a single sensor goes through different processing pipelines using
@@ -49,7 +47,7 @@
 #' \item{The spatial scale of what constitutes a "single location" depends on the 
 #' instrumentation and scientific question being asked.}
 #' \item{Deriving location-based metadata from spatial datasets is computationally 
-#' intensive unless saved and identified with a unique \code{locationID}.}
+#' intensive unless saved and identified with a unique `locationID`.}
 #' \item{Automated searches for spatial metadata occasionally produce incorrect results
 #' because of the non-infinite resolution of spatial datasets.}
 #' }
@@ -64,18 +62,17 @@
 #' provides further useful functionality.
 #' 
 #' \itemize{
-#' \item{Administrators can correct entries in the \code{collectionName} table.  
+#' \item{Administrators can correct entries in the `collectionName` table.  
 #' (_e.g._ locations in river bends that even high resolution spatial datasets mis-assign)}
-#' \item{Additional, non-automatable metadata can be added to \code{collectionName}. 
+#' \item{Additional, non-automatable metadata can be added to `collectionName`. 
 #' (_e.g._ commonly used location names within a community of practice)}
-#' \item{Different field campaigns can have separate \code{collectionName} tables.}
-#' \item{\code{.csv} or \code{.rda} versions of well populated tables can be downloaded from a
+#' \item{Different field campaigns can have separate `collectionName` tables.}
+#' \item{`.csv` or `.rda` versions of well populated tables can be downloaded from a
 #' URL and used locally, giving scientists working with known locations instant
 #' access to spatial data that otherwise requires special skills, large datasets 
 #' and lots of compute cycles.}
 #' }
-
-NULL
+"_PACKAGE"
 
 # ----- Internal Data -------------------------------------------------
 
@@ -85,7 +82,7 @@ NULL
 #' @docType data
 #' @name coreMetadataNames
 #' @title Names of standard spatial metadata columns
-#' @format A vector with 3 elements
+#' @format A character vector
 #' @description Character string identifiers of the minimum set of fields 
 #' required for a table to be considered a valid "known locations" table.
 #' 
@@ -100,10 +97,10 @@ NULL
 #'   "stateCode",            # from MazamaSpatialUtils::getStateCode()
 #'   "countyName",           # from MazamaSpatialUtils::getUSCounty()
 #'   "timezone",             # from MazamaSpatialUtils::getTimezone()
-#'   "houseNumber",          # from MazamaLocationUtils::getSingleAddress_Photon()
-#'   "street",               # from MazamaLocationUtils::getSingleAddress_Photon()
-#'   "city",                 # from MazamaLocationUtils::getSingleAddress_Photon()
-#'   "postalCode"            # from MazamaLocationUtils::getSingleAddress_Photon()
+#'   "houseNumber",
+#'   "street",
+#'   "city",
+#'   "postalCode"
 #' )
 #' }
 
@@ -136,12 +133,12 @@ MazamaLocationUtilsEnv$dataDir <- NULL
 #' @title Directory for location data
 #' @format Absolute path string.
 #' @description This package maintains an internal directory path which 
-#' users can set using \code{setLocationDataDir()}. All package functions use 
+#' users can set using `setLocationDataDir()`. All package functions use 
 #' this directory whenever known location tables are accessed.
 #' 
-#' The default setting when the package is loaded is \code{getwd()}.
-#' @seealso \link{getLocationDataDir}
-#' @seealso \link{setLocationDataDir}
+#' The default setting when the package is loaded is `getwd()`.
+#' @seealso [getLocationDataDir()]
+#' @seealso [setLocationDataDir()]
 NULL
 
 #' @keywords environment
@@ -149,8 +146,8 @@ NULL
 #' @title Get location data directory
 #' @description Returns the directory path where known location data tables are located.
 #' @return Absolute path string.
-#' @seealso \link{LocationDataDir}
-#' @seealso \link{setLocationDataDir}
+#' @seealso [LocationDataDir()]
+#' @seealso [setLocationDataDir()]
 
 getLocationDataDir <- function() {
   if (is.null(MazamaLocationUtilsEnv$dataDir)) {
@@ -169,8 +166,8 @@ getLocationDataDir <- function() {
 #' @description Sets the data directory where known location data tables are located.
 #' If the directory does not exist, it will be created.
 #' @return Silently returns previous value of the data directory.
-#' @seealso \link{LocationDataDir}
-#' @seealso \link{getLocationDataDir}
+#' @seealso [LocationDataDir()]
+#' @seealso [getLocationDataDir()]
 
 setLocationDataDir <- function(dataDir) {
   old <- MazamaLocationUtilsEnv$dataDir

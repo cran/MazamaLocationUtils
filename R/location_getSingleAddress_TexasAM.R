@@ -12,7 +12,7 @@
 #' @return Numeric elevation value.
 #' 
 #' @description Texas A&M APIs are used to determine the address associated with
-#' the \code{longitude} and \code{latitude}.
+#' the `longitude` and `latitude`.
 #' 
 #' @examples
 #' \dontrun{

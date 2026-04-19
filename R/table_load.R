@@ -2,9 +2,9 @@
 #' @title Load a known location table
 #' @description Load a tibble of known locations from the preferred directory.
 #' 
-#' The known location table must be named either \code{<collectionName>.rda}
-#' or \code{<collectionName>.csv}. If both are found, only 
-#' \code{<collectionName>.rda} will be loaded to ensure that columns will have
+#' The known location table must be named either `<collectionName>.rda`
+#' or `<collectionName>.csv`. If both are found, only 
+#' `<collectionName>.rda` will be loaded to ensure that columns will have
 #' the proper type assigned.
 #' 
 #' @param collectionName Character identifier for this table.
@@ -29,7 +29,7 @@
 #' # Check the locationDataDir
 #' list.files(getLocationDataDir(), pattern = "table_load_example")
 #' @seealso 
-#'  \code{\link{setLocationDataDir}}
+#'  [setLocationDataDir()]
 #' @rdname table_load
 #' @export 
 #' @importFrom MazamaCoreUtils stopIfNull

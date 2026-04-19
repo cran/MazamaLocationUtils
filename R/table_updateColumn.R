@@ -2,20 +2,20 @@
 #' @title Update a column of metadata in a table
 #' 
 #' @description Updates records in a location table. Records are identified
-#' by \code{locationID} and the data found in \code{locationData} is used to 
-#' replace any existing value in the \code{columnName} column.
-#' \code{locationID} and \code{locationData} must be of the same length.
-#' Any \code{NA} values in \code{locationID} will be ignored.
+#' by `locationID` and the data found in `locationData` is used to 
+#' replace any existing value in the `columnName` column.
+#' `locationID` and `locationData` must be of the same length.
+#' Any `NA` values in `locationID` will be ignored.
 #' 
-#' If \code{columnName} is not a named column within \code{locationTbl}, a new
+#' If `columnName` is not a named column within `locationTbl`, a new
 #' column will be created.
 #' 
 #' @param locationTbl Tibble of known locations.
-#' @param columnName Name of an existing/new column in \code{locationTbl} whose data
+#' @param columnName Name of an existing/new column in `locationTbl` whose data
 #' will be updated/created.
-#' @param locationID Vector of \code{locationID} strings.
+#' @param locationID Vector of `locationID` strings.
 #' @param locationData Vector of data to be inserted at records identified by 
-#' \code{locationID}.
+#' `locationID`.
 #' @param verbose Logical controlling the generation of progress messages.
 #' @return Updated tibble of known locations.
 #' @examples
@@ -50,8 +50,8 @@
 #' locationTbl_indices <- table_getRecordIndex(locationTbl, locationID)
 #' locationTbl[locationTbl_indices, c("city", "AQSID")]
 #' 
-#' @seealso \link{table_addColumn}
-#' @seealso \link{table_removeColumn}
+#' @seealso [table_addColumn()]
+#' @seealso [table_removeColumn()]
 #' @rdname table_updateColumn
 #' @export 
 #' @importFrom MazamaCoreUtils stopIfNull

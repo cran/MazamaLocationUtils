@@ -10,7 +10,7 @@ table_addCoreMetadata(locationTbl = NULL, precision = 10)
 \item{locationTbl}{Tibble of known locations. This input tibble need not be a
 standardized "known location" with all required columns. They will be added.}
 
-\item{precision}{\code{precision} argument passed on to \link{location_createID}.}
+\item{precision}{\code{precision} argument passed on to \code{\link[=location_createID]{location_createID()}}.}
 }
 \value{
 Tibble with the metadata columns required in a "known locations" table.

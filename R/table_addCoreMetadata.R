@@ -20,15 +20,15 @@
 #' \item{postalCode}
 #' }
 #' 
-#' The \code{longitude} and \code{latitude} columns are required to exist in the
+#' The `longitude` and `latitude` columns are required to exist in the
 #' incoming tibble but all others are optional.
 #' 
 #' If any of these core metadata columns are found, they will be retained.
 #' 
-#' The \code{locationID} will be generated (anew if already found) from existing
+#' The `locationID` will be generated (anew if already found) from existing
 #' longitude and latitude data.
 #' 
-#' Other core metadata columns will be filled with \code{NA} values of the 
+#' Other core metadata columns will be filled with `NA` values of the 
 #' proper type.
 #' 
 #' The result is a tibble with all of the core metadata columns. Theses columns
@@ -41,7 +41,7 @@
 #' 
 #' @param locationTbl Tibble of known locations. This input tibble need not be a 
 #' standardized "known location" with all required columns. They will be added.
-#' @param precision \code{precision} argument passed on to \link{location_createID}.
+#' @param precision `precision` argument passed on to [location_createID()].
 #' 
 #' @return Tibble with the metadata columns required in a "known locations" table.
 #' 

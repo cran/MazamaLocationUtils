@@ -37,8 +37,8 @@ table_initialize() \%>\%
 }
 }
 \seealso{
-\link{id_monitors_500}
+\code{\link[=id_monitors_500]{id_monitors_500()}}
 
-\link{or_monitors_500}
+\code{\link[=or_monitors_500]{or_monitors_500()}}
 }
 \keyword{datasets}

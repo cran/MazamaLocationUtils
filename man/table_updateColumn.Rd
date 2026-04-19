@@ -72,7 +72,7 @@ locationTbl[locationTbl_indices, c("city", "AQSID")]
 
 }
 \seealso{
-\link{table_addColumn}
+\code{\link[=table_addColumn]{table_addColumn()}}
 
-\link{table_removeColumn}
+\code{\link[=table_removeColumn]{table_removeColumn()}}
 }

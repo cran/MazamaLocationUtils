@@ -17,14 +17,14 @@
 #' \item{address}
 #' }
 #' 
-#' When \code{replaceExisting = TRUE}, all existing address fields are discarded
+#' When `replaceExisting = TRUE`, all existing address fields are discarded
 #' in favor of the OpenCage versions. To only fill in missing values in
-#' \code{locationTbl}, use \code{replaceExisting = FALSE}.
+#' `locationTbl`, use `replaceExisting = FALSE`.
 #' 
 #' The OpenCage service returns a large number of fields, some of which may be
 #' useful. To add all OpenCage fields to a location table, use 
-#' \code{retainOpenCage = TRUE}. This will append 78+ fields of information,
-#' each each named with a prefix of \code{"opencage_"}.
+#' `retainOpenCage = TRUE`. This will append 78+ fields of information,
+#' each each named with a prefix of `"opencage_"`.
 #' 
 #' @note The OpenCage service requires an API key which can be obtained from 
 #' their web site. This API key must be set as an environment variable with:
@@ -37,14 +37,14 @@
 #' for 1 request/sec and a maximum of 2500 requests per day.
 #' 
 #' Because of the 1 request/sec default, it is recommended that
-#' \code{table_addOpenCageInfo()} only be used in an interactive session when 
+#' `table_addOpenCageInfo()` only be used in an interactive session when 
 #' updating a table with a large number of records.
 #' 
 #' @param locationTbl Tibble of known locations.
 #' @param replaceExisting Logical specifying whether to replace existing data
 #' with data obtained from OpenCage.
 #' @param retainOpenCage Logical specifying whether to retain all fields obtained
-#' from OpenCage, each named with a prefix of \code{opencage_}.
+#' from OpenCage, each named with a prefix of `opencage_`.
 #' @param verbose Logical controlling the generation of progress messages.
 #' 
 #' @return Tibble of "known locations" enhanced with information from the 

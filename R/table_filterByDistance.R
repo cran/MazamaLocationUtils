@@ -13,9 +13,9 @@
 #' 
 #' @return Tibble of known locations.
 #' 
-#' @description Returns a tibble of the known locations from \code{locationTbl} 
-#' that are within \code{distanceThreshold} meters of the target location 
-#' specified by \code{longitude} and \code{latitude}. 
+#' @description Returns a tibble of the known locations from `locationTbl` 
+#' that are within `distanceThreshold` meters of the target location 
+#' specified by `longitude` and `latitude`. 
 #' 
 #' @note Only a single target location is allowed.
 #' 

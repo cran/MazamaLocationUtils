@@ -1,25 +1,25 @@
 #'
 #' @title Create one or more unique locationIDs
 #' @description A unique locationID is created for each incoming
-#' \code{longitude} and \code{latitude}. 
+#' `longitude` and `latitude`. 
 #' 
-#' See \code{MazamaCoreUtils::\link[MazamaCoreUtils:createLocationID]{createLocationID}} for details.
+#' See [MazamaCoreUtils::createLocationID()] for details.
 #' 
-#' At \code{precision = 10}, this results in a maximum error of 0.6 meters which 
+#' At `precision = 10`, this results in a maximum error of 0.6 meters which 
 #' is more than precise enough for environmental monitoring studies making use
 #' of this package.
 #' 
 #' An excellent way to become familiar with geohash is through the 
-#' \href{https://geohash.softeng.co}{GeoHash Explorer}.
+#' [GeoHash Explorer](https://geohash.softeng.co).
 #' 
-#' @note The \code{"digest"} algorithm is deprecated but provided for backwards 
+#' @note The `"digest"` algorithm is deprecated but provided for backwards 
 #' compatibility with databases that were built using locationIDs generated
 #' with this algorithm.
 #' 
 #' @param longitude Vector of longitudes in decimal degrees E.
 #' @param latitude Vector of latitudes in decimal degrees N.
-#' @param algorithm Algorithm to use -- either \code{"geohash"} or \code{"digest"}.
-#' @param precision \code{precision} argument used when encoding with \code{"geohash"}.
+#' @param algorithm Algorithm to use -- either `"geohash"` or `"digest"`.
+#' @param precision `precision` argument used when encoding with `"geohash"`.
 #' 
 #' @return Vector of character locationIDs.
 #' 

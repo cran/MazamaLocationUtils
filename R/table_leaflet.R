@@ -1,20 +1,20 @@
 #' @title Leaflet interactive map for known locations
 #'
 #' @param locationTbl Tibble of known locations.
-#' @param maptype Optional name of leaflet ProviderTiles to use, e.g. \code{terrain}.
-#' @param extraVars Character vector of addition \code{locationTbl} column names
+#' @param maptype Optional name of leaflet ProviderTiles to use, e.g. `terrain`.
+#' @param extraVars Character vector of addition `locationTbl` column names
 #' to be shown in leaflet popups.  
 #' @param jitter Amount to use to slightly adjust locations so that multiple
-#' monitors at the same location can be seen. Use zero or \code{NA} to see
+#' monitors at the same location can be seen. Use zero or `NA` to see
 #' precise locations.
-#' @param ... Additional arguments passed to \code{leaflet::addCircleMarker()}.
+#' @param ... Additional arguments passed to `leaflet::addCircleMarkers()`.
 #'
 #' @description This function creates interactive maps that will be displayed in
 #' RStudio's 'Viewer' tab. The default setting of `jitter` will move locations
 #' randomly within an ~50 meter radius so that overlapping locations can be 
 #' identified. Set `jitter = 0` to see precise locations.
 #'
-#' @details The \code{maptype} argument is mapped onto leaflet "ProviderTile"
+#' @details The `maptype` argument is mapped onto leaflet "ProviderTile"
 #'   names. Current mappings include:
 #' \itemize{
 #' \item{"roadmap" => "OpenStreetMap"}
@@ -38,28 +38,27 @@
 #' @importFrom leaflet leaflet fitBounds addProviderTiles addCircleMarkers
 #' 
 #' @examples
-#' \dontrun{
-#' library(MazamaLocationUtils)
-#' 
-#' # A table with all core metadata
-#' table_leaflet(wa_monitors_500)
+#' \donttest{
+#' if (interactive()) {
+#'   # A table with all core metadata
+#'   table_leaflet(wa_monitors_500)
 #'   
-#' # A table missing some core metadata
-#' table_leaflet(
-#'   wa_airfire_meta,
-#'   extraVars = c("stateCode", "countyName", "msaName")
-#' )
+#'   # A table missing some core metadata
+#'   table_leaflet(
+#'     wa_airfire_meta
+#'   )
 #' 
-#' # Customizing the map
-#' table_leaflet(
-#'   wa_airfire_meta,
-#'   extraVars = c("stateCode", "countyName", "msaName"),
-#'   radius = 6,
-#'   color = "black",
-#'   weight = 2,
-#'   fillColor = "red",
-#'   fillOpacity = 0.3
-#' )
+#'   # Customizing the map
+#'   table_leaflet(
+#'     wa_airfire_meta,
+#'     extraVars = c("AQSID"),
+#'     radius = 6,
+#'     color = "black",
+#'     weight = 2,
+#'     fillColor = "red",
+#'     fillOpacity = 0.3
+#'   )
+#' }
 #' }
 
 table_leaflet <- function(
@@ -154,11 +153,8 @@ table_leaflet <- function(
       "longitude = ", locationTbl$longitude, ", ", "latitude = ", locationTbl$latitude, "<br>",
       "timezone = ", locationTbl$timezone, "<br>",
       "ISO = ", locationTbl$countryCode, ".", locationTbl$stateCode, "<br>",
-      "county = ", locationTbl$countyName, "<br>",
-      "addr. = ", locationTbl$houseNumber, ", ", locationTbl$street, ", ", locationTbl$city, ", ", 
-      locationTbl$stateCode, ", ", locationTbl$postalCode, "<br>"
+      "county = ", locationTbl$countyName, "<br>"
     )
-    
     
   } else {
     

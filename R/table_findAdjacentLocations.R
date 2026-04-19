@@ -3,27 +3,27 @@
 #' 
 #' @description Calculate distances between all locations within a known
 #' locations table and return a tibble containing all records that have an 
-#' adjacent location separated by less than \code{distanceThreshold} meters.
+#' adjacent location separated by less than `distanceThreshold` meters.
 #' The return tibble is ordered by separation distance.
 #' 
 #' It is useful when working with new metadata tables to identify adjacent
 #' locations early on so that decisions can be made about the appropriateness
-#' of the specified \code{distanceThreshold}.
+#' of the specified `distanceThreshold`.
 #' 
-#' @note The measure \code{"cheap"} may be used to speed things up depending on
+#' @note The measure `"cheap"` may be used to speed things up depending on
 #' the spatial scale being considered. Distances calculated with 
-#' \code{measure = "cheap"} will vary by a few meters compared with those 
-#' calculated using \code{measure = "geodesic"}.
+#' `measure = "cheap"` will vary by a few meters compared with those 
+#' calculated using `measure = "geodesic"`.
 #' 
 #' @param locationTbl Tibble of known locations.
 #' @param distanceThreshold Distance in meters.
 #' @param measure One of "haversine" "vincenty", "geodesic", or "cheap" 
 #' specifying desired method of geodesic distance calculation.
 #' 
-#' See \code{geodist::\link[geodist:geodist]{geodist}} for details.
+#' See [geodist::geodist()] for details.
 #' 
 #' @return Tibble of known locations separated by less than 
-#' \code{distanceThreshold} meters.
+#' `distanceThreshold` meters.
 #' 
 #' @examples 
 #' library(MazamaLocationUtils)

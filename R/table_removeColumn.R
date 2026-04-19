@@ -1,6 +1,6 @@
 
 #' @title Remove a column of metadata in a table
-#' @description Remove the column matching \code{columnName}. This function 
+#' @description Remove the column matching `columnName`. This function 
 #' can be used in pipelines.
 #' @param locationTbl Tibble of known locations.
 #' @param columnName Name of the colun to be removed.
@@ -34,8 +34,8 @@
 #'     table_removeColumn("longitude")
 #' }, silent = FALSE)
 #'
-#' @seealso \link{table_addColumn}
-#' @seealso \link{table_removeColumn}
+#' @seealso [table_addColumn()]
+#' @seealso [table_removeColumn()]
 #' @rdname table_removeColumn
 #' @export 
 #' @importFrom MazamaCoreUtils stopIfNull

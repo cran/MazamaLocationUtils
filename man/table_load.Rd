@@ -15,9 +15,9 @@ Tibble of known locations.
 \description{
 Load a tibble of known locations from the preferred directory.
 
-The known location table must be named either \code{<collectionName>.rda}
-or \code{<collectionName>.csv}. If both are found, only
-\code{<collectionName>.rda} will be loaded to ensure that columns will have
+The known location table must be named either \verb{<collectionName>.rda}
+or \verb{<collectionName>.csv}. If both are found, only
+\verb{<collectionName>.rda} will be loaded to ensure that columns will have
 the proper type assigned.
 }
 \examples{
@@ -41,5 +41,5 @@ dim(my_table)
 list.files(getLocationDataDir(), pattern = "table_load_example")
 }
 \seealso{
-\code{\link{setLocationDataDir}}
+\code{\link[=setLocationDataDir]{setLocationDataDir()}}
 }

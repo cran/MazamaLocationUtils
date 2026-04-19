@@ -1,13 +1,13 @@
 
 #' @title Save a known location table
 #' @description Save a tibble of known locations to the preferred directory. If
-#' \code{outputType} is a vector, the known locations table will be saved to the 
+#' `outputType` is a vector, the known locations table will be saved to the 
 #' preferred directory in multiple formats.
 #' 
 #' @param locationTbl Tibble of known locations.
 #' @param collectionName Character identifier for this table.
 #' @param backup Logical specifying whether to save a backup version of any
-#' existing tables sharing \code{collectionName}.
+#' existing tables sharing `collectionName`.
 #' @param outputType Vecctor of output formats. (Currently only "rda" or "csv" are supported.)
 #' @return File path of saved file.
 #' @examples

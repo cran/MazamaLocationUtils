@@ -2,7 +2,7 @@
 #'
 #' @title Add clustering information to a dataframe
 #'
-#' @param tbl Tibble with geolocation information (\emph{e.g.}.
+#' @param tbl Tibble with geolocation information (*e.g.*.
 #' @param clusterDiameter Diameter in meters used to determine the number of
 #' clusters (see description).
 #' @param lonVar Name of longitude variable in the incoming tibble.
@@ -19,24 +19,24 @@
 #' We use clustering to find an appropriate number of unique "deployments".
 #' The sensitivity of this algorithm can be adjused with the clusterDiameter argument.
 #'
-#' Standard \code{kmeans} clustering does not work well when clusters can have widely
+#' Standard `kmeans` clustering does not work well when clusters can have widely
 #' differing numbers of members. A much better result is acheived with
-#' the Partitioning Around Medoids method available in \code{cluster::pam()}.
+#' the Partitioning Around Medoids method available in `cluster::pam()`.
 #'
-#' The value of \code{clusterRadius} is compared with the output of
-#' \code{cluster::pam(...)$clusinfo[,'av_diss']} to determine the number of clusters.
+#' The value of `clusterRadius` is compared with the output of
+#' `cluster::pam(...)$clusinfo[,'av_diss']` to determine the number of clusters.
 #' 
-#' @note The \code{table_addClustering()} function implements two-stage clustering
-#' using \link{clusterByDistance}. If the first attempt at clustering produces
+#' @note The `table_addClustering()` function implements two-stage clustering
+#' using [clusterByDistance()]. If the first attempt at clustering produces
 #' clustered locations that are still too close to eachother, another round
 #' of clustering is performed using the results of the previous attempt. This
 #' two-stage approach seems to work well in. practice. 
 #'
-#' @return Input tibble with additional columns: \code{clusterLon, clusterLat}.
+#' @return Input tibble with additional columns: `clusterLon, clusterLat`.
 #'
-#' @references \href{https://working-with-data.mazamascience.com/2021/07/15/when-k-means-clustering-fails/}{When k-means clustering fails}
+#' @references [When k-means clustering fails](https://working-with-data.mazamascience.com/2021/07/15/when-k-means-clustering-fails/)
 #' 
-#' @seealso \link{clusterByDistance}
+#' @seealso [clusterByDistance()]
 #' 
 #' @examples
 #' library(MazamaLocationUtils)

@@ -21,7 +21,7 @@
 #' \item{postalCode}
 #' }
 #' 
-#' The \code{longitude} and \code{latitude} columns are required but all others
+#' The `longitude` and `latitude` columns are required but all others
 #' are optional.
 #' 
 #' If any of these optional columns are found, they will be used and the often 
@@ -30,17 +30,17 @@
 #' columns of information that are 
 #' not part of the required core metadata will be retained.
 #' 
-#' This method skips the assignment of columns like \code{elevation} and all
+#' This method skips the assignment of columns like `elevation` and all
 #' address related fields that require web service requests.
 #' 
 #' Compared to initializing a brand new table and populating it one record at a
 #' time, this is a much faster way of creating a known location table from a
 #' pre-existing table of metadata.
 #' 
-#' @note The measure \code{"cheap"} may be used to speed things up depending on
+#' @note The measure `"cheap"` may be used to speed things up depending on
 #' the spatial scale being considered. Distances calculated with 
-#' \code{measure = "cheap"} will vary by a few meters compared with those 
-#' calculated using \code{measure = "geodesic"}.
+#' `measure = "cheap"` will vary by a few meters compared with those 
+#' calculated using `measure = "geodesic"`.
 #' 
 #' @param locationTbl Tibble of known locations. This input tibble need not be a 
 #' standardized "known location" table with all required columns. Missing 
@@ -52,12 +52,12 @@
 #' @param distanceThreshold Distance in meters. 
 #' @param measure One of "haversine" "vincenty", "geodesic", or "cheap" 
 #' specifying desired method of geodesic distance calculation. See 
-#' \code{?geodist::geodist}.
-#' @param precision \code{precision} argument passed on to \link{location_createID}.
+#' `?geodist::geodist`.
+#' @param precision `precision` argument passed on to [location_createID()].
 #' @param verbose Logical controlling the generation of progress messages.
 #' 
 #' @return Known location tibble with the specified metadata columns. Any 
-#' locations whose circles (as defined by \code{distanceThreshold}) overlap will
+#' locations whose circles (as defined by `distanceThreshold`) overlap will
 #' generate warning messages. 
 #' 
 #' It is incumbent upon the user to address overlapping locations by one of:

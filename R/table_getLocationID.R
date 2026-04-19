@@ -1,15 +1,15 @@
 
 #' @title Return IDs of known locations
-#' @description Returns a vector of \code{locationID}s for the known locations
+#' @description Returns a vector of `locationID`s for the known locations
 #' that each incoming location will be assigned to within the given. If more
-#' than one known location exists within the given \code{distanceThreshold}, the closest will be
-#' assigned.  \code{NA} will be returned for each incoming that cannot be 
-#' assigned to a known location in \code{locationTbl}.
+#' than one known location exists within the given `distanceThreshold`, the closest will be
+#' assigned.  `NA` will be returned for each incoming that cannot be 
+#' assigned to a known location in `locationTbl`.
 #' 
-#' @note The measure \code{"cheap"} may be used to speed things up depending on
+#' @note The measure `"cheap"` may be used to speed things up depending on
 #' the spatial scale being considered. Distances calculated with 
-#' \code{measure = "cheap"} will vary by a few meters compared with those 
-#' calculated using \code{measure = "geodesic"}.
+#' `measure = "cheap"` will vary by a few meters compared with those 
+#' calculated using `measure = "geodesic"`.
 #' 
 #' @param locationTbl Tibble of known locations.
 #' @param longitude Vector of longitudes in decimal degrees E.
@@ -17,9 +17,9 @@
 #' @param distanceThreshold Distance in meters.
 #' @param measure One of "geodesic", "haversine", "vincenty" or "cheap" 
 #' specifying desired method of geodesic distance calculation. 
-#' See \code{\link[geodist]{geodist}}.
+#' See [geodist::geodist()].
 #' 
-#' @return Vector of known \code{locationID}s.
+#' @return Vector of known `locationID`s.
 #' @examples
 #' locationTbl <- get(data("wa_monitors_500"))
 #' 

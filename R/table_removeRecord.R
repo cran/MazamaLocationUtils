@@ -1,9 +1,9 @@
 
 #' @title Remove location records from a table
-#' @description Incoming \code{locationID} values are compared 
-#' against the incoming \code{locationTbl} and any matches are removed.
+#' @description Incoming `locationID` values are compared 
+#' against the incoming `locationTbl` and any matches are removed.
 #' @param locationTbl Tibble of known locations.
-#' @param locationID Vector of \code{locationID} strings.
+#' @param locationID Vector of `locationID` strings.
 #' @param verbose Logical controlling the generation of progress messages.
 #' @return Updated tibble of known locations.
 #' @examples
@@ -26,9 +26,9 @@
 #' # Test
 #' table_getLocationID(locationTbl, lon, lat, distanceThreshold = 500)
 #' 
-#' @seealso \link{table_addLocation}
-#' @seealso \link{table_addSingleLocation}
-#' @seealso \link{table_updateSingleRecord}
+#' @seealso [table_addLocation()]
+#' @seealso [table_addSingleLocation()]
+#' @seealso [table_updateSingleRecord()]
 #' @rdname table_removeRecord
 #' @export 
 #' @importFrom rlang .data

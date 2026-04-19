@@ -57,9 +57,9 @@ locationTbl \%>\%
 
 }
 \seealso{
-\link{table_addLocation}
+\code{\link[=table_addLocation]{table_addLocation()}}
 
-\link{table_addSingleLocation}
+\code{\link[=table_addSingleLocation]{table_addSingleLocation()}}
 
-\link{table_removeRecord}
+\code{\link[=table_removeRecord]{table_removeRecord()}}
 }

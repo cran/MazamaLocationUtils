@@ -14,7 +14,7 @@
 #' the elevation. Default: NULL skips this step. Accepted values: "usgs".
 #' @param addressService Name of the address service to use for determining
 #' the street address. Default: NULL skips this step. Accepted values: "photon".
-#' @param precision \code{precision} argument passed on to \link{location_createID}.
+#' @param precision `precision` argument passed on to [location_createID()].
 #' @param verbose Logical controlling the generation of progress messages.
 #' 
 #' @return Tibble with a single new known location.

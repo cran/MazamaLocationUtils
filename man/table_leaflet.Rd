@@ -24,7 +24,7 @@ to be shown in leaflet popups.}
 monitors at the same location can be seen. Use zero or \code{NA} to see
 precise locations.}
 
-\item{...}{Additional arguments passed to \code{leaflet::addCircleMarker()}.}
+\item{...}{Additional arguments passed to \code{leaflet::addCircleMarkers()}.}
 }
 \value{
 A leaflet "plot" object which, if not assigned, is rendered in
@@ -52,27 +52,26 @@ underlying map tile if available. See
 "provider tiles" to use as the background map.
 }
 \examples{
-\dontrun{
-library(MazamaLocationUtils)
-
-# A table with all core metadata
-table_leaflet(wa_monitors_500)
+\donttest{
+if (interactive()) {
+  # A table with all core metadata
+  table_leaflet(wa_monitors_500)
   
-# A table missing some core metadata
-table_leaflet(
-  wa_airfire_meta,
-  extraVars = c("stateCode", "countyName", "msaName")
-)
+  # A table missing some core metadata
+  table_leaflet(
+    wa_airfire_meta
+  )
 
-# Customizing the map
-table_leaflet(
-  wa_airfire_meta,
-  extraVars = c("stateCode", "countyName", "msaName"),
-  radius = 6,
-  color = "black",
-  weight = 2,
-  fillColor = "red",
-  fillOpacity = 0.3
-)
+  # Customizing the map
+  table_leaflet(
+    wa_airfire_meta,
+    extraVars = c("AQSID"),
+    radius = 6,
+    color = "black",
+    weight = 2,
+    fillColor = "red",
+    fillOpacity = 0.3
+  )
+}
 }
 }

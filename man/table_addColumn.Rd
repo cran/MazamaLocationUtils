@@ -47,7 +47,7 @@ names(locationTbl)
 
 }
 \seealso{
-\link{table_removeColumn}
+\code{\link[=table_removeColumn]{table_removeColumn()}}
 
-\link{table_updateColumn}
+\code{\link[=table_updateColumn]{table_updateColumn()}}
 }

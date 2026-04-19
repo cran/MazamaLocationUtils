@@ -1,9 +1,9 @@
 #' @title Add a single new known location record to a table
 #' 
-#' @description Incoming \code{longitude} and \code{latitude} values are compared 
-#' against the incoming \code{locationTbl} to see if they are already within
-#' \code{distanceThreshold} meters of an existing entry.  A new record is created for
-#' if the location is not already found in \code{locationTbl}.
+#' @description Incoming `longitude` and `latitude` values are compared 
+#' against the incoming `locationTbl` to see if they are already within
+#' `distanceThreshold` meters of an existing entry.  A new record is created for
+#' if the location is not already found in `locationTbl`.
 #' 
 #' @param locationTbl Tibble of known locations.
 #' @param longitude Single longitude in decimal degrees E.
@@ -47,9 +47,9 @@
 #' }, silent = FALSE)
 #' }
 #' 
-#' @seealso \link{table_addLocation}
-#' @seealso \link{table_removeRecord}
-#' @seealso \link{table_updateSingleRecord}
+#' @seealso [table_addLocation()]
+#' @seealso [table_removeRecord()]
+#' @seealso [table_updateSingleRecord()]
 #' @rdname table_addSingleLocation
 #' @export 
 #' @importFrom MazamaCoreUtils stopIfNull

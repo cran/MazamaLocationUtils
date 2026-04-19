@@ -11,11 +11,11 @@
 #' 
 #' @return Tibble of known locations.
 #' 
-#' @description Returns a tibble of the known locations from \code{locationTbl} 
-#' that are closest to the vector of target locations specified by \code{longitude}
-#' and \code{latitude}. Only a single known location is returned for each
+#' @description Returns a tibble of the known locations from `locationTbl` 
+#' that are closest to the vector of target locations specified by `longitude`
+#' and `latitude`. Only a single known location is returned for each
 #' incoming target location. If no known location is found for a particular
-#' incoming location, that record in the tibble will contain all \code{NA}.
+#' incoming location, that record in the tibble will contain all `NA`.
 #' 
 #' @examples
 #' library(MazamaLocationUtils)

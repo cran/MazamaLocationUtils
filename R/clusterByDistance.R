@@ -14,21 +14,21 @@
 #' be jittery and result in a sensor self-reporting from a cluster of nearby locations.
 #' Clustering helps resolve this by assigning a single location to the cluster.
 #'
-#' Standard \code{kmeans} clustering does not work well when clusters can have 
+#' Standard `kmeans` clustering does not work well when clusters can have 
 #' widely differing numbers of members. A much better result is acheived with
-#' the Partitioning Around Medoids method available in \code{cluster::pam()}.
+#' the Partitioning Around Medoids method available in `cluster::pam()`.
 #'
-#' The value of \code{clusterDiameter} is compared with the output of
-#' \code{cluster::pam(...)$clusinfo[,'av_diss']} to determine the number of clusters.
+#' The value of `clusterDiameter` is compared with the output of
+#' `cluster::pam(...)$clusinfo[,'av_diss']` to determine the number of clusters.
 #' 
-#' @note In most applications, the \link{table_addClustering} function should be 
-#' used as it implements two-stage clustering using \code{clusterbyDistance()}.
+#' @note In most applications, the [table_addClustering()] function should be 
+#' used as it implements two-stage clustering using `clusterbyDistance()`.
 #'
-#' @return Input tibble with additional columns: \code{clusterLon, clusterLat, clusterID}.
+#' @return Input tibble with additional columns: `clusterLon, clusterLat, clusterID`.
 #'
-#' @references \href{https://working-with-data.mazamascience.com/2021/07/15/when-k-means-clustering-fails/}{When k-means clustering fails}
+#' @references [When k-means clustering fails](https://working-with-data.mazamascience.com/2021/07/15/when-k-means-clustering-fails/)
 #' 
-#' @seealso \link{table_removeRecord}
+#' @seealso [table_removeRecord()]
 #'
 #' @examples
 #' library(MazamaLocationUtils)

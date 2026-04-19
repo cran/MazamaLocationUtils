@@ -1,3 +1,12 @@
+# MazamaLocationUtils 0.4.5
+
+* Updated version dependences for **geodist**, **MazamaCoreUtils** and
+**MazamaSpatialUtils**.
+* Updated all source file documentation to use modern **roxygen2** syntax.
+* Improved `table_leaflet()` popup behavior.
+* `table_save()` can save either 'rda' or 'csv' files.
+* Handle error in `clusterByDistance()` when `maxClusters > now(tbl)`.
+
 # MazamaLocationUtils 0.4.4
 
 * Fixed bug in `clusterByDistance()` which could fail when incoming tibbles

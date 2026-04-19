@@ -1,13 +1,13 @@
 #'
 #' @title Add a new column of metadata to a table
 #' 
-#' @description A new metadata column is added to the \code{locationTbl}. For
-#' matching \code{locationID} records, the associated \code{locationData} is
-#' inserted. Otherwise, the new column will be initialized with \code{NA}.
+#' @description A new metadata column is added to the `locationTbl`. For
+#' matching `locationID` records, the associated `locationData` is
+#' inserted. Otherwise, the new column will be initialized with `NA`.
 #' 
 #' @param locationTbl Tibble of known locations.
 #' @param columnName Name to use for the new column.
-#' @param locationID Vector of \code{locationID} strings.
+#' @param locationID Vector of `locationID` strings.
 #' @param locationData Vector of data to used at matching records.
 #' @param verbose Logical controlling the generation of progress messages.
 #' 
@@ -27,8 +27,8 @@
 #'   
 #' names(locationTbl)
 #' 
-#' @seealso \link{table_removeColumn}
-#' @seealso \link{table_updateColumn}
+#' @seealso [table_removeColumn()]
+#' @seealso [table_updateColumn()]
 #' @rdname table_addColumn
 #' @export 
 #' @importFrom MazamaCoreUtils stopIfNull
